@@ -8,7 +8,12 @@ $c-grey: #999999;
 $c-grey-border: #e0dcdc;
 $c-green: #2e9f55;
 $c-black: #111;
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+}
 .toolbar-background {
   background-color: $c-blue;
   &.toolbar-background-ios {
@@ -19,12 +24,16 @@ $c-black: #111;
 .toolbar-title {
   color: $c-white;
   text-align: center;
+  font-size: 18px;
   &.toolbar-title-ios {
     color: $c-white;
   }
 }
 
 ion-footer {
+  ion-toolbar {
+    min-height: 55px!important;
+  }
   .toolbar-background {
     background-color: $c-light-blue;
     border-width: 0 !important;
@@ -65,4 +74,15 @@ ion-footer {
 
 .no-active {
   display: none !important;
+}
+
+.sub-title-custom {
+  text-transform: uppercase;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.p-custom {
+  font-size: 13px;
+  line-height: 2;
 }

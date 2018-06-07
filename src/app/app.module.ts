@@ -11,6 +11,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { ApiProvider } from '../providers/api/api';
 import {AddInformationPageModule} from "../pages/add-information/add-information.module";
+import {DlsclaimerPageModule} from "../pages/dlsclaimer/dlsclaimer.module";
 export function isNotIos(plt) {
     // shortcut function to be reused internally
     // checks navigator.platform to see if it's an actual iOS device
@@ -27,6 +28,7 @@ export function isNotIos(plt) {
     ListPage
   ],
   imports: [
+    DlsclaimerPageModule,
     AddInformationPageModule,
     BrowserModule,
     HttpClientModule,
