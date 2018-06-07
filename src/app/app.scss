@@ -5,4 +5,64 @@ $c-blue: #2699fb;
 $c-sky: #e0fffb;
 $c-blue-border: #c7eafb;
 $c-grey: #999999;
+$c-grey-border: #e0dcdc;
 $c-green: #2e9f55;
+$c-black: #111;
+
+.toolbar-background {
+  background-color: $c-blue;
+  &.toolbar-background-ios {
+    background-color: $c-blue;
+  }
+}
+
+.toolbar-title {
+  color: $c-white;
+  text-align: center;
+  &.toolbar-title-ios {
+    color: $c-white;
+  }
+}
+
+ion-footer {
+  .toolbar-background {
+    background-color: $c-light-blue;
+    border-width: 0 !important;
+    &.toolbar-background-ios {
+      background-color: $c-light-blue;
+    }
+  }
+
+  .toolbar-title {
+    color: $c-blue;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 500;
+    &.toolbar-title-ios {
+      color: $c-blue;
+    }
+  }
+}
+
+.button-arrow-back {
+  display: inline-block;
+  background-color: $c-blue;
+  box-shadow: none;
+  ion-icon {
+    font-size: 35px;
+    font-weight: 700;
+    color: $c-white;
+  }
+}
+.check-list-headline {
+  font-size: 20px;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+.check-list-description {
+  font-size: 13px;
+}
+
+.no-active {
+  display: none !important;
+}

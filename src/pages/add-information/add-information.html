@@ -1,0 +1,111 @@
+<!--
+  Generated template for the AddInformationPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button class="button-arrow-back"><ion-icon name="arrow-round-back"></ion-icon></button>
+    <ion-title>Personal Information</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+    <ion-item>
+      <ion-label>Date of Birth<ion-icon name="arrow-down" class="icon-select-down"></ion-icon></ion-label>
+      <ion-input value="09/09/1987" type="date"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Country<ion-icon name="arrow-down" class="icon-select-down"></ion-icon></ion-label>
+      <ion-select>
+        <ion-option value="bacon" selected="true">United States</ion-option>
+        <ion-option value="olives">England</ion-option>
+        <ion-option value="xcheese">Canada</ion-option>
+        <ion-option value="peppers">Vietnam</ion-option>
+        <ion-option value="mushrooms">China</ion-option>
+        <ion-option value="onions">Thailand</ion-option>
+        <ion-option value="pepperoni">Singapore</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>City / Town</ion-label>
+      <ion-input value="Auckland" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Email</ion-label>
+      <ion-input value="dongat2501@gmail.com" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Contact Number</ion-label>
+      <ion-input value="01677145xxx" type="text"></ion-input>
+    </ion-item>
+    <ion-item class="row-custom">
+      <ion-label>Weight<ion-icon name="arrow-down" class="icon-select-down"></ion-icon></ion-label>
+      <ion-input value="60" type="text" class="col-50"></ion-input>
+      <ion-select class="col-50">
+        <ion-option value="bacon" selected="true">Kilograms</ion-option>
+        <ion-option value="olives">Grams</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item class="row-custom">
+      <ion-label>Height<ion-icon name="arrow-down" class="icon-select-down"></ion-icon></ion-label>
+      <ion-input value="160" type="text" class="col-50"></ion-input>
+      <ion-select class="col-50">
+        <ion-option value="bacon" selected="true">Centimetres</ion-option>
+        <ion-option value="olives">Metres</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item class="ion-check-box">
+      <ion-label>Health / Medication</ion-label>
+      <ion-checkbox [(ngModel)]="health"></ion-checkbox>
+    </ion-item>
+    <ion-item class="ion-textarea-custom">
+      <ion-label>SPECIFY</ion-label>
+      <ion-textarea name="specify" value="Enter somethings"></ion-textarea>
+    </ion-item>
+  </ion-list>
+  <div class="check-list-custom">
+    <h1 class="check-list-headline">
+      Health Checklist:
+    </h1>
+    <p class="check-list-description">
+      Please check any that apply or have applied in the past.
+    </p>
+    <ion-list>
+      <ion-item class="ion-check-box">
+        <ion-label>Stroke</ion-label>
+        <ion-checkbox [(ngModel)]="stroke"></ion-checkbox>
+      </ion-item>
+      <ion-item class="ion-check-box">
+        <ion-label>Heart Condition</ion-label>
+        <ion-checkbox [(ngModel)]="heart-condition"></ion-checkbox>
+      </ion-item>
+      <ion-item class="ion-check-box">
+        <ion-label>Hypertension</ion-label>
+        <ion-checkbox [(ngModel)]="hypertension"></ion-checkbox>
+      </ion-item>
+      <ion-item class="ion-check-box">
+        <ion-label>pregnant</ion-label>
+        <ion-checkbox [(ngModel)]="pregnant"></ion-checkbox>
+      </ion-item>
+      <ion-item class="ion-check-box">
+        <ion-label>other illnesses</ion-label>
+        <ion-checkbox [(ngModel)]="other-illnesses"></ion-checkbox>
+      </ion-item>
+      <ion-item class="ion-textarea-custom">
+        <ion-label>SPECIFY</ion-label>
+        <ion-textarea name="specify" value="Enter somethings"></ion-textarea>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-title class="sub-title">Continue</ion-title>
+  </ion-toolbar>
+</ion-footer>
