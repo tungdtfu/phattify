@@ -1,25 +1,96 @@
-page-addlist {
-  ion-card-header {
-    position: relative;
-    ion-icon {
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 25px;
+page-setting {
+  .scroll-content {
+    background-color: $c-light-sky;
+    ion-card {
+      background-color: $c-light-sky;
+      box-shadow: none;
+    }
+    ion-card-header {
+      text-align: center;
+    }
+    .icon-around {
+      width: 96px;
+      height: 96px;
+      display: inline-block;
+      position: relative;
+      background-color: $c-blue;
+      border-radius: 50%;
+      ion-icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate3d(-50%, -50%, 0);
+        color: $c-white;
+        font-size: 50px;
+      }
     }
   }
-  ion-card-content {
-    display: flex;
-    &.card-content {
-      padding-bottom: 0;
+  ion-item.item.item-block  {
+    border-width: 0;
+    &.item-input, &.item-select {
+      padding-left: 16px;
+      padding-right: 16px;
+      position: relative;
+      border-width: 0;
+      background-color: $c-light-sky;
+      .item-inner {
+        border: 0;
+        padding-right: 0;
+      }
     }
-    &.card-content-md {
-      padding-bottom: 0;
+  }
+  ion-icon.icon-select-down {
+    position: absolute;
+    right: 25px;
+    bottom: 15px;
+    background: #fff;
+    width: 35px;
+    font-size: 17px;
+    text-align:right;
+    pointer-events: none;
+  }
+  .input-wrapper {
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0;
+    border-width: 0;
+    ion-label {
+      width: 100%;
+      margin-bottom: 5px;
+      font-size: 13px;
+      color: $c-blue!important;
     }
-    .icon-event {
-      margin-left: 10px;
-      margin-top: 16px;
+    ion-input,ion-select {
+      max-width: 100%;
+      width: 100%;
+      height: 48px;
+      padding: 0 10px;
+      background-color: $c-white;
+      border: 1px solid $c-blue-border;
+      color: $c-blue;
+      font-size: 14px;
+      &.col-50 {
+        width: calc(50% - 4px);
+      }
+      input {
+        width: 100%!important;
+        margin-left: 0!important;
+        padding-top: 3px!important;
+        box-sizing: border-box;
+      }
+      .select-icon {
+        display: none;
+      }
+      .select-text {
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+  ion-footer {
+    &:before {
+      content: none!important;
     }
   }
 }
