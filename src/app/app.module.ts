@@ -12,6 +12,16 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { ApiProvider } from '../providers/api/api';
 import {AddInformationPageModule} from "../pages/add-information/add-information.module";
 import {DlsclaimerPageModule} from "../pages/dlsclaimer/dlsclaimer.module";
+import {SignInPageModule} from "../pages/sign-in/sign-in.module";
+import {ClientPage} from "../pages/client/client";
+import {ContactMentorPage} from "../pages/contact-mentor/contact-mentor";
+import {FoodPlanPage} from "../pages/foodplan/foodplan";
+import {SettingPage} from "../pages/setting/setting";
+import {CalendarPage} from "../pages/calendar/calendar";
+import {TabsPage} from "../pages/tabs/tabs";
+import { LoginPage} from "../pages/login/login";
+import {LoginPageModule} from "../pages/login/login.module";
+
 export function isNotIos(plt) {
     // shortcut function to be reused internally
     // checks navigator.platform to see if it's an actual iOS device
@@ -25,10 +35,18 @@ export function isNotIos(plt) {
   declarations: [
     MyApp,
     HomePage,
-    ListPage
+    ListPage,
+    ClientPage,
+    ContactMentorPage,
+    CalendarPage,
+    FoodPlanPage,
+    SettingPage,
+    TabsPage,
   ],
   imports: [
+      LoginPageModule,
     DlsclaimerPageModule,
+    SignInPageModule,
     AddInformationPageModule,
     BrowserModule,
     HttpClientModule,
@@ -46,6 +64,12 @@ export function isNotIos(plt) {
     MyApp,
     HomePage,
     ListPage,
+    ClientPage,
+    ContactMentorPage,
+    CalendarPage,
+    FoodPlanPage,
+    SettingPage,
+    TabsPage,
   ],
   providers: [
     StatusBar,

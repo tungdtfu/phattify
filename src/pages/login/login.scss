@@ -33,12 +33,11 @@ page-login {
     margin-bottom: 20px;
     background: $c-sky;
     border-top: 0!important;
-    border-bottom: 1px solid $c-blue-border;
     &:last-child {
-      border-bottom: 1px solid $c-blue-border!important;
+      border-bottom: 0!important;
     }
     .item-inner {
-      border: 0;
+      border-bottom: 1px solid $c-blue-border!important;
     }
   }
   .text-input {
@@ -57,7 +56,7 @@ page-login {
     .sub-title {
       margin-bottom: 20px;
       color: $c-blue;
-      font-weight: 600;
+      font-weight: 500;
       font-size: 14px;
       text-align: center;
     }
@@ -120,6 +119,7 @@ page-login {
       .item-inner {
         margin: 0;
         padding: 0;
+        border: 0!important;
       }
       ion-label {
         margin: 0;
@@ -163,8 +163,10 @@ page-login {
   }
 
   .photo-description {
+    font-weight: 400;
     .sub-title {
       margin-bottom: 0;
+      font-weight: 500;
     }
   }
   .login-complete {

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
+import { IonicPage, NavController, NavParams,ModalController } from 'ionic-angular';
+import { ModalUploadPage } from "../modal-upload/modal-upload";
 /**
  * Generated class for the LoginPage page.
  *
@@ -14,12 +14,18 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'login.html',
 })
 export class LoginPage {
+    NavController: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+    constructor(private navCtrl: NavController, public navParams: NavParams,public modalCtrl: ModalController) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
+  }
+
+  presentModal() {
+      const modal = this.modalCtrl.create(ModalUploadPage);
+      modal.present();
   }
 
 }
