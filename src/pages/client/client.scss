@@ -1,25 +1,78 @@
-page-addlist {
-  ion-card-header {
-    position: relative;
-    ion-icon {
+page-client {
+  .circle-progress {
+    padding: 40px 25px 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: $c-light-sky;
+    .circle-progress-detail {
+      position: relative;
+      color: $c-blue;
+      .p-large {
+        font-weight: 600;
+        color: $c-grey-p-large;
+      }
+      .p-small {
+        margin: 10px 0;
+      }
+    }
+    .circle-progress-current {
       position: absolute;
-      right: 10px;
       top: 50%;
-      transform: translateY(-50%);
-      font-size: 25px;
+      left: 50%;
+      transform: translate3d(-50%, -50%, 0);
+      .p-large {
+        font-weight: 600;
+        color: $c-blue;
+        letter-spacing: 0.7px;
+      }
+      .current-weight {
+        font-size: 16px;
+        margin-bottom: 10px;
+        .info-weight {
+          font-size: 28px;
+        }
+      }
+      .current-status {
+        .square-status {
+          display: inline-block;
+          width: 12px;
+          height: 11px;
+          background-color: $c-green2;
+        }
+      }
     }
   }
-  ion-card-content {
+  .lost-weight-progress {
     display: flex;
-    &.card-content {
-      padding-bottom: 0;
+    color: $c-blue;
+    background-color: $c-light-blue2;
+    .lost-weight-col {
+      width: percentage(100/3);
+      padding: 40px 10px;
+      border: 1px solid $c-grey-border2;
+      border-left: 0;
+      &:first-child {
+        border-left: 1px solid $c-grey-border2;
+      }
     }
-    &.card-content-md {
-      padding-bottom: 0;
+    .p-small {
+      font-weight: 500;
+      text-align: center;
+      margin-bottom: 3px;
     }
-    .icon-event {
-      margin-left: 10px;
-      margin-top: 16px;
+    .sub-title-p {
+      font-size: 20px;
+      font-weight: 700;
+      text-align: center;
+    }
+    button {
+      background-color: $c-blue;
+      color: $c-white;
+      padding: 18px 20px;
+      border-radius: 4px;
+      text-transform: capitalize;
+      font-weight: 500;
     }
   }
 }

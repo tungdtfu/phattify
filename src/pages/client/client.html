@@ -1,11 +1,63 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Client
+      Trevor round 2
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-
+  <div class="circle-progress">
+    <div class="circle-progress-detail circle-progress-left">
+      <p class="p-large">Start</p>
+      <p class="p-small">130kg</p>
+      <p class="p-small">BMI: 42.6</p>
+      <p class="p-small">Aug 23, 2018</p>
+    </div>
+    <div class="circle-progress-detail circle-progress-center">
+      <div class="circle-progress-current">
+        <div class="p-large">Current</div>
+        <div class="current-weight"><span class="info-weight">128</span>kg</div>
+        <div class="current-status">
+          <span class="square-status square-green"></span>
+          <span class="square-status square-green"></span>
+          <span class="square-status square-green"></span>
+          <span class="square-status square-green"></span>
+        </div>
+      </div>
+      <round-progress
+              [current]="current"
+              [max]="max"
+              [color]="'#2699fb'"
+              [background]="'8bff8f'"
+              [stroke]="20"
+              [radius]="88"
+              [rounded]="true"
+              [clockwise]="false"
+              [responsive]="false"
+              [duration]="800"
+              [animation]="'easeInOutQuart'"
+              [animationDelay]="0">
+      </round-progress>
+    </div>
+    <div class="circle-progress-detail circle-progress-right">
+      <p class="p-large">Target</p>
+      <p class="p-small">96kg</p>
+      <p class="p-small">Complete</p>
+      <p class="p-small">Dec 23, 2018</p>
+    </div>
+  </div>
+  <div class="lost-weight-progress">
+    <div class="lost-weight-col">
+      <div class="p-small">You lost</div>
+      <div class="sub-title-p">2kg</div>
+    </div>
+    <div class="lost-weight-col">
+      <button>Enter Weight</button>
+    </div>
+    <div class="lost-weight-col">
+      <div class="p-small">Weight Remaining</div>
+      <div class="sub-title-p">22kg</div>
+    </div>
+  </div>
 </ion-content>

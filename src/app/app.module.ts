@@ -18,6 +18,8 @@ import {TabsPage} from "../pages/tabs/tabs";
 import { LoginPage} from "../pages/login/login";
 import { LoadingProvider } from '../providers/loading/loading';
 import { UserProvider } from '../providers/user/user';
+import {RoundProgressModule} from 'angular-svg-round-progressbar';
+
 
 // export function isNotIos(plt) {
     // shortcut function to be reused internally
@@ -43,6 +45,7 @@ import { UserProvider } from '../providers/user/user';
             DlsclaimerPageModule,
             SignInPageModule,
             AddInformationPageModule,
+            RoundProgressModule
         ],
         bootstrap: [IonicApp],
         entryComponents: [
@@ -61,6 +64,7 @@ import { UserProvider } from '../providers/user/user';
             {provide: ErrorHandler, useClass: IonicErrorHandler},
             LoadingProvider,
             UserProvider,
+            ApiProvider
         ]
     })
     export class AppModule {

@@ -1,14 +1,18 @@
 //variables
 $c-white: #ffffff;
 $c-light-blue: #bce0fd;
+$c-light-blue2: #c5dff4;
 $c-blue: #2699fb;
 $c-sky: #e0fffb;
 $c-light-sky: #E8FCFF;
 $c-blue-border: #c7eafb;
 $c-grey: #999999;
 $c-grey-p : #777777;
+$c-grey-p-large: #606569;
 $c-grey-border: #e0dcdc;
+$c-grey-border2: #707070;
 $c-green: #2e9f55;
+$c-green2: #1ac30c;
 $c-black: #111;
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
@@ -21,9 +25,16 @@ ion-header {
   ion-navbar.toolbar {
     min-height: 61px;
     .back-button {
-      padding: 0;
       color: $c-white;
       background-color: transparent;
+      ion-icon {
+        &:before {
+          content: "\f27d"!important;
+        }
+      }
+      .back-button-text {
+        display: none;
+      }
     }
   }
 }
@@ -75,6 +86,9 @@ ion-footer {
     font-size: 35px;
     font-weight: 700;
     color: $c-white;
+    &:before {
+      content: "\f27d"!important;
+    }
   }
 }
 .check-list-headline {
@@ -99,4 +113,12 @@ ion-footer {
 .p-custom {
   font-size: 13px;
   line-height: 2;
+}
+
+.p-large {
+  font-size: 15px;
+}
+
+.p-small {
+  font-size: 13px;
 }

@@ -10,9 +10,9 @@ import { LoginPage } from '../pages/login/login';
 export class MyApp {
 	@ViewChild(Nav) nav: Nav;
 
-	// rootPage:any = TabsPage;
+	rootPage:any = TabsPage;
 	pages: Array<{title: string, component: any}>;
-    rootPage: any = LoginPage;
+    // rootPage: any = LoginPage;
 	constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
 		this.initializeApp();
 
@@ -20,7 +20,7 @@ export class MyApp {
 	// used for an example of ngFor and navigation
 	this.pages = [
 	  { title: 'Login', component: LoginPage },
-
+	  { title: 'Tabpages', component: TabsPage },
 	];
 	}
 

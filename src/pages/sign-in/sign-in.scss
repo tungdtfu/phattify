@@ -88,6 +88,12 @@ page-sign-in {
       }
     }
   }
+  .sign-in-noti {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
   .text-footer {
     color: $c-blue;
   }
