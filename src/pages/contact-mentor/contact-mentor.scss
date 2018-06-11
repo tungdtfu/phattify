@@ -1,2 +1,37 @@
 page-contact-mentor {
+  .scroll-content {
+    padding: 30px;
+    background-color: $c-light-sky;
+    ion-list {
+      padding: 0 20px;
+      background-color: $c-white;
+      color: $c-blue;
+      ion-item {
+        padding: 10px 0;
+        border-bottom: 1px solid $c-light-sky;
+        &:last-child {
+          border-bottom: 0;
+        }
+        .item-inner {
+          padding: 0!important;
+          border: 0!important;
+        }
+      }
+      ion-label {
+        margin-right: 0;
+        display: flex;
+        align-items: center;
+        color: $c-blue;
+        ion-icon {
+          margin-right: 15px;
+          font-size: 22px;
+        }
+      }
+      .detail-right {
+        flex: 1;
+        text-align: right;
+        font-size: 11px;
+      }
+    }
+  }
 }

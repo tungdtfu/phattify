@@ -19,6 +19,7 @@ import { LoginPage} from "../pages/login/login";
 import { LoadingProvider } from '../providers/loading/loading';
 import { UserProvider } from '../providers/user/user';
 import {RoundProgressModule} from 'angular-svg-round-progressbar';
+import { ChartModule } from 'angular-highcharts';
 
 
 // export function isNotIos(plt) {
@@ -45,7 +46,8 @@ import {RoundProgressModule} from 'angular-svg-round-progressbar';
             DlsclaimerPageModule,
             SignInPageModule,
             AddInformationPageModule,
-            RoundProgressModule
+            RoundProgressModule,
+            ChartModule
         ],
         bootstrap: [IonicApp],
         entryComponents: [
