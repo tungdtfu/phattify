@@ -2,11 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { HttpClientModule } from '@angular/common/http';
-
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
-
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { ApiProvider } from '../providers/api/api';
@@ -20,62 +16,53 @@ import {SettingPage} from "../pages/setting/setting";
 import {CalendarPage} from "../pages/calendar/calendar";
 import {TabsPage} from "../pages/tabs/tabs";
 import { LoginPage} from "../pages/login/login";
-import {LoginPageModule} from "../pages/login/login.module";
+import { LoadingProvider } from '../providers/loading/loading';
+import { UserProvider } from '../providers/user/user';
 
-export function isNotIos(plt) {
+// export function isNotIos(plt) {
     // shortcut function to be reused internally
     // checks navigator.platform to see if it's an actual iOS device
     // this does not use the user-agent string because it is often spoofed
     // an actual iPad will return true, a chrome dev tools iPad will return false
 
-    // console.log( "isNotIos", ! plt.testNavigatorPlatform('iphone|ipad|ipod'));
-    return !plt.testNavigatorPlatform('iphone|ipad|ipod');
-}
-@NgModule({
-  declarations: [
-    MyApp,
-    HomePage,
-    ListPage,
-    ClientPage,
-    ContactMentorPage,
-    CalendarPage,
-    FoodPlanPage,
-    SettingPage,
-    TabsPage,
-  ],
-  imports: [
-      LoginPageModule,
-    DlsclaimerPageModule,
-    SignInPageModule,
-    AddInformationPageModule,
-    BrowserModule,
-    HttpClientModule,
-    IonicModule.forRoot(MyApp, {
-        scrollAssist: isNotIos,
-        // scrollPadding: true,
-        // inputBlurring: false,
-        autoFocusAssist: true,
-        mode: 'ios',
-        backButtonText: ''
-    }),
-  ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    MyApp,
-    HomePage,
-    ListPage,
-    ClientPage,
-    ContactMentorPage,
-    CalendarPage,
-    FoodPlanPage,
-    SettingPage,
-    TabsPage,
-  ],
-  providers: [
-    StatusBar,
-    SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
-    ApiProvider
-  ]
-})
-export class AppModule {}
+    @NgModule({
+        declarations: [
+            MyApp,
+            ClientPage,
+            ContactMentorPage,
+            CalendarPage,
+            FoodPlanPage,
+            SettingPage,
+            TabsPage,
+            LoginPage,
+        ],
+        imports: [
+            BrowserModule,
+            HttpClientModule,
+            IonicModule.forRoot(MyApp),
+            DlsclaimerPageModule,
+            SignInPageModule,
+            AddInformationPageModule,
+        ],
+        bootstrap: [IonicApp],
+        entryComponents: [
+            MyApp,
+            ClientPage,
+            ContactMentorPage,
+            CalendarPage,
+            FoodPlanPage,
+            SettingPage,
+            TabsPage,
+            LoginPage,
+        ],
+        providers: [
+            StatusBar,
+            SplashScreen,
+            {provide: ErrorHandler, useClass: IonicErrorHandler},
+            LoadingProvider,
+            UserProvider,
+        ]
+    })
+    export class AppModule {
+    }
+// }
