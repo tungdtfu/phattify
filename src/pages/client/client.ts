@@ -13,12 +13,11 @@ export class ClientPage {
     }
 
     ngAfterViewInit(): void {
-        var myElement = document.querySelector('#chart-compare');
-        var temp = myElement.offsetWidth;
+        // var myElement = document.getElementById('#chart-compare');
+        // var temp = myElement.offsetWidth;
         this.options = {
             chart: {
                 defaultSeriesType: 'areaspline',
-                width: temp,
                 margin: [20, 20, 30, 45],
                 backgroundColor: '#2699fb',
                 selectionMarkerFill: 'none'
