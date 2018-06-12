@@ -19,9 +19,8 @@ import { LoginPage} from "../pages/login/login";
 import { LoadingProvider } from '../providers/loading/loading';
 import { UserProvider } from '../providers/user/user';
 import {RoundProgressModule} from 'angular-svg-round-progressbar';
-import { ChartModule } from 'angular-highcharts';
-
-
+import { ChartModule } from 'angular2-highcharts';
+declare var require : any;
 // export function isNotIos(plt) {
     // shortcut function to be reused internally
     // checks navigator.platform to see if it's an actual iOS device
@@ -43,11 +42,12 @@ import { ChartModule } from 'angular-highcharts';
             BrowserModule,
             HttpClientModule,
             IonicModule.forRoot(MyApp),
+            ChartModule.forRoot(require('highcharts')),
             DlsclaimerPageModule,
             SignInPageModule,
             AddInformationPageModule,
-            RoundProgressModule,
-            ChartModule
+            RoundProgressModule
+
         ],
         bootstrap: [IonicApp],
         entryComponents: [

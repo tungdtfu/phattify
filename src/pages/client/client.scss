@@ -75,4 +75,16 @@ page-client {
       font-weight: 500;
     }
   }
+
+  //chart compare
+  #chart-compare {
+    background: #2699fb;
+    width:100%;
+    position: relative;
+    chart {
+      height:100%;
+      width:100%;
+      position:absolute;
+    }
+  }
 }
