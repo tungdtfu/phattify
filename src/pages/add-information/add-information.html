@@ -11,116 +11,113 @@
   </ion-navbar>
 
 </ion-header>
-
-
 <ion-content padding>
-  <ion-list>
-    <ion-item>
-      <ion-label>First name</ion-label>
-      <ion-input value="Ngat" type="text"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label>Last name</ion-label>
-      <ion-input value="Do" type="text"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label>Password</ion-label>
-      <ion-input value="12345@ngat" type="text"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label>Confirm Password</ion-label>
-      <ion-input value="12345@ngat" type="text"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label>Date of Birth<ion-icon ios="ios-arrow-down" md="ios-arrow-down" class="icon-select-down"></ion-icon></ion-label>
-      <ion-input value="09/09/1987" type="date"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label>Country<ion-icon ios="ios-arrow-down" md="ios-arrow-down" class="icon-select-down"></ion-icon></ion-label>
-      <ion-select>
-        <ion-option value="bacon" selected="true">United States</ion-option>
-        <ion-option value="olives">England</ion-option>
-        <ion-option value="xcheese">Canada</ion-option>
-        <ion-option value="peppers">Vietnam</ion-option>
-        <ion-option value="mushrooms">China</ion-option>
-        <ion-option value="onions">Thailand</ion-option>
-        <ion-option value="pepperoni">Singapore</ion-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label>City / Town</ion-label>
-      <ion-input value="Auckland" type="text"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label>Email</ion-label>
-      <ion-input value="dongat2501@gmail.com" type="text"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label>Contact Number</ion-label>
-      <ion-input value="01677145xxx" type="text"></ion-input>
-    </ion-item>
-    <ion-item class="row-custom">
-      <ion-label>Weight<ion-icon ios="ios-arrow-down" md="ios-arrow-down" class="icon-select-down"></ion-icon></ion-label>
-      <ion-input value="60" type="text" class="col-50"></ion-input>
-      <ion-select class="col-50">
-        <ion-option value="bacon" selected="true">Kilograms</ion-option>
-        <ion-option value="olives">Grams</ion-option>
-      </ion-select>
-    </ion-item>
-    <ion-item class="row-custom">
-      <ion-label>Height<ion-icon ios="ios-arrow-down" md="ios-arrow-down" class="icon-select-down"></ion-icon></ion-label>
-      <ion-input value="160" type="text" class="col-50"></ion-input>
-      <ion-select class="col-50">
-        <ion-option value="bacon" selected="true">Centimetres</ion-option>
-        <ion-option value="olives">Metres</ion-option>
-      </ion-select>
-    </ion-item>
-    <ion-item class="ion-check-box">
-      <ion-label>Health / Medication</ion-label>
-      <ion-checkbox></ion-checkbox>
-    </ion-item>
-    <ion-item class="ion-textarea-custom">
-      <ion-label>SPECIFY</ion-label>
-      <ion-textarea name="specify" value="Enter somethings"></ion-textarea>
-    </ion-item>
-  </ion-list>
-  <div class="check-list-custom">
-    <h1 class="check-list-headline">
-      Health Checklist:
-    </h1>
-    <p class="check-list-description">
-      Please check any that apply or have applied in the past.
-    </p>
+  <form [formGroup]="registerForm" (ngSubmit)="register(registerForm.value)">
     <ion-list>
-      <ion-item class="ion-check-box">
-        <ion-label>Stroke</ion-label>
-        <ion-checkbox ></ion-checkbox>
+      <ion-item>
+        <ion-label class="required">First name</ion-label>
+        <ion-input type="text" formControlName="firstname"></ion-input>
+        <div class="error-text" *ngIf="registerForm.controls.firstname.touched">
+          <div>First name is required.</div>
+        </div>
+      </ion-item>
+      <ion-item>
+        <ion-label class="required">Surname</ion-label>
+        <ion-input type="text" formControlName="surname"></ion-input>
+        <div class="error-text" *ngIf="registerForm.controls.surname.touched">
+          <div>First name is required.</div>
+        </div>
+      </ion-item>
+      <ion-item>
+        <ion-label class="required">Password</ion-label>
+        <ion-input type="password" formControlName="password"></ion-input>
+        <div class="error-text" *ngIf="registerForm.controls.surname.touched">
+          <div>First name is required.</div>
+        </div>
+      </ion-item>
+      <ion-item>
+        <ion-label class="required">Confirm Password</ion-label>
+        <ion-input type="password" formControlName="confirmPassword"></ion-input>
+        <div class="error-text" *ngIf="registerForm.controls.surname.touched">
+          <div>First name is required.</div>
+          <div *ngIf="registerForm.hasError('mismatchedPasswords')">Passwords do not match.</div>
+        </div>
+      </ion-item>
+      <ion-item>
+        <ion-label class="required">Date of Birth
+          <ion-icon ios="ios-arrow-down" md="ios-arrow-down" class="icon-select-down"></ion-icon>
+        </ion-label>
+        <ion-input type="date" formControlName="dateOfBirth"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="required">Country
+          <ion-icon ios="ios-arrow-down" md="ios-arrow-down" class="icon-select-down"></ion-icon>
+        </ion-label>
+        <ion-select formControlName="country">
+          <ion-option *ngFor="let item of countries" value="{{item.Id}}">{{item.Name}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label class="required">City / Town</ion-label>
+        <ion-input type="text" formControlName="city"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="required">Email</ion-label>
+        <ion-input type="email" formControlName="email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="required">Contact Number</ion-label>
+        <ion-input type="text" formControlName="contractNumber"></ion-input>
+      </ion-item>
+      <ion-item class="row-custom">
+        <ion-label class="required">Weight
+          <ion-icon ios="ios-arrow-down" md="ios-arrow-down" class="icon-select-down"></ion-icon>
+        </ion-label>
+        <ion-input type="number" class="col-50" formControlName="weight"></ion-input>
+        <ion-select class="col-50" formControlName="weightUnit">
+          <ion-option *ngFor="let item of weightUnits" value="{{item}}">{{item}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item class="row-custom">
+        <ion-label class="required">Height
+          <ion-icon ios="ios-arrow-down" md="ios-arrow-down" class="icon-select-down"></ion-icon>
+        </ion-label>
+        <ion-input type="number" class="col-50" formControlName="height"></ion-input>
+        <ion-select class="col-50" formControlName="heightUnit">
+          <ion-option *ngFor="let item of heightUnits" value="{{item}}">{{item}}</ion-option>
+        </ion-select>
       </ion-item>
       <ion-item class="ion-check-box">
-        <ion-label>Heart Condition</ion-label>
-        <ion-checkbox ></ion-checkbox>
-      </ion-item>
-      <ion-item class="ion-check-box">
-        <ion-label>Hypertension</ion-label>
-        <ion-checkbox></ion-checkbox>
-      </ion-item>
-      <ion-item class="ion-check-box">
-        <ion-label>pregnant</ion-label>
-        <ion-checkbox ></ion-checkbox>
-      </ion-item>
-      <ion-item class="ion-check-box">
-        <ion-label>other illnesses</ion-label>
-        <ion-checkbox ></ion-checkbox>
+        <ion-label>Health / Medication</ion-label>
+        <ion-checkbox formControlName="health"></ion-checkbox>
       </ion-item>
       <ion-item class="ion-textarea-custom">
         <ion-label>SPECIFY</ion-label>
-        <ion-textarea name="specify" value="Enter somethings"></ion-textarea>
+        <ion-textarea name="specifyHealth" formControlName="specifyHealth"></ion-textarea>
       </ion-item>
     </ion-list>
-  </div>
+    <div class="check-list-custom">
+      <h1 class="check-list-headline">
+        Health Checklist:
+      </h1>
+      <p class="check-list-description">
+        Please check any that apply or have applied in the past.
+      </p>
+      <ion-list>
+        <ion-item class="ion-check-box" *ngFor="let item of healthChecklist">
+          <ion-label>{{item.label}}</ion-label>
+          <ion-checkbox (ionChange)="healthCheck(item.id)" formControlName="temp"></ion-checkbox>
+        </ion-item>
+        <ion-item class="ion-textarea-custom">
+          <ion-label>SPECIFY</ion-label>
+          <ion-textarea name="specifyHealthChecklist" formControlName="specifyHealthChecklist"></ion-textarea>
+        </ion-item>
+      </ion-list>
+    </div>
+  </form>
 </ion-content>
 <ion-footer>
   <ion-toolbar>
-    <ion-title class="sub-title">Continue</ion-title>
+    <ion-title class="sub-title" (click)="register(registerForm.value)">Continue</ion-title>
   </ion-toolbar>
 </ion-footer>

@@ -15,11 +15,16 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class DlsclaimerPage {
 
+  model: any;
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.model = navParams.get("model");
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad DlsclaimerPage');
   }
 
+  register(){
+
+  }
 }

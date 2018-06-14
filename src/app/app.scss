@@ -122,3 +122,16 @@ ion-footer {
 .p-small {
   font-size: 13px;
 }
+
+.error-text{
+  color: red;
+}
+
+.required:after {
+  content: "*";
+  color: red;
+  margin-left: 3px;
+  font-size: 15px;
+  height: 15px;
+  display: inline-block;
+}

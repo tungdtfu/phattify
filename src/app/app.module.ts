@@ -5,70 +5,77 @@ import { HttpClientModule } from '@angular/common/http';
 import { MyApp } from './app.component';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { ApiProvider } from '../providers/api/api';
-import {AddInformationPageModule} from "../pages/add-information/add-information.module";
-import {DlsclaimerPageModule} from "../pages/dlsclaimer/dlsclaimer.module";
-import {SignInPageModule} from "../pages/sign-in/sign-in.module";
-import {ClientPage} from "../pages/client/client";
-import {ContactMentorPage} from "../pages/contact-mentor/contact-mentor";
-import {FoodPlanPage} from "../pages/foodplan/foodplan";
-import {SettingPage} from "../pages/setting/setting";
-import {CalendarPage} from "../pages/calendar/calendar";
-import {TabsPage} from "../pages/tabs/tabs";
-import { LoginPage} from "../pages/login/login";
 import { LoadingProvider } from '../providers/loading/loading';
 import { UserProvider } from '../providers/user/user';
+import { AddInformationPage } from '../pages/add-information/add-information';
+import { SignInPage } from '../pages/sign-in/sign-in';
+import { CalendarPage } from '../pages/calendar/calendar';
+import { ClientPage } from '../pages/client/client';
+import { ContactMentorPage } from '../pages/contact-mentor/contact-mentor';
+import { DlsclaimerPage } from '../pages/dlsclaimer/dlsclaimer';
+import { FoodplanPage } from '../pages/foodplan/foodplan';
+import { SettingPage } from '../pages/setting/setting';
+import { TabsPage } from '../pages/tabs/tabs';
+import { SignInPageModule } from '../pages/sign-in/sign-in.module';
+import { RegisterPage } from '../pages/register/register';
+import { RegisterPageModule } from '../pages/register/register.module';
+import { Camera } from '@ionic-native/camera';
 import {RoundProgressModule} from 'angular-svg-round-progressbar';
+import { ImageProvider } from '../providers/image/image';
 import { ChartModule } from 'angular2-highcharts';
 declare var require : any;
-// export function isNotIos(plt) {
-    // shortcut function to be reused internally
-    // checks navigator.platform to see if it's an actual iOS device
-    // this does not use the user-agent string because it is often spoofed
-    // an actual iPad will return true, a chrome dev tools iPad will return false
 
-    @NgModule({
-        declarations: [
-            MyApp,
-            ClientPage,
-            ContactMentorPage,
-            CalendarPage,
-            FoodPlanPage,
-            SettingPage,
-            TabsPage,
-            LoginPage,
-        ],
-        imports: [
-            BrowserModule,
-            HttpClientModule,
-            IonicModule.forRoot(MyApp),
-            ChartModule.forRoot(require('highcharts')),
-            DlsclaimerPageModule,
-            SignInPageModule,
-            AddInformationPageModule,
-            RoundProgressModule
+import { IonicStorageModule } from '@ionic/storage';
+import { CommonProvider } from '../providers/common/common';
+import { AuthProvider } from '../providers/auth/auth';
 
-        ],
-        bootstrap: [IonicApp],
-        entryComponents: [
-            MyApp,
-            ClientPage,
-            ContactMentorPage,
-            CalendarPage,
-            FoodPlanPage,
-            SettingPage,
-            TabsPage,
-            LoginPage,
-        ],
-        providers: [
-            StatusBar,
-            SplashScreen,
-            {provide: ErrorHandler, useClass: IonicErrorHandler},
-            LoadingProvider,
-            UserProvider,
-            ApiProvider
-        ]
-    })
-    export class AppModule {
-    }
-// }
+@NgModule({
+  declarations: [
+    MyApp,
+    AddInformationPage,
+    CalendarPage,
+    ClientPage,
+    ContactMentorPage,
+    DlsclaimerPage,
+    FoodplanPage,
+    SettingPage,
+    TabsPage,
+    
+  ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    RegisterPageModule,
+    SignInPageModule,
+    RoundProgressModule,
+    ChartModule.forRoot(require('highcharts')),
+    IonicModule.forRoot(MyApp),
+    //IonicStorageModule.forRoot()
+  ],
+  bootstrap: [IonicApp],
+  entryComponents: [
+    MyApp,
+    AddInformationPage,
+    CalendarPage,
+    ClientPage,
+    ContactMentorPage,
+    DlsclaimerPage,
+    FoodplanPage,
+    SettingPage,
+    TabsPage,
+    
+  ],
+  providers: [
+    StatusBar,
+    SplashScreen,
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    LoadingProvider,
+    UserProvider,
+    UserProvider,
+    CommonProvider,
+    AuthProvider,
+    Camera,
+    ImageProvider 
+  ]
+})
+export class AppModule {}

@@ -1,15 +1,16 @@
 page-foodplan {
-  .foot-plan {
-    font-weight: 400;
-    color: $c-grey-p;
-    background-color: $c-light-sky;
-    h4 {
-      font-size: 20px;
-      font-weight: 300;
-    }
-    p, h6, ul, li {
-      font-size: 10px;
-      letter-spacing: 0.8px;
+    .foot-plan {
+      font-weight: 400;
+      color: $c-grey-p;
+      background-color: $c-light-sky;
+      h4 {
+        font-size: 20px;
+        font-weight: 300;
+      }
+      p, h6, ul, li {
+        font-size: 10px;
+        letter-spacing: 0.8px;
+      }
     }
   }
-}
+  

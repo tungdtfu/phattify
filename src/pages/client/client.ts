@@ -7,6 +7,22 @@ import {NavController} from 'ionic-angular';
 })
 export class ClientPage {
     options: Object;
+    current: number = 27;
+  max: number = 50;
+  stroke: number = 15;
+  radius: number = 125;
+  semicircle: boolean = false;
+  rounded: boolean = false;
+  responsive: boolean = false;
+  clockwise: boolean = true;
+  color: string = '#45ccce';
+  background: string = '#eaeaea';
+  duration: number = 800;
+  animation: string = 'easeOutCubic';
+  animationDelay: number = 0;
+  animations: string[] = [];
+  gradient: boolean = false;
+  realCurrent: number = 0;
 
     constructor(public navCtrl: NavController) {
 
@@ -103,14 +119,11 @@ export class ClientPage {
 
     }
 
-    current = 2;
-    max = 100;
-
     ngOnInit() {
         setInterval(() => {
             this.current = this.current + 1
         }, 1000);
     }
 
-
+   
 }

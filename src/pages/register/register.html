@@ -1,0 +1,48 @@
+<!--
+  Generated template for the RegisterPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-content>
+  <ion-card>
+      <ion-img width="108" height="108" src="../../assets/imgs/login-mage.png"></ion-img>
+  </ion-card>
+  <div class="content-login login-complete"> <!--login-complete when user login succes-->
+      <div class="content-process">
+          <ion-list>
+              <ion-item>
+                  <div  class="process-col" [ngClass]="{'process-col-active':currentUser}"></div><!--class "process-col-active" to green for process col-->
+                  <button ion-button (click)="addInformation()">Create Profile</button>
+                  <div  class="sub-content" *ngIf="currentUser" >
+                      <p class="sub-title">Tap an icon to start taking your picture</p>
+                      <div class="take-photo">
+                          <div class="photo-description" (click)="showRadio('profile')">
+                              <span class="photo-icon">
+                                  <img [src]="listImage.profile" />
+                              </span>
+                              <p class="sub-title">Profile</p>
+                          </div>
+                          <div class="photo-description" (click)="showRadio('front')">
+                              <span class="photo-icon">
+                                <img [src]="listImage.front" />
+                              </span>
+                              <p class="sub-title">Front</p>
+                          </div>
+                          <div class="photo-description" (click)="showRadio('side')" >
+                              <span class="photo-icon">
+                                <img [src]="listImage.side" />
+                              </span>
+                              <p class="sub-title">Side</p>
+                          </div>
+                      </div>
+                  </div>
+              </ion-item>
+              <ion-item>
+                  <div  class="process-col process-col-2 process-col-extra" ></div><!--class"process-col-extra" appear when class"poecess-col-active" in the first col active-->
+                  <button ion-button (click)="upImage()">Take profile picture</button>
+              </ion-item>              
+          </ion-list>
+      </div>
+  </div>  
+</ion-content>

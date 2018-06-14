@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LoadingController, AlertController,ToastController } from 'ionic-angular';
+import { LoadingController, AlertController, ToastController } from 'ionic-angular';
 /*
   Generated class for the LoadingProvider provider.
 
@@ -9,7 +9,7 @@ import { LoadingController, AlertController,ToastController } from 'ionic-angula
 @Injectable()
 export class LoadingProvider {
   loading: any;
-  constructor(public loadingCtrl: LoadingController,private _alertCtrl: AlertController,private toastCtrl: ToastController ) {
+  constructor(public loadingCtrl: LoadingController, private _alertCtrl: AlertController, private toastCtrl: ToastController) {
   }
   showLoading() {
     this.loading = this.loadingCtrl.create({
@@ -19,11 +19,11 @@ export class LoadingProvider {
   };
 
   hideLoading() {
-    if(this.loading){
+    if (this.loading) {
       this.loading.dismiss();
     }
   };
-  
+
   alert(title, message) {
     let alert = this._alertCtrl.create({
       title: title,
@@ -32,6 +32,7 @@ export class LoadingProvider {
     });
     alert.present();
   }
+  
   showToast(message) {
     let toast = this.toastCtrl.create({
       message: message,
