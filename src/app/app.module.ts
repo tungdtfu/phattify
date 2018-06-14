@@ -50,7 +50,7 @@ import { AuthProvider } from '../providers/auth/auth';
     RoundProgressModule,
     ChartModule.forRoot(require('highcharts')),
     IonicModule.forRoot(MyApp),
-    //IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
