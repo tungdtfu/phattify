@@ -38,4 +38,15 @@ export class ApiProvider {
       .map((res:any) => res.json());
   }
 
+
+  getListGroupChat(user_id, login_token) {
+    let data = {
+      user_id: user_id
+    }
+    let headers = new Headers({ 'Accept': 'application/json' });
+    //headers.append('login_token', login_token);
+    let url = API_Socket + 'get-list-group-of-user';
+    return this.http.post(url, data)
+      .map((res: any) => res.json());
+  }
 }

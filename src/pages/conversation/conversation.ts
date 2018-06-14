@@ -18,6 +18,16 @@ import { SocketProvider } from '../../providers/services/socket.service';
 })
 export class ConversationPage {
   @ViewChild('content') content: any;
+
+  /**
+   * HARD CODE BEGIN
+   */
+  fake_uuid = '61b8fa90-0fb0-11e8-8db9-9f21753dfc2d';
+  fake_loginToken = '160a14f2d30b5f936ffbc7fee8a3b7ca59b6308a';
+  fake_groupId = '05d01f6d-a28b-4706-92ff-dd007329c914';
+  /**
+   * HARD CODE END
+   */
   listConversation: any = [];
   user: any;
   typingMessage: boolean;
@@ -97,15 +107,16 @@ export class ConversationPage {
       this.showBoxShadow = true;
     }, 300);
 
-    // this.getListConversation(this.friend_ID);
+    this.getListConversation(this.friend_ID);
     this.socket = this.socketProvider.ConnectSocket();
+    this.socketProvider.JoinGroupChat(this.fake_groupId);
     this.socket.on('send_message_to_client', msg => {
-      console.log(msg);
+      console.log("new mess from other" + msg);
       // if (this.group_id && msg.group_id == this.group_id && this.navCtrl.getActive().name == 'ConversationPage') {
-        // if (this.user.id != msg.current_user.id) {
-          // this.apiProvider.readMessage(this.user.id, this.group_id);
-          this.addMessageTolist(msg);
-        // }
+      // if (this.user.id != msg.current_user.id) {
+      // this.apiProvider.readMessage(this.user.id, this.group_id);
+      this.addMessageTolist(msg);
+      // }
       // }
     });
   }
@@ -119,7 +130,13 @@ export class ConversationPage {
       friend_id = this.friend.id;
     }
     //this.loadingScreen.presentLoading();
-    this.apiProvider.getListConversation(this.user.id, this.group_id, friend_id, this.user.login_token).subscribe(
+    this.apiProvider.getListGroupChat(this.fake_uuid, this.fake_loginToken).subscribe(res => {
+      console.log(res);
+    }, err => {
+      console.log(err);
+    })
+
+    this.apiProvider.getListConversation(this.fake_uuid, this.fake_groupId, null, this.fake_loginToken).subscribe(
       res => {
         //this.loadingScreen.dismissLoading();
         if (res.status == SUCCESS_STATUS) {
@@ -170,8 +187,8 @@ export class ConversationPage {
     }
     //last_time_send_message : moment.utc().format('YYYY-MM-DD h:mm:ss a'),
     let dataMessage = {
-      group_id: this.group_id,
-      user_id : "1",
+      group_id: this.fake_groupId,
+      user_id: this.fake_uuid,
       // current_user: {
       //   id: this.user.id,
       //   avatar: this.user.avatar,
