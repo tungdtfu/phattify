@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
 import { MyApp } from './app.component';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -20,14 +21,25 @@ import { SignInPageModule } from '../pages/sign-in/sign-in.module';
 import { RegisterPage } from '../pages/register/register';
 import { RegisterPageModule } from '../pages/register/register.module';
 import { Camera } from '@ionic-native/camera';
-import {RoundProgressModule} from 'angular-svg-round-progressbar';
+import { RoundProgressModule } from 'angular-svg-round-progressbar';
 import { ImageProvider } from '../providers/image/image';
 import { ChartModule } from 'angular2-highcharts';
-declare var require : any;
+declare var require: any;
 
 import { IonicStorageModule } from '@ionic/storage';
 import { CommonProvider } from '../providers/common/common';
 import { AuthProvider } from '../providers/auth/auth';
+
+// Page
+import { ConversationPage } from '../../src/pages/conversation/conversation';
+
+// Component
+import { MessageComponent } from '../../src/components/message/message';
+import { InputChatComponent } from '../../src/components/input-chat/input-chat';
+
+// Provider
+import { ApiProvider } from '../../src/providers/api/api';
+import { SocketProvider } from '../../src/providers/services/socket.service';
 
 @NgModule({
   declarations: [
@@ -40,7 +52,10 @@ import { AuthProvider } from '../providers/auth/auth';
     FoodplanPage,
     SettingPage,
     TabsPage,
-    
+    ConversationPage,
+
+    MessageComponent,
+    InputChatComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +65,8 @@ import { AuthProvider } from '../providers/auth/auth';
     RoundProgressModule,
     ChartModule.forRoot(require('highcharts')),
     IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    HttpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -63,19 +79,24 @@ import { AuthProvider } from '../providers/auth/auth';
     FoodplanPage,
     SettingPage,
     TabsPage,
-    
+    ConversationPage,
+
+    MessageComponent,
+    InputChatComponent
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
     LoadingProvider,
     UserProvider,
     UserProvider,
     CommonProvider,
     AuthProvider,
     Camera,
-    ImageProvider 
+    ImageProvider,
+    ApiProvider,
+    SocketProvider
   ]
 })
-export class AppModule {}
+export class AppModule { }

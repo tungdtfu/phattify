@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
+import 'rxjs/add/operator/map';
+import { API_Socket } from "../../constants/config";
 /*
   Generated class for the ApiProvider provider.
 
@@ -12,6 +13,29 @@ export class ApiProvider {
 
   constructor(public http: HttpClient) {
     console.log('Hello ApiProvider Provider');
+  }
+
+  getListConversation(user_id, group_id, friend_id, login_token) {
+    if (!group_id) {
+      group_id = '';
+    }
+    let data = {
+      user_id: user_id,
+      group_id: group_id,
+      friend_id: friend_id
+    };
+
+    // if (group_id) {
+    //   data.group_id = group_id;
+    // }
+    // else {
+    //   data.friend_id = friend_id;
+    // }
+    let headers = new Headers({ 'Accept': 'application/json' });
+    //headers.append('login_token', login_token);
+    let url = API_Socket + 'get-info-group';
+    return this.http.post(url, data)
+      .map((res:any) => res.json());
   }
 
 }

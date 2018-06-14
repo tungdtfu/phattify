@@ -1,0 +1,133 @@
+message-component {
+  .conversation-avatar{
+    position: absolute;
+    top: 0;
+    img{
+      border-radius: 50%;
+      overflow: hidden;
+      width: 30px;
+      height: 30px;
+      display: block;
+      object-fit: cover;
+    }
+    .badge{
+      top: -5px;
+      position: absolute;
+    }
+  }
+  .conversation-message{
+    border-radius: 10px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.08);
+    padding: 15px 10px;
+    color: rgb(73, 73, 73);
+    display: inline-block;
+    word-break: break-word;
+    word-wrap: break-word;
+  }
+  .conversation-send-profile{
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.08);
+    display: inline-block;
+    overflow: hidden;
+    background-color: red;
+    min-width: 200px;
+    position: relative;
+    .bg-green{
+      height: 50px;
+    }
+    p{
+      font-size: 16px;
+      color: black;
+    }
+    .profile{
+      text-align: center;
+      .avatar{
+        position: absolute;
+        top: -3px;
+        left: 50%;
+        width: 100%;
+        padding: 10px;
+        transform: translateX(-50%);
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        .user-name{
+          // color: $white;
+          font-size: 14px;
+          font-weight: normal;
+        }
+        img{
+          width: 50px;
+          height: 50px;
+          object-fit: cover;
+          border-radius: 50%;
+        }
+      }
+    }
+    .infor{
+      padding: 30px 10px 10px 10px;
+      justify-content: center;
+      align-items: center;
+      flex: 1;
+    }
+  }
+  .conversation-time{
+    padding: 5px;
+    p{
+      color: rgb(182, 182, 182);
+      line-height: 1.25;
+      font-size: 14px;
+    }
+  }
+  .person-1{
+    padding-left: 40px;
+    position: relative;
+    flex-direction: column;
+    justify-content: left;
+    .conversation-row{
+      justify-content: flex-start;
+      margin-bottom: 5px;
+    }
+    .conversation-avatar{
+      left: 0;
+      .badge{
+        left: 18px;
+      }
+    }
+    .conversation-time{
+        justify-content: flex-start;
+      p{
+        text-align: left;
+      }
+    }
+  }
+  .person-2{
+    padding-right: 40px;
+    position: relative;
+    text-align: right;
+    justify-content: flex-end;
+    flex-direction: column;
+    .conversation-row{
+      justify-content: flex-end;
+      margin-bottom: 5px;
+    }
+    .conversation-avatar{
+      right: 0;
+      .badge{
+        right: 18px;
+      }
+    }
+    .conversation-message{
+      background-color: #f6f6f6;
+      text-align: left;
+    }
+    .conversation-time{
+        justify-content: flex-end;
+      p{
+        text-align: right;
+      }
+    }
+  }
+
+}
