@@ -36,9 +36,8 @@ export class UserProvider {
         let token = res['token'];
         var user = this.jwtHelper.decodeToken(token);
         this.storage.set(StorageKey.userDetails, user)
-        this.storage.set(StorageKey.loginToken, token).then(() => {
-          observer.next(status);
-        });
+        localStorage.setItem(StorageKey.loginToken, token);
+        observer.next(status);
       }, err => {
         observer.error(err);
       });
@@ -54,12 +53,8 @@ export class UserProvider {
           observer.next(status);
           return;
         }
-        let token = res['token'];
-        var user = this.jwtHelper.decodeToken(token);
-        this.storage.set(StorageKey.userDetails, user)
-        this.storage.set(StorageKey.loginToken, token).then(() => {
-          observer.next(status);
-        });
+        localStorage.setItem(StorageKey.loginToken, res['token']);
+        observer.next(status);
       }, err => {
         observer.error(err);
       });
@@ -69,5 +64,30 @@ export class UserProvider {
 
   getCurrentUserDetails() {
     return this.storage.get(StorageKey.loginToken);
+  }
+
+  refreshToken() {
+    let url = SERVER_URL + 'refreshtoken';
+    let token = localStorage.getItem(StorageKey.loginToken);
+    if(!token){
+      return Observable.create(observer => {
+        observer.error();
+      })
+    }
+    let authdata = 'Bearer ' + token;
+    return Observable.create(observer => {
+      this.http.get(url, { headers: { 'Authorization': authdata } }).subscribe(res => {
+        let status = res['status'];
+        if (status === ResponseStatus.error) {
+          localStorage.clear();
+          observer.next(status);
+          return;
+        }
+        localStorage.setItem(StorageKey.loginToken, res['token']);
+        observer.next(status);
+      }, err => {
+        observer.error(err);
+      });
+    });
   }
 }
