@@ -52,7 +52,7 @@ this.storage.clear();
         this.error = true;
         return;
       }
-      this.navCtrl.setRoot(CalendarPage);
+      this.navCtrl.setRoot(ClientPage);
     }, err => {
       this.loading.hideLoading();
       this.error = true;

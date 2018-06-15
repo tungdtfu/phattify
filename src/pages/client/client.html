@@ -5,14 +5,13 @@
     </ion-title>
   </ion-navbar>
 </ion-header>
-
 <ion-content>
   <div class="circle-progress">
-    <div class="circle-progress-detail circle-progress-left">
+    <div class="circle-progress-detail circle-progress-left" *ngIf="chartWeight.start.weight">
       <p class="p-large">Start</p>
-      <p class="p-small">130kg</p>
-      <p class="p-small">BMI: 42.6</p>
-      <p class="p-small">Aug 23, 2018</p>
+      <p class="p-small">{{chartWeight.start.weight}}kg</p>
+      <p class="p-small">BMI: {{chartWeight.start.bmi}}</p>
+      <p class="p-small">{{chartWeight.start.date}}</p>
     </div>
     <div class="circle-progress-detail circle-progress-center">
       <div class="circle-progress-current">
@@ -26,8 +25,8 @@
         </div>
       </div>
       <round-progress
-              [current]="current"
-              [max]="max"
+              [current]="chartWeight.round.current"
+              [max]="chartWeight.round.max"
               [color]="'#2699fb'"
               [background]="'8bff8f'"
               [stroke]="20"
@@ -40,11 +39,11 @@
               [animationDelay]="0">
       </round-progress>
     </div>
-    <div class="circle-progress-detail circle-progress-right">
+    <div class="circle-progress-detail circle-progress-right" *ngIf="chartWeight.target.weight">
       <p class="p-large">Target</p>
-      <p class="p-small">96kg</p>
-      <p class="p-small">Complete</p>
-      <p class="p-small">Dec 23, 2018</p>
+      <p class="p-small">{{chartWeight.target.weight}}kg</p>
+      <p class="p-small">{{chartWeight.target.status}}</p>
+      <p class="p-small">{{chartWeight.target.date}}</p>
     </div>
   </div>
   <div class="lost-weight-progress">

@@ -7,25 +7,44 @@ import {NavController} from 'ionic-angular';
 })
 export class ClientPage {
     options: Object;
-    current: number = 27;
-  max: number = 50;
-  stroke: number = 15;
-  radius: number = 125;
-  semicircle: boolean = false;
-  rounded: boolean = false;
-  responsive: boolean = false;
-  clockwise: boolean = true;
-  color: string = '#45ccce';
-  background: string = '#eaeaea';
-  duration: number = 800;
-  animation: string = 'easeOutCubic';
-  animationDelay: number = 0;
-  animations: string[] = [];
-  gradient: boolean = false;
-  realCurrent: number = 0;
+    stroke: number = 15;
+    radius: number = 125;
+    semicircle: boolean = false;
+    rounded: boolean = false;
+    responsive: boolean = false;
+    clockwise: boolean = true;
+    color: string = '#45ccce';
+    background: string = '#eaeaea';
+    duration: number = 800;
+    animation: string = 'easeOutCubic';
+    animationDelay: number = 0;
+    animations: string[] = [];
+    gradient: boolean = false;
+    realCurrent: number = 0;
+
+    chartWeight: any = {
+        start: {},
+        target: {},
+        round: {}
+    };
 
     constructor(public navCtrl: NavController) {
-
+        this.chartWeight = {
+            start: {
+                weight: 128,
+                bmi: 42.6,
+                date: 'Aug 23, 2018'
+            },
+            target: {
+                weight: 96,
+                status: 'Complete',
+                date: 'Dec 23, 2018'
+            },
+            round: {
+                current: 27,
+                max: 50
+            }
+        }
     }
 
     ngAfterViewInit(): void {
@@ -121,7 +140,7 @@ export class ClientPage {
 
     ngOnInit() {
         setInterval(() => {
-            this.current = this.current + 1
+            this.chartWeight.round.current = this.chartWeight.round.current + 1
         }, 1000);
     }
 
