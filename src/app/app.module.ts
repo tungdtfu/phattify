@@ -26,6 +26,7 @@ import { ChartModule } from 'angular2-highcharts';
 declare var require : any;
 
 import { IonicStorageModule } from '@ionic/storage';
+import { Base64 } from "@ionic-native/base64";
 import { CommonProvider } from '../providers/common/common';
 import { AuthProvider } from '../providers/auth/auth';
 
@@ -75,6 +76,7 @@ import { AuthProvider } from '../providers/auth/auth';
     CommonProvider,
     AuthProvider,
     Camera,
+    Base64,
     ImageProvider 
   ]
 })

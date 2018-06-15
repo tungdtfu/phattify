@@ -18,11 +18,10 @@ export class ImageProvider {
 
   upLoadImage(listImage) {
     let url = SERVER_URL + 'uploadimages';
-    let headers = new HttpHeaders();
-    headers.append('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyMUI2OTQwMi03RTlDLTRCQTMtOTlBOC02RDg0QTk2RkE4NjYiLCJleHBpcmVzSW4iOjg2NDAwLCJpYXQiOjE1Mjg5NjQxNjAsImV4cCI6MTUyOTA1MDU2MCwiYXVkIjoiaHR0cHM6Ly9waGF0dGlmeW1vYmlsZXNlcnZpY2UuYXp1cmV3ZWJzaXRlcy5uZXQvIiwiaXNzIjoiaHR0cHM6Ly9waGF0dGlmeW1vYmlsZXNlcnZpY2UuYXp1cmV3ZWJzaXRlcy5uZXQvIn0.KzhE4nSLPmd7Zs4xthICG05MkQT-hh-Y78acxaYRhSg');
+    let headers = new HttpHeaders({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyMUI2OTQwMi03RTlDLTRCQTMtOTlBOC02RDg0QTk2RkE4NjYiLCJleHBpcmVzSW4iOjg2NDAwLCJpYXQiOjE1Mjg5NzI2MjgsImV4cCI6MTUyOTA1OTAyOCwiYXVkIjoiaHR0cHM6Ly9waGF0dGlmeW1vYmlsZXNlcnZpY2UuYXp1cmV3ZWJzaXRlcy5uZXQvIiwiaXNzIjoiaHR0cHM6Ly9waGF0dGlmeW1vYmlsZXNlcnZpY2UuYXp1cmV3ZWJzaXRlcy5uZXQvIn0.IPEAcqem5pJ8R52fnzRan2x_yLQwDHFEzCYDg1lHpvE'});
     const formData = new FormData();
     listImage.map(img => {
-      formData.append('fileUpload', img, img.name);
+      formData.append('fileUpload', img.img, img.name);
     })
 
     return Observable.create(observer => {

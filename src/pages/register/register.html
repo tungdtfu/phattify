@@ -19,19 +19,19 @@
                       <div class="take-photo">
                           <div class="photo-description" (click)="showRadio('profile')">
                               <span class="photo-icon">
-                                  <img [src]="listImage.profile" />
+                                  <img src="{{listImage.profile}}" />
                               </span>
                               <p class="sub-title">Profile</p>
                           </div>
                           <div class="photo-description" (click)="showRadio('front')">
                               <span class="photo-icon">
-                                <img [src]="listImage.front" />
+                                <img src="{{listImage.front}}" />
                               </span>
                               <p class="sub-title">Front</p>
                           </div>
                           <div class="photo-description" (click)="showRadio('side')" >
                               <span class="photo-icon">
-                                <img [src]="listImage.side" />
+                                <img src="{{listImage.side}}" />
                               </span>
                               <p class="sub-title">Side</p>
                           </div>
@@ -39,8 +39,13 @@
                   </div>
               </ion-item>
               <ion-item>
+<<<<<<< HEAD
                   <div  class="process-col process-col-2 process-col-extra" ></div><!--class"process-col-extra" appear when class"poecess-col-active" in the first col active-->
                   <button ion-button (click)="upImage()" [disabled]="!currentUser">Take profile picture</button>
+=======
+                  <div class="process-col process-col-2 process-col-extra" ></div><!--class"process-col-extra" appear when class"poecess-col-active" in the first col active-->
+                  <button ion-button [disabled]="disabledTakeProfile()" (click)="upImage()">Take profile picture</button>
+>>>>>>> 89ce08efbf8eae41a6f6f6b8c4171850e9ca6d5a
               </ion-item>              
           </ion-list>
       </div>
