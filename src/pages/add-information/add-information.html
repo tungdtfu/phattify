@@ -90,7 +90,7 @@
         <ion-label>Health / Medication</ion-label>
         <ion-checkbox formControlName="health"></ion-checkbox>
       </ion-item>
-      <ion-item class="ion-textarea-custom">
+      <ion-item class="ion-textarea-custom" *ngIf="registerForm.value.health">
         <ion-label>SPECIFY</ion-label>
         <ion-textarea name="specifyHealth" formControlName="specifyHealth"></ion-textarea>
       </ion-item>
@@ -104,10 +104,14 @@
       </p>
       <ion-list>
         <ion-item class="ion-check-box" *ngFor="let item of healthChecklist">
-          <ion-label>{{item.label}}</ion-label>
-          <ion-checkbox (ionChange)="healthCheck(item.id)" formControlName="temp"></ion-checkbox>
+          <ion-label>{{item.Name}}</ion-label>
+          <ion-checkbox (ionChange)="healthCheck(item.Id)" formControlName="temp"></ion-checkbox>
         </ion-item>
-        <ion-item class="ion-textarea-custom">
+        <ion-item class="ion-check-box">
+          <ion-label>Other illnesses</ion-label>
+          <ion-checkbox (ionChange)="healthCheck(0)" formControlName="temp"></ion-checkbox>
+        </ion-item>
+        <ion-item class="ion-textarea-custom" *ngIf="displaySpecifyHealthChecklist">
           <ion-label>SPECIFY</ion-label>
           <ion-textarea name="specifyHealthChecklist" formControlName="specifyHealthChecklist"></ion-textarea>
         </ion-item>

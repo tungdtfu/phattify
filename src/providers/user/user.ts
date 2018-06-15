@@ -34,13 +34,13 @@ export class UserProvider {
           return;
         }
         let token = res['token'];
+        var user = this.jwtHelper.decodeToken(token);
+        this.storage.set(StorageKey.userDetails, user)
         this.storage.set(StorageKey.loginToken, token).then(() => {
-          var user = this.jwtHelper.decodeToken(token);
-          debugger
           observer.next(status);
         });
       }, err => {
-        observer.error(ResponseStatus.error);
+        observer.error(err);
       });
     });
   }
@@ -61,10 +61,11 @@ export class UserProvider {
           observer.next(status);
         });
       }, err => {
-        observer.error(ResponseStatus.error);
+        observer.error(err);
       });
     });
   }
+
 
   getCurrentUserDetails() {
     return this.storage.get(StorageKey.loginToken);

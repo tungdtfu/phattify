@@ -19,4 +19,9 @@ export class CommonProvider {
     return this.http.get(url);
   }
 
+  getHealthChecklist() {
+    let url = SERVER_URL + 'health';
+    return this.http.get(url);
+  }
+
 }

@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, DateTime } from 'ionic-angular';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { DlsclaimerPage } from '../dlsclaimer/dlsclaimer';
 import { CommonProvider } from '../../providers/common/common';
 import { ResponseStatus } from '../../constants/response-status.constain';
+import { Observable } from 'rxjs';
+import { LoadingProvider } from '../../providers/loading/loading';
 
 /**
  * Generated class for the AddInformationPage page.
@@ -20,6 +22,9 @@ import { ResponseStatus } from '../../constants/response-status.constain';
 export class AddInformationPage {
   registerForm: any;
   countries: any = [];
+  healthChecklist: any = [];
+  selectedHealthChecklist = [];
+  displaySpecifyHealthChecklist: boolean = false;
 
   weightUnits: any = [
     'Kilograms', 'Grams'
@@ -29,38 +34,6 @@ export class AddInformationPage {
     'Centimetres', 'Metres'
   ];
 
-  healthChecklist = [
-    {
-      id: 1,
-      label: 'Stroke'
-    },
-    {
-      id: 2,
-      label: 'Heart Condition'
-    },
-    {
-      id: 3,
-      label: 'Hypertension'
-    },
-    {
-      id: 4,
-      label: 'Diabetes'
-    },
-    {
-      id: 5,
-      label: 'Pregnant'
-    },
-    {
-      id: 6,
-      label: 'Breastfeeding'
-    },
-    {
-      id: 7,
-      label: 'Other illnesses'
-    }
-  ];
-  selectedHealthChecklist = [];
-  
   ionViewDidLoad() {
     this.registerForm.patchValue({
       weightUnit: this.weightUnits[0],
@@ -69,13 +42,19 @@ export class AddInformationPage {
     this.bindFormData();
   }
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private commonProvider: CommonProvider) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private formBuilder: FormBuilder,
+    private commonProvider: CommonProvider,
+    private loading: LoadingProvider
+  ) {
     this.registerForm = this.formBuilder.group({
       firstname: ['', Validators.required],
       surname: ['', Validators.required],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required],
-      dateOfBirth: ['', Validators.required],
+      dateOfBirth: [Date.now(), Validators.required],
       country: ['', Validators.required],
       city: ['', Validators.required],
       email: ['', Validators.required],
@@ -85,8 +64,8 @@ export class AddInformationPage {
       height: ['', Validators.required],
       heightUnit: ['', Validators.required],
       health: [false, Validators.required],
-      specifyHealth: ['', Validators.required],
-      specifyHealthChecklist: ['', Validators.required],
+      specifyHealth: [''],
+      specifyHealthChecklist: [''],
       temp: [false, Validators.required]
     }, {
         validator: [
@@ -112,9 +91,18 @@ export class AddInformationPage {
   healthCheck(id) {
     let index = this.selectedHealthChecklist.findIndex(i => i === id);
     if (index > -1) {
-      this.selectedHealthChecklist = this.selectedHealthChecklist.splice(index, 1);
+      this.selectedHealthChecklist = this.selectedHealthChecklist.splice(index-1, 1);
+      if (id == 0) {
+        this.displaySpecifyHealthChecklist = false;
+        this.registerForm.patchValue({
+          specifyHealthChecklist: ''
+        });
+      }
     } else {
       this.selectedHealthChecklist.push(id);
+      if (id == 0) {
+        this.displaySpecifyHealthChecklist = true;
+      }
     }
   }
 
@@ -145,7 +133,7 @@ export class AddInformationPage {
       weight: form.weight,
       height: form.height,
       UnitOfWeight: form.weightUnit,
-      UnitOfHeight : form.heightUnit,
+      UnitOfHeight: form.heightUnit,
       healthMedication: form.specifyHealth,
       "healthId": "4E56B8B2-FA06-4981-99BE-135866B92983",
       otherIllnesses: form.specifyHealthChecklist,
@@ -155,20 +143,27 @@ export class AddInformationPage {
   }
 
   bindFormData() {
-    this.getCountries();
-  }
+    let countriesObs = this.commonProvider.getCountries();
+    let healthChecklistObs = this.commonProvider.getHealthChecklist();
+    this.loading.showLoading();
+    Observable.zip(countriesObs, healthChecklistObs).subscribe(res => {
+      this.loading.hideLoading();
+      let countriesRes = res[0];
+      let healthChecklistRes = res[1];
+      if (countriesRes['status'] === ResponseStatus.success) {
+        this.countries = countriesRes['data'];
+        if (this.countries.length) {
+          this.registerForm.patchValue({
+            country: this.countries[0].Id
+          });
+        }
+      }
 
-  getCountries() {
-    this.commonProvider.getCountries().subscribe(res => {
-      if (res['status'] === ResponseStatus.error) {
-        return;
+      if (healthChecklistRes['status'] === ResponseStatus.success) {
+        this.healthChecklist = healthChecklistRes['data'];
       }
-      this.countries = res['data'];
-      if (this.countries.length) {
-        this.registerForm.patchValue({
-          country: this.countries[0].Id
-        });
-      }
-    })
+    }, err => {
+      this.loading.hideLoading();
+    });
   }
 }
