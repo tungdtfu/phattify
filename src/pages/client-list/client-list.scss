@@ -1,0 +1,114 @@
+page-client-list {
+  ion-content.content {
+    background-color: #E8FCFF!important;
+  }
+  .scroll-content {
+    background-color: #E8FCFF;
+    ion-list.list {
+      padding: 0 8px;
+    }
+  }
+  .clients-list-header {
+    position: relative;
+    ion-icon {
+      position: absolute;
+      top: 50%;
+      right: 25px;
+      background-color: #ffffff;
+      transform: translateY(-50%);
+      font-size: 20px;
+      color: #2699FB;
+    }
+  }
+  ion-item.item.item-block  {
+    margin-bottom: 4px;
+    border: 0!important;
+    border-radius: 3px;
+    &.bg-green {
+      background-color: #BFEFC6;
+    }
+    &.bg-red {
+      background-color: #EFBFBF;
+    }
+    &.bg-yellow {
+      background-color: #EFEBBF;
+    }
+    .item-inner {
+      border: 0;
+    }
+    ion-avatar {
+      img {
+        width: 60px;
+        height: 60px;
+      }
+    }
+  }
+  .client-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: #000000;
+  }
+  .client-info {
+    display: inline-block;
+    font-size: 12px;
+    color: #000000;
+    &.client-info-current {
+      padding-right: 5px;
+      border-right: 1px solid #000000;
+    }
+  }
+  ion-searchbar.searchbar {
+    padding: 0 8px 8px 8px;
+    background: transparent;
+    border: 0;
+    .searchbar-input-container {
+      input {
+        height: 48px;
+        box-shadow: none;
+        border: 1px solid #E8FCFF;
+        &::placeholder {
+          color: #BCE0FD;
+          font-size: 14px;
+        }
+      }
+      .searchbar-search-icon {
+        display: none;
+      }
+    }
+  }
+  .client-option {
+    width: 100%;
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: #E8FCFF;
+    .client-col {
+      flex: 1;
+      text-align: center;
+      span {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        position: relative;
+        background: #5B97DC;
+        border-radius: 50%;
+        &.client-swap {
+          transform: rotate(90deg);
+        }
+        ion-icon {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate3d(-50%, -50%, 0);
+          font-size: 25px;
+          color: #ffffff;
+
+        }
+      }
+    }
+  }
+}
