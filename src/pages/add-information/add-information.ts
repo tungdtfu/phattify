@@ -59,8 +59,15 @@ export class AddInformationPage {
       label: 'Other illnesses'
     }
   ];
-
   selectedHealthChecklist = [];
+  
+  ionViewDidLoad() {
+    this.registerForm.patchValue({
+      weightUnit: this.weightUnits[0],
+      heightUnit: this.heightUnits[0]
+    });
+    this.bindFormData();
+  }
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private commonProvider: CommonProvider) {
     this.registerForm = this.formBuilder.group({
@@ -72,7 +79,7 @@ export class AddInformationPage {
       country: ['', Validators.required],
       city: ['', Validators.required],
       email: ['', Validators.required],
-      contractNumber: ['', Validators.required],
+      contactNumber: ['', Validators.required],
       weight: ['', Validators.required],
       weightUnit: ['', Validators.required],
       height: ['', Validators.required],
@@ -111,20 +118,39 @@ export class AddInformationPage {
     }
   }
 
-  ionViewDidLoad() {
-    this.registerForm.patchValue({
-      weightUnit: this.weightUnits[0],
-      heightUnit: this.heightUnits[0]
+  markFormGroupTouched(formGroup: FormGroup) {
+    return (<any>Object).values(formGroup.controls).forEach(control => {
+      control.markAsTouched();
+
+      if (control.controls) {
+        control.controls.forEach(c => this.markFormGroupTouched(c));
+      }
     });
-    this.bindFormData();
   }
 
   register(form) {
     if (!this.registerForm.valid) {
+      this.markFormGroupTouched(this.registerForm);
       return;
     }
-    var model = form;
-    form.selectedHealthChecklist = this.selectedHealthChecklist;
+    var model = {
+      firstName: form.firstname,
+      surName: form.surname,
+      email: form.email,
+      password: form.password,
+      dateOfBirth: form.dateOfBirth,
+      country: form.country,
+      city: form.city,
+      contactNumber: form.contactNumber,
+      weight: form.weight,
+      height: form.height,
+      UnitOfWeight: form.weightUnit,
+      UnitOfHeight : form.heightUnit,
+      healthMedication: form.specifyHealth,
+      "healthId": "4E56B8B2-FA06-4981-99BE-135866B92983",
+      otherIllnesses: form.specifyHealthChecklist,
+      selectedHealthChecklist: this.selectedHealthChecklist
+    }
     this.navCtrl.push(DlsclaimerPage, { model: model });
   }
 

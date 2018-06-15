@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { UserProvider } from '../../providers/user/user';
 
 /**
  * Generated class for the DlsclaimerPage page.
@@ -17,14 +18,16 @@ export class DlsclaimerPage {
 
   model: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private userProvider: UserProvider) {
     this.model = navParams.get("model");
   }
 
   ionViewDidLoad() {
   }
 
-  register(){
-
+  register() {
+    this.userProvider.register(this.model).subscribe(res => {
+      debugger
+    })
   }
 }

@@ -16,8 +16,10 @@ import { JwtHelper } from 'angular2-jwt';
 @Injectable()
 export class UserProvider {
   jwtHelper = new JwtHelper();
+
   constructor(public http: HttpClient, private storage: Storage) {
   }
+
   login(email, password) {
     let url = SERVER_URL + 'login';
     let params = {
@@ -33,8 +35,29 @@ export class UserProvider {
         }
         let token = res['token'];
         this.storage.set(StorageKey.loginToken, token).then(() => {
-          var user = this.jwtHelper.decodeToken(token).username;
+          var user = this.jwtHelper.decodeToken(token);
           debugger
+          observer.next(status);
+        });
+      }, err => {
+        observer.error(ResponseStatus.error);
+      });
+    });
+  }
+
+  register(model) {
+    let url = SERVER_URL + 'register';
+    return Observable.create(observer => {
+      this.http.post(url, model).subscribe(res => {
+        let status = res['status'];
+        if (status === ResponseStatus.error) {
+          observer.next(status);
+          return;
+        }
+        let token = res['token'];
+        var user = this.jwtHelper.decodeToken(token);
+        this.storage.set(StorageKey.userDetails, user)
+        this.storage.set(StorageKey.loginToken, token).then(() => {
           observer.next(status);
         });
       }, err => {

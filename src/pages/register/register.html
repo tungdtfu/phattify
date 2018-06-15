@@ -14,7 +14,7 @@
               <ion-item>
                   <div  class="process-col" [ngClass]="{'process-col-active':currentUser}"></div><!--class "process-col-active" to green for process col-->
                   <button ion-button (click)="addInformation()">Create Profile</button>
-                  <div  class="sub-content"  >
+                  <div  class="sub-content" *ngIf="currentUser">
                       <p class="sub-title">Tap an icon to start taking your picture</p>
                       <div class="take-photo">
                           <div class="photo-description" (click)="showRadio('profile')">
@@ -40,7 +40,7 @@
               </ion-item>
               <ion-item>
                   <div  class="process-col process-col-2 process-col-extra" ></div><!--class"process-col-extra" appear when class"poecess-col-active" in the first col active-->
-                  <button ion-button (click)="upImage()">Take profile picture</button>
+                  <button ion-button (click)="upImage()" [disabled]="!currentUser">Take profile picture</button>
               </ion-item>              
           </ion-list>
       </div>
