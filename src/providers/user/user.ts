@@ -63,13 +63,14 @@ export class UserProvider {
 
 
   getCurrentUserDetails() {
-    return this.storage.get(StorageKey.loginToken);
+    return localStorage.getItem(StorageKey.loginToken);
   }
 
   refreshToken() {
     let url = SERVER_URL + 'refreshtoken';
     let token = localStorage.getItem(StorageKey.loginToken);
     if(!token){
+      localStorage.clear();
       return Observable.create(observer => {
         observer.error();
       })

@@ -14,7 +14,7 @@ import { LoadingProvider } from '../../providers/loading/loading';
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-declare var window : any;
+declare var window: any;
 declare var b64toBlob: any;
 @IonicPage()
 @Component({
@@ -89,9 +89,7 @@ export class RegisterPage {
   }
 
   ionViewDidLoad() {
-    this.userProvider.getCurrentUserDetails().then(res => {
-      this.currentUser = res;
-    })
+    this.currentUser = this.userProvider.getCurrentUserDetails();
   }
 
   emitAttachment() {
@@ -138,7 +136,7 @@ export class RegisterPage {
     })
   }
 
-  private makeBase64ToBlob (img) {
+  private makeBase64ToBlob(img) {
     return new Promise((resolve, reject) => {
       if (img.indexOf('data:image/png;base64') > -1) {
         img = img.replace('data:image/png;base64,', '');
@@ -156,7 +154,7 @@ export class RegisterPage {
     })
   }
 
-  upImage () {
+  upImage() {
     this.loading.showLoading();
     let list = [];
     this.makeBase64ToBlob(this.listImage.profile).then(img => {
@@ -182,14 +180,14 @@ export class RegisterPage {
       })
     })
   }
-  addInformation(){
+  addInformation() {
     this.navCtrl.push(AddInformationPage);
   }
-  showImageBase64 (imageData) {
+  showImageBase64(imageData) {
     return imageData;
     // return this.sanitizer.bypassSecurityTrustResourceUrl(imageData);
   }
-  disabledTakeProfile () {
+  disabledTakeProfile() {
     for (let key in this.listImage) {
       if (this.listImage[key] == 'assets/imgs/default-avatar.png')
         return true;

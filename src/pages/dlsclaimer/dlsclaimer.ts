@@ -7,6 +7,7 @@ import { Storage } from '@ionic/storage';
 import { JwtHelper } from 'angular2-jwt';
 import { ClientPage } from '../client/client';
 import { LoadingProvider } from '../../providers/loading/loading';
+import { RegisterPage } from '../register/register';
 
 /**
  * Generated class for the DlsclaimerPage page.
@@ -38,7 +39,7 @@ export class DlsclaimerPage {
       if (status === ResponseStatus.error) {
         return;
       }
-      this.navCtrl.setRoot(ClientPage);
+      this.navCtrl.setRoot(RegisterPage);
     }, err => {
       this.loading.hideLoading();
     })
