@@ -22,9 +22,10 @@ export class ConversationPage {
   /**
    * HARD CODE BEGIN
    */
-  fake_uuid = '61b8fa90-0fb0-11e8-8db9-9f21753dfc2d';
-  fake_loginToken = '160a14f2d30b5f936ffbc7fee8a3b7ca59b6308a';
-  fake_groupId = '05d01f6d-a28b-4706-92ff-dd007329c914';
+  fake_uuid = '05adf56b-c128-4203-802f-d8d0e2916210';
+  fake_uuid_friend = '21B69402-7E9C-4BA3-99A8-6D84A96FA866';
+  fake_loginToken = '';
+  fake_groupId = null;
   /**
    * HARD CODE END
    */
@@ -136,7 +137,7 @@ export class ConversationPage {
       console.log(err);
     })
 
-    this.apiProvider.getListConversation(this.fake_uuid, this.fake_groupId, null, this.fake_loginToken).subscribe(
+    this.apiProvider.getListConversation(this.fake_uuid, this.fake_groupId, this.fake_uuid_friend, this.fake_loginToken).subscribe(
       res => {
         //this.loadingScreen.dismissLoading();
         if (res.status == SUCCESS_STATUS) {

@@ -8,7 +8,7 @@ export const SERVER_URL = "http://phattifymobileservice.azurewebsites.net/api/";
 // // export const API_Socket = "http://socket.peero.uat.pgtest.co/";
 // //UAT
 // export const API_URL = "http://api.peero.uat2.pgtest.co:8080/";
-export const API_Socket = "http://socket.peero.uat2.pgtest.co:8080/";
+export const API_Socket = "http://phattifymobileservice.azurewebsites.net/";
 export const SUCCESS_STATUS = 1;
 export const ERROR_STATUS = 0;
 export const ACCESS_DENIED = 3;
