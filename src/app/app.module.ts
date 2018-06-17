@@ -29,6 +29,10 @@ import { IonicStorageModule } from '@ionic/storage';
 import { Base64 } from "@ionic-native/base64";
 import { CommonProvider } from '../providers/common/common';
 import { AuthProvider } from '../providers/auth/auth';
+import { RoundProvider } from '../providers/round/round';
+import { DatetimeProvider } from '../providers/date-time-format/date-time-format';
+import { HealthyProvider } from '../providers/healthy/healthy';
+import { LocalStorageProvider } from '../providers/local-storage/local-storage';
 
 @NgModule({
   declarations: [
@@ -77,7 +81,11 @@ import { AuthProvider } from '../providers/auth/auth';
     AuthProvider,
     Camera,
     Base64,
-    ImageProvider 
+    ImageProvider,
+    RoundProvider,
+    DatetimeProvider,
+    HealthyProvider,
+    LocalStorageProvider 
   ]
 })
 export class AppModule {}

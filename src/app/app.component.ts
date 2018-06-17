@@ -16,6 +16,8 @@ export class MyApp {
 
   // rootPage: any = SignInPage;
   rootPage: any = RegisterPage;
+  // rootPage: any = ClientPage;
+  
   
 
   pages: Array<{title: string, component: any}>;

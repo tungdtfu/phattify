@@ -16,7 +16,7 @@
     <div class="circle-progress-detail circle-progress-center">
       <div class="circle-progress-current">
         <div class="p-large">Current</div>
-        <div class="current-weight"><span class="info-weight">128</span>kg</div>
+        <div class="current-weight"  *ngIf="yourWeight.current"><span class="info-weight">{{yourWeight.current}}</span>kg</div>
         <div class="current-status">
           <span class="square-status square-green"></span>
           <span class="square-status square-green"></span>
@@ -30,9 +30,9 @@
               [color]="'#2699fb'"
               [background]="'8bff8f'"
               [stroke]="20"
-              [radius]="88"
+              [radius]="78"
               [rounded]="true"
-              [clockwise]="false"
+              [clockwise]="true"
               [responsive]="false"
               [duration]="800"
               [animation]="'easeInOutQuart'"
@@ -49,14 +49,14 @@
   <div class="lost-weight-progress">
     <div class="lost-weight-col">
       <div class="p-small">You lost</div>
-      <div class="sub-title-p">2kg</div>
+      <div class="sub-title-p">{{yourWeight.lost}}kg</div>
     </div>
     <div class="lost-weight-col">
-      <button>Enter Weight</button>
+      <button (click)="showPrompt()">Enter Weight</button>
     </div>
     <div class="lost-weight-col">
       <div class="p-small">Weight Remaining</div>
-      <div class="sub-title-p">22kg</div>
+      <div class="sub-title-p">{{yourWeight.remaining}}kg</div>
     </div>
   </div>
   <div class="box-chart">

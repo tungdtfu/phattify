@@ -1,5 +1,10 @@
-import {Component} from '@angular/core';
-import {NavController} from 'ionic-angular';
+import { Component } from '@angular/core';
+import { NavController, AlertController } from 'ionic-angular';
+import { RoundProvider } from '../../providers/round/round';
+import { ResponseStatus } from '../../constants/response-status.constain';
+import { HealthyProvider } from '../../providers/healthy/healthy';
+import { DatetimeProvider } from '../../providers/date-time-format/date-time-format';
+import { LoadingProvider } from '../../providers/loading/loading';
 
 @Component({
     selector: 'page-client',
@@ -22,13 +27,21 @@ export class ClientPage {
     gradient: boolean = false;
     realCurrent: number = 0;
 
+    yourWeight: any = {
+        lost: 0,
+        current: 0,
+        remaining: 0
+    }
+
     chartWeight: any = {
         start: {},
         target: {},
         round: {}
     };
 
-    constructor(public navCtrl: NavController) {
+    constructor(public navCtrl: NavController, public alertCtrl: AlertController,
+        private _roundProvider: RoundProvider, private _healthyProvider: HealthyProvider,
+        private _datetimeProvider: DatetimeProvider, private _loadingProvider: LoadingProvider) {
         this.chartWeight = {
             start: {
                 weight: 128,
@@ -48,8 +61,6 @@ export class ClientPage {
     }
 
     ngAfterViewInit(): void {
-        // var myElement = document.getElementById('#chart-compare');
-        // var temp = myElement.offsetWidth;
         this.options = {
             chart: {
                 defaultSeriesType: 'areaspline',
@@ -59,20 +70,20 @@ export class ClientPage {
 
             },
             credits: false,
-            title: {text: ''},
-            legend:{
-                enabled:false
+            title: { text: '' },
+            legend: {
+                enabled: false
             },
             plotOptions: {
                 areaspline: {
                     fillOpacity: 0.4,
                     marker: {
                         enabled: false,
-                        states:{
-                            hover:{
+                        states: {
+                            hover: {
                                 enabled: false,
                             },
-                            select:{
+                            select: {
                                 enabled: false,
                             }
                         }
@@ -87,34 +98,34 @@ export class ClientPage {
                     }
                 }
             },
-            tooltip:{
-                enabled:false
+            tooltip: {
+                enabled: false
             },
             yAxis: [{
                 min: 0,
                 tickInterval: 25,
-                padding:5,
-                gridLineWidth:0,
-                tickWidth:0,
-                labels:{
-                    style:{
-                        color:'#fff',
-                        fontSize:'9px'
+                padding: 5,
+                gridLineWidth: 0,
+                tickWidth: 0,
+                labels: {
+                    style: {
+                        color: '#fff',
+                        fontSize: '9px'
                     }
                 },
-                title: {text: ''},
+                title: { text: '' },
             }],
-            xAxis:{
+            xAxis: {
                 categories: ['0', '5', '10', '15', '20', '25', '30', '35', '40'],
                 endOnTick: false,
                 startOnTick: false,
-                tickLength:0,
-                tickWidth:0,
-                gridLineWidth:0,
+                tickLength: 0,
+                tickWidth: 0,
+                gridLineWidth: 0,
                 labels: {
-                    style:{
-                        color:'#fff',
-                        fontSize:'9px'
+                    style: {
+                        color: '#fff',
+                        fontSize: '9px'
                     }
                 },
                 lineWidth: 0,
@@ -132,17 +143,82 @@ export class ClientPage {
                         [1, 'rgb(255, 255, 255,0.1)']
                     ]
                 },
-                lineWidth:0
+                lineWidth: 0
             }]
         };
 
     }
 
-    ngOnInit() {
-        setInterval(() => {
-            this.chartWeight.round.current = this.chartWeight.round.current + 1
-        }, 1000);
+    showPrompt() {
+        const prompt = this.alertCtrl.create({
+            title: 'Login',
+            message: "Enter a name for this new album you're so keen on adding",
+            inputs: [
+                {
+                    name: 'weight',
+                    placeholder: 'Title',
+                    type: 'number'
+                },
+            ],
+            buttons: [
+                {
+                    text: 'Cancel',
+                    handler: data => {
+                        console.log('Cancel clicked');
+                    }
+                },
+                {
+                    text: 'Save',
+                    handler: data => {
+                        this.yourWeight = {
+                            current: data.weight,
+                            lost: this.chartWeight.start.weight - data.weight,
+                            remaining: data.weight - this.chartWeight.target.weight
+                        }
+                    }
+                }
+            ]
+        });
+        
+        prompt.present();
     }
 
-   
+    ngOnInit() {
+        // setInterval(() => {
+        //     this.chartWeight.round.current = this.chartWeight.round.current + 1
+        // }, 1000);
+
+        this.getData();
+    }
+
+    getData () {
+        this._loadingProvider.showLoading();
+        this._roundProvider.getRounDetail().subscribe(res => {
+            this._loadingProvider.hideLoading();
+            if (res['status'] == ResponseStatus.error) {
+                return;
+            } else {
+                let chart = res['data'].find(item => {
+                    return item.Status == 'Processing';
+                })
+
+                this.chartWeight = {
+                    start: {
+                        weight: chart.StartWeight,
+                        bmi: this._healthyProvider.getBmi(chart.StartWeight, 2.1),
+                        date: this._datetimeProvider.dateFormatRound(chart.StartDate)
+                    },
+                    target: {
+                        weight: chart.StartWeight,
+                        status: chart.Status,
+                        date: this._datetimeProvider.dateFormatRound(chart.EndDate)
+                    },
+                    round: {
+                        current: this._datetimeProvider.subDate(new Date(chart.StartDate), new Date()),
+                        max: chart.NumberOfProgramDays
+                    }
+                }
+            }
+        })
+    }
 }

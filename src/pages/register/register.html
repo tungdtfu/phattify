@@ -12,9 +12,9 @@
       <div class="content-process">
           <ion-list>
               <ion-item>
-                  <div  class="process-col" [ngClass]="{'process-col-active':currentUser}"></div><!--class "process-col-active" to green for process col-->
+                  <div  class="process-col" [ngClass]="{'process-col-active':showChooseImage}"></div><!--class "process-col-active" to green for process col-->
                   <button ion-button (click)="addInformation()">Create Profile</button>
-                  <div  class="sub-content"  >
+                  <div  class="sub-content" *ngIf="showChooseImage">
                       <p class="sub-title">Tap an icon to start taking your picture</p>
                       <div class="take-photo">
                           <div class="photo-description" (click)="showRadio('profile')">

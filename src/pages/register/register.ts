@@ -7,6 +7,8 @@ import { ImagePicker } from '@ionic-native/image-picker';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { ImageProvider } from '../../providers/image/image';
 import { LoadingProvider } from '../../providers/loading/loading';
+import { ResponseStatus } from '../../constants/response-status.constain';
+import { ClientPage } from '../client/client';
 /**
  * Generated class for the RegisterPage page.
  *
@@ -26,6 +28,7 @@ export class RegisterPage {
   radioOpen : any;
   radioResult : any;
   imgs: any[] = [];
+  showChooseImage: Boolean = false;
   listImage = {
     profile: 'assets/imgs/default-avatar.png', 
     front: 'assets/imgs/default-avatar.png',
@@ -41,6 +44,7 @@ export class RegisterPage {
     private sanitizer: DomSanitizer,
     private loading: LoadingProvider
   ) {
+    
   }
   showRadio(step) {
     let alert = this.alertCtrl.create();
@@ -85,7 +89,10 @@ export class RegisterPage {
     alert.present();
   }
   ionViewDidLoad() {
-    console.log('ionViewDidLoad RegisterPage');
+    console.log("Enter view");
+    if (this.navParams.get('addInformation')) {
+      this.showChooseImage = true;
+    }
   }
   emitAttachment() {
     this.attachments.emit(this.imgs);
@@ -166,9 +173,13 @@ export class RegisterPage {
             img: this.makeBase64ToBlob(this.listImage.side),
             name: 'side.png'
           });
-          this.imageService.upLoadImage(list).subscribe(result => {
+          this.imageService.upLoadImage(list).subscribe(res => {
             this.loading.hideLoading();
-            console.log(result);
+            if (res['status'] == ResponseStatus.error) {
+              this.loading.showToast(res['message']);
+            } else {
+              this.navCtrl.push(ClientPage);
+            }
           })
         })
       })
