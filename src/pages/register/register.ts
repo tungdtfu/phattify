@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, Platform  } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, Platform } from 'ionic-angular';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Base64 } from "@ionic-native/base64";
 import { AddInformationPage } from '../add-information/add-information';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { ImageProvider } from '../../providers/image/image';
+import { UserProvider } from '../../providers/user/user';
 import { LoadingProvider } from '../../providers/loading/loading';
 import { ResponseStatus } from '../../constants/response-status.constain';
 import { ClientPage } from '../client/client';
@@ -15,22 +16,22 @@ import { ClientPage } from '../client/client';
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-declare var window : any;
+declare var window: any;
 declare var b64toBlob: any;
 @IonicPage()
 @Component({
   selector: 'page-register',
   templateUrl: 'register.html',
-  providers:[ImagePicker, ImageProvider],
+  providers: [ImagePicker, ImageProvider],
 })
 export class RegisterPage {
+  currentUser: any;
   @Output() attachments = new EventEmitter<any>();
-  radioOpen : any;
-  radioResult : any;
+  radioOpen: any;
+  radioResult: any;
   imgs: any[] = [];
-  showChooseImage: Boolean = false;
   listImage = {
-    profile: 'assets/imgs/default-avatar.png', 
+    profile: 'assets/imgs/default-avatar.png',
     front: 'assets/imgs/default-avatar.png',
     side: 'assets/imgs/default-avatar.png'
   };
@@ -40,6 +41,7 @@ export class RegisterPage {
     private _platform: Platform,
     private camera: Camera,
     private imageService: ImageProvider,
+    private userProvider: UserProvider,
     private base64: Base64,
     private sanitizer: DomSanitizer,
     private loading: LoadingProvider
@@ -48,12 +50,12 @@ export class RegisterPage {
   }
   showRadio(step) {
     let alert = this.alertCtrl.create();
-    let title; 
-    if(step== 'profile'){
+    let title;
+    if (step == 'profile') {
       title = "Lightsaber color1"
-    } else if(step == 'front'){
+    } else if (step == 'front') {
       title = "Lightsaber color2"
-    }else {
+    } else {
       title = "Lightsaber color3"
     }
     alert.setTitle(title);
@@ -75,12 +77,12 @@ export class RegisterPage {
       handler: data => {
         this.radioOpen = false;
         this.radioResult = data;
-        if(this.radioResult == 'library'){
+        if (this.radioResult == 'library') {
           this.selectFromLibrary().then(img => {
             this.listImage[step] = img.toString();
           })
-        }else{
-          this.takePhotoOrVideo().then(img => { 
+        } else {
+          this.takePhotoOrVideo().then(img => {
             this.listImage[step] = img.toString();
           })
         }
@@ -88,15 +90,15 @@ export class RegisterPage {
     });
     alert.present();
   }
+
   ionViewDidLoad() {
-    console.log("Enter view");
-    if (this.navParams.get('addInformation')) {
-      this.showChooseImage = true;
-    }
+    this.currentUser = this.userProvider.getCurrentUserDetails();
   }
+
   emitAttachment() {
     this.attachments.emit(this.imgs);
   }
+
   takePhotoOrVideo() {
     return new Promise((resolve, reject) => {
       const options: CameraOptions = {
@@ -137,7 +139,7 @@ export class RegisterPage {
     })
   }
 
-  private makeBase64ToBlob (img) {
+  private makeBase64ToBlob(img) {
     return new Promise((resolve, reject) => {
       if (img.indexOf('data:image/png;base64') > -1) {
         img = img.replace('data:image/png;base64,', '');
@@ -155,7 +157,7 @@ export class RegisterPage {
     })
   }
 
-  upImage () {
+  upImage() {
     this.loading.showLoading();
     let list = [];
     this.makeBase64ToBlob(this.listImage.profile).then(img => {
@@ -185,14 +187,14 @@ export class RegisterPage {
       })
     })
   }
-  addInformation(){
+  addInformation() {
     this.navCtrl.push(AddInformationPage);
   }
-  showImageBase64 (imageData) {
+  showImageBase64(imageData) {
     return imageData;
     // return this.sanitizer.bypassSecurityTrustResourceUrl(imageData);
   }
-  disabledTakeProfile () {
+  disabledTakeProfile() {
     for (let key in this.listImage) {
       if (this.listImage[key] == 'assets/imgs/default-avatar.png')
         return true;

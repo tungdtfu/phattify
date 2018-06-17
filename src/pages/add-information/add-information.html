@@ -17,38 +17,32 @@
       <ion-item>
         <ion-label class="required">First name</ion-label>
         <ion-input type="text" formControlName="firstname"></ion-input>
-        <div class="error-text" *ngIf="registerForm.controls.firstname.touched">
-          <div>First name is required.</div>
-        </div>
       </ion-item>
+      <p class="error-text" *ngIf="registerForm.controls.firstname.touched && !registerForm.controls.firstname.valid">This field is required.</p>
       <ion-item>
         <ion-label class="required">Surname</ion-label>
         <ion-input type="text" formControlName="surname"></ion-input>
-        <div class="error-text" *ngIf="registerForm.controls.surname.touched">
-          <div>First name is required.</div>
-        </div>
       </ion-item>
+      <p class="error-text" *ngIf="registerForm.controls.surname.touched && !registerForm.controls.surname.valid">This field is required.</p>
       <ion-item>
         <ion-label class="required">Password</ion-label>
         <ion-input type="password" formControlName="password"></ion-input>
-        <div class="error-text" *ngIf="registerForm.controls.surname.touched">
-          <div>First name is required.</div>
-        </div>
       </ion-item>
+      <p class="error-text" *ngIf="registerForm.controls.password.touched && !registerForm.controls.password.valid">This field is required.</p>
       <ion-item>
         <ion-label class="required">Confirm Password</ion-label>
         <ion-input type="password" formControlName="confirmPassword"></ion-input>
-        <div class="error-text" *ngIf="registerForm.controls.surname.touched">
-          <div>First name is required.</div>
-          <div *ngIf="registerForm.hasError('mismatchedPasswords')">Passwords do not match.</div>
-        </div>
       </ion-item>
+      <p class="error-text" *ngIf="registerForm.controls.confirmPassword.touched && !registerForm.controls.confirmPassword.valid">This field is required.</p>
+      <p class="error-text" *ngIf="registerForm.controls.confirmPassword.touched && registerForm.hasError('mismatchedPasswords')">Passwords do not match.</p>
       <ion-item>
         <ion-label class="required">Date of Birth
           <ion-icon ios="ios-arrow-down" md="ios-arrow-down" class="icon-select-down"></ion-icon>
         </ion-label>
         <ion-input type="date" formControlName="dateOfBirth"></ion-input>
       </ion-item>
+      <p class="error-text" *ngIf="registerForm.controls.dateOfBirth.touched && !registerForm.controls.dateOfBirth.valid">This field is required.</p>
+
       <ion-item>
         <ion-label class="required">Country
           <ion-icon ios="ios-arrow-down" md="ios-arrow-down" class="icon-select-down"></ion-icon>
@@ -61,14 +55,17 @@
         <ion-label class="required">City / Town</ion-label>
         <ion-input type="text" formControlName="city"></ion-input>
       </ion-item>
+      <p class="error-text" *ngIf="registerForm.controls.city.touched && !registerForm.controls.city.valid">This field is required.</p>
       <ion-item>
         <ion-label class="required">Email</ion-label>
         <ion-input type="email" formControlName="email"></ion-input>
       </ion-item>
+      <p class="error-text" *ngIf="registerForm.controls.email.touched && !registerForm.controls.email.valid">This field is required.</p>
       <ion-item>
         <ion-label class="required">Contact Number</ion-label>
-        <ion-input type="text" formControlName="contractNumber"></ion-input>
+        <ion-input type="text" formControlName="contactNumber"></ion-input>
       </ion-item>
+      <p class="error-text" *ngIf="registerForm.controls.contactNumber.touched && !registerForm.controls.contactNumber.valid">This field is required.</p>
       <ion-item class="row-custom">
         <ion-label class="required">Weight
           <ion-icon ios="ios-arrow-down" md="ios-arrow-down" class="icon-select-down"></ion-icon>
@@ -78,6 +75,7 @@
           <ion-option *ngFor="let item of weightUnits" value="{{item}}">{{item}}</ion-option>
         </ion-select>
       </ion-item>
+      <p class="error-text" *ngIf="registerForm.controls.weight.touched && !registerForm.controls.weight.valid">This field is required.</p>
       <ion-item class="row-custom">
         <ion-label class="required">Height
           <ion-icon ios="ios-arrow-down" md="ios-arrow-down" class="icon-select-down"></ion-icon>
@@ -87,11 +85,12 @@
           <ion-option *ngFor="let item of heightUnits" value="{{item}}">{{item}}</ion-option>
         </ion-select>
       </ion-item>
+      <p class="error-text" *ngIf="registerForm.controls.height.touched && !registerForm.controls.height.valid">This field is required.</p>
       <ion-item class="ion-check-box">
         <ion-label>Health / Medication</ion-label>
         <ion-checkbox formControlName="health"></ion-checkbox>
       </ion-item>
-      <ion-item class="ion-textarea-custom">
+      <ion-item class="ion-textarea-custom" *ngIf="registerForm.value.health">
         <ion-label>SPECIFY</ion-label>
         <ion-textarea name="specifyHealth" formControlName="specifyHealth"></ion-textarea>
       </ion-item>
@@ -105,10 +104,14 @@
       </p>
       <ion-list>
         <ion-item class="ion-check-box" *ngFor="let item of healthChecklist">
-          <ion-label>{{item.label}}</ion-label>
-          <ion-checkbox (ionChange)="healthCheck(item.id)" formControlName="temp"></ion-checkbox>
+          <ion-label>{{item.Name}}</ion-label>
+          <ion-checkbox (ionChange)="healthCheck(item.Id)" formControlName="temp"></ion-checkbox>
         </ion-item>
-        <ion-item class="ion-textarea-custom">
+        <ion-item class="ion-check-box">
+          <ion-label>Other illnesses</ion-label>
+          <ion-checkbox (ionChange)="healthCheck(0)" formControlName="temp"></ion-checkbox>
+        </ion-item>
+        <ion-item class="ion-textarea-custom" *ngIf="displaySpecifyHealthChecklist">
           <ion-label>SPECIFY</ion-label>
           <ion-textarea name="specifyHealthChecklist" formControlName="specifyHealthChecklist"></ion-textarea>
         </ion-item>

@@ -6,8 +6,9 @@ import { ResponseStatus } from '../../constants/response-status.constain';
 import { CalendarPage } from '../calendar/calendar';
 import { LoadingProvider } from '../../providers/loading/loading';
 import { Storage } from '@ionic/storage';
-import { FormBuilder, Validators,FormControl, FormGroup  } from '@angular/forms';
+import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms';
 import { ClientPage } from '../client/client';
+import { StorageKey } from '../../constants/storage-key.constain';
 /**
  * Generated class for the SignInPage page.
  *
@@ -21,7 +22,7 @@ import { ClientPage } from '../client/client';
   templateUrl: 'sign-in.html',
 })
 export class SignInPage {
-  loginForm = new FormGroup ({
+  loginForm = new FormGroup({
     email: new FormControl(),
     password: new FormControl()
   });
@@ -32,14 +33,24 @@ export class SignInPage {
     public navParams: NavParams,
     private userProvider: UserProvider,
     private loading: LoadingProvider,
-    private storage:Storage
+    private storage: Storage
   ) {
   }
 
   ionViewDidLoad() {
-this.storage.clear();
+    this.loading.showLoading();
+    this.userProvider.refreshToken().subscribe(res => {
+      this.loading.hideLoading();
+      if (res === ResponseStatus.error) {
+        return;
+      }
+      this.navCtrl.setRoot(ClientPage);
+    }, () => {
+      this.loading.hideLoading();
+      return;
+    });
   }
-  register(){
+  register() {
     this.navCtrl.push(RegisterPage);
   }
 
@@ -53,7 +64,7 @@ this.storage.clear();
         return;
       }
       this.navCtrl.setRoot(ClientPage);
-    }, err => {
+    }, () => {
       this.loading.hideLoading();
       this.error = true;
       return;

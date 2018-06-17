@@ -16,8 +16,10 @@ import { JwtHelper } from 'angular2-jwt';
 @Injectable()
 export class UserProvider {
   jwtHelper = new JwtHelper();
+
   constructor(public http: HttpClient, private storage: Storage) {
   }
+
   login(email, password) {
     let url = SERVER_URL + 'login';
     let params = {
@@ -32,18 +34,61 @@ export class UserProvider {
           return;
         }
         let token = res['token'];
-        this.storage.set(StorageKey.loginToken, token).then(() => {
-          var user = this.jwtHelper.decodeToken(token).username;
-          debugger
-          observer.next(status);
-        });
+        var user = this.jwtHelper.decodeToken(token);
+        this.storage.set(StorageKey.userDetails, user)
+        localStorage.setItem(StorageKey.loginToken, token);
+        observer.next(status);
       }, err => {
-        observer.error(ResponseStatus.error);
+        observer.error(err);
       });
     });
   }
 
+  register(model) {
+    let url = SERVER_URL + 'register';
+    return Observable.create(observer => {
+      this.http.post(url, model).subscribe(res => {
+        let status = res['status'];
+        if (status === ResponseStatus.error) {
+          observer.next(status);
+          return;
+        }
+        localStorage.setItem(StorageKey.loginToken, res['token']);
+        observer.next(status);
+      }, err => {
+        observer.error(err);
+      });
+    });
+  }
+
+
   getCurrentUserDetails() {
-    return this.storage.get(StorageKey.loginToken);
+    return localStorage.getItem(StorageKey.loginToken);
+  }
+
+  refreshToken() {
+    let url = SERVER_URL + 'refreshtoken';
+    let token = localStorage.getItem(StorageKey.loginToken);
+    if(!token){
+      localStorage.clear();
+      return Observable.create(observer => {
+        observer.error();
+      })
+    }
+    let authdata = 'Bearer ' + token;
+    return Observable.create(observer => {
+      this.http.get(url, { headers: { 'Authorization': authdata } }).subscribe(res => {
+        let status = res['status'];
+        if (status === ResponseStatus.error) {
+          localStorage.clear();
+          observer.next(status);
+          return;
+        }
+        localStorage.setItem(StorageKey.loginToken, res['token']);
+        observer.next(status);
+      }, err => {
+        observer.error(err);
+      });
+    });
   }
 }

@@ -1,5 +1,12 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { UserProvider } from '../../providers/user/user';
+import { ResponseStatus } from '../../constants/response-status.constain';
+import { StorageKey } from '../../constants/storage-key.constain';
+import { Storage } from '@ionic/storage';
+import { JwtHelper } from 'angular2-jwt';
+import { ClientPage } from '../client/client';
+import { LoadingProvider } from '../../providers/loading/loading';
 import { RegisterPage } from '../register/register';
 
 /**
@@ -15,19 +22,26 @@ import { RegisterPage } from '../register/register';
   templateUrl: 'dlsclaimer.html',
 })
 export class DlsclaimerPage {
-
+  jwtHelper = new JwtHelper();
   model: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private userProvider: UserProvider, private loading: LoadingProvider) {
     this.model = navParams.get("model");
   }
 
   ionViewDidLoad() {
   }
 
-  register(){
-    this.navCtrl.push(RegisterPage, {
-      addInformation: true
+  register() {
+    this.loading.showLoading();
+    this.userProvider.register(this.model).subscribe(res => {
+      this.loading.hideLoading();
+      if (status === ResponseStatus.error) {
+        return;
+      }
+      this.navCtrl.setRoot(RegisterPage);
+    }, err => {
+      this.loading.hideLoading();
     })
   }
 }
