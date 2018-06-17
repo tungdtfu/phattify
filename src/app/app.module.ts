@@ -15,6 +15,7 @@ import {FoodPlanPage} from "../pages/foodplan/foodplan";
 import {SettingPage} from "../pages/setting/setting";
 import {CalendarPage} from "../pages/calendar/calendar";
 import {ClientListPageModule} from "../pages/client-list/client-list.module";
+import {ClientDataPageModule} from "../pages/client-data/client-data.module";
 import {TabsPage} from "../pages/tabs/tabs";
 import { LoginPage} from "../pages/login/login";
 import { LoadingProvider } from '../providers/loading/loading';
@@ -48,7 +49,8 @@ declare var require : any;
             SignInPageModule,
             AddInformationPageModule,
             RoundProgressModule,
-            ClientListPageModule
+            ClientListPageModule,
+            ClientDataPageModule
 
         ],
         bootstrap: [IonicApp],
