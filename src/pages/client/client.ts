@@ -39,6 +39,11 @@ export class ClientPage {
         round: {}
     };
 
+    dayChartWeight: any = {
+        day: ['0', '5', '10', '15', '20', '25', '30', '35', '40'],
+        weight: [200, 140, 160, 180, 46, 60, 20, 110, 180]
+    }
+
     constructor(public navCtrl: NavController, public alertCtrl: AlertController,
         private _roundProvider: RoundProvider, private _healthyProvider: HealthyProvider,
         private _datetimeProvider: DatetimeProvider, private _loadingProvider: LoadingProvider) {
@@ -61,91 +66,6 @@ export class ClientPage {
     }
 
     ngAfterViewInit(): void {
-        this.options = {
-            chart: {
-                defaultSeriesType: 'areaspline',
-                margin: [20, 20, 30, 45],
-                backgroundColor: '#2699fb',
-                selectionMarkerFill: 'none'
-
-            },
-            credits: false,
-            title: { text: '' },
-            legend: {
-                enabled: false
-            },
-            plotOptions: {
-                areaspline: {
-                    fillOpacity: 0.4,
-                    marker: {
-                        enabled: false,
-                        states: {
-                            hover: {
-                                enabled: false,
-                            },
-                            select: {
-                                enabled: false,
-                            }
-                        }
-                    },
-                    pointPlacement: 'on'
-                },
-                series: {
-                    states: {
-                        hover: {
-                            enabled: false
-                        }
-                    }
-                }
-            },
-            tooltip: {
-                enabled: false
-            },
-            yAxis: [{
-                min: 0,
-                tickInterval: 25,
-                padding: 5,
-                gridLineWidth: 0,
-                tickWidth: 0,
-                labels: {
-                    style: {
-                        color: '#fff',
-                        fontSize: '9px'
-                    }
-                },
-                title: { text: '' },
-            }],
-            xAxis: {
-                categories: ['0', '5', '10', '15', '20', '25', '30', '35', '40'],
-                endOnTick: false,
-                startOnTick: false,
-                tickLength: 0,
-                tickWidth: 0,
-                gridLineWidth: 0,
-                labels: {
-                    style: {
-                        color: '#fff',
-                        fontSize: '9px'
-                    }
-                },
-                lineWidth: 0,
-                minorGridLineWidth: 0,
-                minorTickLength: 0
-
-            },
-            series: [{
-                data: [20, 140, 160, 180, 46, 60, 20, 110, 180],
-                selected: false,
-                color: {
-                    linearGradient: [0, 150, 10, 1],
-                    stops: [
-                        [0, 'rgb(255, 255, 255,0.4)'],
-                        [1, 'rgb(255, 255, 255,0.1)']
-                    ]
-                },
-                lineWidth: 0
-            }]
-        };
 
     }
 
@@ -218,7 +138,115 @@ export class ClientPage {
                         max: chart.NumberOfProgramDays
                     }
                 }
+
+                this._roundProvider.getRoundByUserId('DA66958A-292C-4EC5-B44D-3F7C98E48983').subscribe(detail => {
+                    if (detail['status'] == ResponseStatus.error) {
+                        return;
+                    } else {
+                        let data = detail['data'];
+
+                        let listDay = [], listWeight = [];
+                        data.map(item => {
+                            listDay.push(this._datetimeProvider.dateFormatRound(item.createdAt));
+                        })
+                        data.map(item => {
+                            listWeight.push(item.CurrentWeight);
+                        })
+                        this.dayChartWeight.day = listDay;
+                        this.dayChartWeight.weight = listWeight;
+
+                        this.drawDayChart();
+                    }
+                })
             }
         })
+    }
+
+    drawDayChart () {
+        this.options = {
+            chart: {
+                defaultSeriesType: 'areaspline',
+                margin: [20, 20, 30, 45],
+                backgroundColor: '#2699fb',
+                selectionMarkerFill: 'none'
+
+            },
+            credits: false,
+            title: { text: '' },
+            legend: {
+                enabled: false
+            },
+            plotOptions: {
+                areaspline: {
+                    fillOpacity: 0.4,
+                    marker: {
+                        enabled: false,
+                        states: {
+                            hover: {
+                                enabled: false,
+                            },
+                            select: {
+                                enabled: false,
+                            }
+                        }
+                    },
+                    pointPlacement: 'on'
+                },
+                series: {
+                    states: {
+                        hover: {
+                            enabled: false
+                        }
+                    }
+                }
+            },
+            tooltip: {
+                enabled: false
+            },
+            yAxis: [{
+                min: 0,
+                tickInterval: 25,
+                padding: 5,
+                gridLineWidth: 0,
+                tickWidth: 0,
+                labels: {
+                    style: {
+                        color: '#fff',
+                        fontSize: '9px'
+                    }
+                },
+                title: { text: '' },
+            }],
+            xAxis: {
+                categories: this.dayChartWeight.day,
+                endOnTick: false,
+                startOnTick: false,
+                tickLength: 0,
+                tickWidth: 0,
+                gridLineWidth: 0,
+                labels: {
+                    style: {
+                        color: '#fff',
+                        fontSize: '9px'
+                    }
+                },
+                lineWidth: 0,
+                minorGridLineWidth: 0,
+                minorTickLength: 0
+
+            },
+            series: [{
+                data: this.dayChartWeight.weight,
+                selected: false,
+                color: {
+                    linearGradient: [0, 150, 10, 1],
+                    stops: [
+                        [0, 'rgb(255, 255, 255,0.4)'],
+                        [1, 'rgb(255, 255, 255,0.1)']
+                    ]
+                },
+                lineWidth: 0
+            }]
+        };
     }
 }

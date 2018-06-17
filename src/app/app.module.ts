@@ -33,6 +33,7 @@ import { RoundProvider } from '../providers/round/round';
 import { DatetimeProvider } from '../providers/date-time-format/date-time-format';
 import { HealthyProvider } from '../providers/healthy/healthy';
 import { LocalStorageProvider } from '../providers/local-storage/local-storage';
+import { ApiProvider } from '../providers/api/api';
 
 @NgModule({
   declarations: [
@@ -79,6 +80,7 @@ import { LocalStorageProvider } from '../providers/local-storage/local-storage';
     UserProvider,
     CommonProvider,
     AuthProvider,
+    ApiProvider,
     Camera,
     Base64,
     ImageProvider,

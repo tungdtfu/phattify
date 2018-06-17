@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SERVER_URL } from '../../constants/config';
 import { Observable } from 'rxjs/Observable';
@@ -6,6 +6,8 @@ import { ResponseStatus } from '../../constants/response-status.constain';
 import { StorageKey } from '../../constants/storage-key.constain';
 import { Storage } from '@ionic/storage';
 import { JwtHelper } from 'angular2-jwt';
+import { ApiProvider } from '../api/api';
+import { LocalStorageProvider } from '../local-storage/local-storage';
 
 /*
   Generated class for the UserProvider provider.
@@ -17,7 +19,7 @@ import { JwtHelper } from 'angular2-jwt';
 export class UserProvider {
   jwtHelper = new JwtHelper();
 
-  constructor(public http: HttpClient, private storage: Storage) {
+  constructor(public http: HttpClient, private storage: Storage, private _apiProvider: ApiProvider, private _localStorage: LocalStorageProvider) {
   }
 
   login(email, password) {
@@ -33,11 +35,20 @@ export class UserProvider {
           observer.next(status);
           return;
         }
+
         let token = res['token'];
         var user = this.jwtHelper.decodeToken(token);
         this.storage.set(StorageKey.userDetails, user)
+
+        // Save loginToken and get Information user 
         localStorage.setItem(StorageKey.loginToken, token);
-        observer.next(status);
+        this.getCurrentUser().subscribe(user => {
+          if (user) {
+            observer.next(status);
+          } else {
+            observer.next(ResponseStatus.error);
+          }
+        })
       }, err => {
         observer.error(err);
       });
@@ -53,8 +64,16 @@ export class UserProvider {
           observer.next(status);
           return;
         }
+
+        // Save loginToken and get Information user 
         localStorage.setItem(StorageKey.loginToken, res['token']);
-        observer.next(status);
+        this.getCurrentUser().subscribe(user => {
+          if (user) {
+            observer.next(status);
+          } else {
+            observer.next(ResponseStatus.error);
+          }
+        })
       }, err => {
         observer.error(err);
       });
@@ -90,5 +109,18 @@ export class UserProvider {
         observer.error(err);
       });
     });
+  }
+
+  getCurrentUser () {
+    return Observable.create(observer => {
+      this._apiProvider.requestGet(`${SERVER_URL}user`).subscribe(res => {
+        if (res['status'] == ResponseStatus.error) {
+          observer.next(null);
+        } else {
+          this._localStorage.setItem(StorageKey.userDetails, res['data']);
+          observer.next(res['data']);
+        }
+      });
+    })
   }
 }

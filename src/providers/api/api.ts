@@ -1,5 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { StorageKey } from '../../constants/storage-key.constain';
 
 /*
   Generated class for the ApiProvider provider.
@@ -14,4 +15,12 @@ export class ApiProvider {
     console.log('Hello ApiProvider Provider');
   }
 
+  getHeader () {
+    let token = localStorage.getItem(StorageKey.loginToken);
+    return new HttpHeaders({Authorization: `Bearer ${token}`});
+  }
+
+  requestGet (url) {
+    return this.http.get(url,{headers : this.getHeader()});
+  }
 }
