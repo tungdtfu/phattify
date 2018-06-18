@@ -21,6 +21,7 @@ import { LoginPage} from "../pages/login/login";
 import { LoadingProvider } from '../providers/loading/loading';
 import { UserProvider } from '../providers/user/user';
 import {RoundProgressModule} from 'angular-svg-round-progressbar';
+import {AddClientPageModule} from "../pages/add-client/add-client.module";
 import { ChartModule } from 'angular2-highcharts';
 declare var require : any;
 // export function isNotIos(plt) {
@@ -50,7 +51,8 @@ declare var require : any;
             AddInformationPageModule,
             RoundProgressModule,
             ClientListPageModule,
-            ClientDataPageModule
+            ClientDataPageModule,
+            AddClientPageModule
 
         ],
         bootstrap: [IonicApp],

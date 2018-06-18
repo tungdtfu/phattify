@@ -4,6 +4,7 @@ $c-light-blue: #bce0fd;
 $c-light-blue2: #c5dff4;
 $c-blue: #2699fb;
 $c-sky: #e0fffb;
+$c-sky2: #B9F8F8;
 $c-light-sky: #E8FCFF;
 $c-blue-border: #c7eafb;
 $c-grey: #999999;
@@ -91,6 +92,10 @@ ion-footer {
     }
   }
 }
+
+.bg-sky {
+  background-color: $c-sky2;
+}
 .check-list-headline {
   font-size: 20px;
   font-weight: 400;
@@ -121,4 +126,10 @@ ion-footer {
 
 .p-small {
   font-size: 13px;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
