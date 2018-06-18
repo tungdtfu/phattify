@@ -7,6 +7,7 @@ import * as io from 'socket.io-client';
 import { ApiProvider } from '../../providers/api/api';
 // import { TimeDiffProvider } from '../../providers/services/timeDiff.service';
 import { SocketProvider } from '../../providers/services/socket.service';
+import { UserProvider } from '../../providers/user/user';
 //import plugins
 
 //import pages
@@ -51,6 +52,7 @@ export class ConversationPage {
     private actionSheetCtrl: ActionSheetController,
     public modalCtrl: ModalController,
     private socketProvider: SocketProvider,
+    private userProvider: UserProvider
   ) {
     this.typingMessage = false;
     if (this.navParams.get('friend')) {
@@ -70,6 +72,12 @@ export class ConversationPage {
       this.friend_ID = this.navParams.get('friend_id');
     }
     //console.log(moment.utc().format('YYYY-MM-DD h:mm:ss a'));
+  }
+
+  getCurrentUser() {
+    var user = this.userProvider.getCurrentUserDetails().subscribe(res=>{
+      debugger
+    })
   }
 
   deleteConversation() {
@@ -120,6 +128,7 @@ export class ConversationPage {
       // }
       // }
     });
+    this.getCurrentUser();
   }
 
 

@@ -5,6 +5,7 @@ import { ResponseStatus } from '../../constants/response-status.constain';
 import { HealthyProvider } from '../../providers/healthy/healthy';
 import { DatetimeProvider } from '../../providers/date-time-format/date-time-format';
 import { LoadingProvider } from '../../providers/loading/loading';
+import { ConversationPage } from '../conversation/conversation';
 
 @Component({
     selector: 'page-client',
@@ -67,6 +68,10 @@ export class ClientPage {
 
     ngAfterViewInit(): void {
 
+    }
+
+    testMessageModule(){
+        this.navCtrl.push(ConversationPage);
     }
 
     showPrompt() {
