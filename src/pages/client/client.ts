@@ -36,7 +36,7 @@ export class ClientPage {
     chartWeight: any = {
         start: {},
         target: {},
-        round: {}
+        round: {},
     };
 
     dayChartWeight: any = {
@@ -71,12 +71,12 @@ export class ClientPage {
 
     showPrompt() {
         const prompt = this.alertCtrl.create({
-            title: 'Login',
-            message: "Enter a name for this new album you're so keen on adding",
+            title: 'Weight',
+            message: "Enter your Weight",
             inputs: [
                 {
                     name: 'weight',
-                    placeholder: 'Title',
+                    placeholder: 'Kg',
                     type: 'number'
                 },
             ],
@@ -88,12 +88,16 @@ export class ClientPage {
                     }
                 },
                 {
-                    text: 'Save',
+                    text: 'OK',
                     handler: data => {
                         this.yourWeight = {
                             current: data.weight,
                             lost: this.chartWeight.start.weight - data.weight,
                             remaining: data.weight - this.chartWeight.target.weight
+                        }
+                        this.chartWeight.round = {
+                            current: this.chartWeight.start.weight - this.chartWeight.target.weight - Math.abs(this.chartWeight.target.weight - data.weight),
+                            max: this.chartWeight.start.weight - this.chartWeight.target.weight
                         }
                     }
                 }
@@ -111,6 +115,36 @@ export class ClientPage {
         this.getData();
     }
 
+    calWeight(test) {
+        var day = Math.ceil(test.length / 10);//round up 2
+        var i = 0;
+        var days = [];
+        var weights = [];
+        var flag = false;
+        var daysText = [];
+
+        while (!flag) {
+            days.push(i);
+            weights.push(test[i].CurrentWeight);
+
+            daysText.push(this._datetimeProvider.dateFormatRound(test[i].createdAt))
+            if (i + day >= test.length) {
+                i = test.length - 1;
+                if (days.indexOf(i) < 0) {
+                    days.push(i);
+                    daysText.push(this._datetimeProvider.dateFormatRound(test[i].createdAt))
+                    weights.push(test[i].CurrentWeight);
+                }
+                flag = true;
+            } else {
+                i = i + day;
+            }
+        }
+        this.dayChartWeight = {
+            day: daysText,
+            weight: weights
+        }
+    }
     getData() {
         this._loadingProvider.showLoading();
         this._roundProvider.getRounDetail().subscribe(res => {
@@ -125,41 +159,42 @@ export class ClientPage {
                 return;
             }
 
-            this.chartWeight = {
-                start: {
-                    weight: chart.StartWeight,
-                    bmi: this._healthyProvider.getBmi(chart.StartWeight, 2.1),
-                    date: this._datetimeProvider.dateFormatRound(chart.StartDate)
-                },
-                target: {
-                    weight: chart.StartWeight,
-                    status: chart.Status,
-                    date: this._datetimeProvider.dateFormatRound(chart.EndDate)
-                },
-                round: {
-                    current: this._datetimeProvider.subDate(new Date(chart.StartDate), new Date()),
-                    max: chart.NumberOfProgramDays
-                }
-            }
-
+           
             this._roundProvider.getRoundByUserId('DA66958A-292C-4EC5-B44D-3F7C98E48983').subscribe(detail => {
                 if (detail['status'] == ResponseStatus.error) {
                     return;
                 }
                 let data = detail['data'];
-
-                let listDay = [], listWeight = [];
-                data.map(item => {
-                    listDay.push(this._datetimeProvider.dateFormatRound(item.createdAt));
+                let currentDay = data.find(item =>{
+                    return this._datetimeProvider.dateFormatRound(item.createdAt) == this._datetimeProvider.dateFormatRound(new Date());
                 })
-                data.map(item => {
-                    listWeight.push(item.CurrentWeight);
-                })
-                this.dayChartWeight.day = listDay;
-                this.dayChartWeight.weight = listWeight;
+                if(currentDay){
+                    this.yourWeight.current = currentDay.CurrentWeight;
+                    this.yourWeight.lost = chart.StartWeight - currentDay.CurrentWeight;
+                    this.yourWeight.remaining  = currentDay.CurrentWeight - chart.TargetWeight;
+                }
 
+                this.calWeight(data)
                 this.drawDayChart();
+                //chart.StartWeight = 120
+                this.chartWeight = {
+                    start: {
+                        weight: chart.StartWeight,
+                        bmi: this._healthyProvider.getBmi(chart.StartWeight, 2.1),
+                        date: this._datetimeProvider.dateFormatRound(chart.StartDate)
+                    },
+                    target: {
+                        weight: chart.TargetWeight,
+                        status: chart.Status,
+                        date: this._datetimeProvider.dateFormatRound(chart.EndDate)
+                    },
+                    round: {
+                        current: currentDay ? chart.StartWeight - chart.TargetWeight - Math.abs(chart.TargetWeight - currentDay.CurrentWeight): 0,
+                        max: chart.StartWeight- chart.TargetWeight
+                    }
+                }
             })
+
         })
     }
 
@@ -167,7 +202,7 @@ export class ClientPage {
         this.options = {
             chart: {
                 defaultSeriesType: 'areaspline',
-                margin: [20, 20, 30, 45],
+                margin: [20, 20, 70, 45],
                 backgroundColor: '#2699fb',
                 selectionMarkerFill: 'none'
 
