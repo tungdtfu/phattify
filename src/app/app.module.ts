@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
 import { MyApp } from './app.component';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -18,10 +19,10 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { SignInPageModule } from '../pages/sign-in/sign-in.module';
 import { RegisterPageModule } from '../pages/register/register.module';
 import { Camera } from '@ionic-native/camera';
-import {RoundProgressModule} from 'angular-svg-round-progressbar';
+import { RoundProgressModule } from 'angular-svg-round-progressbar';
 import { ImageProvider } from '../providers/image/image';
 import { ChartModule } from 'angular2-highcharts';
-declare var require : any;
+declare var require: any;
 
 import { IonicStorageModule } from '@ionic/storage';
 import { Base64 } from "@ionic-native/base64";
@@ -32,6 +33,16 @@ import { DatetimeProvider } from '../providers/date-time-format/date-time-format
 import { HealthyProvider } from '../providers/healthy/healthy';
 import { LocalStorageProvider } from '../providers/local-storage/local-storage';
 import { ApiProvider } from '../providers/api/api';
+
+// Page
+import { ConversationPage } from '../../src/pages/conversation/conversation';
+
+// Component
+import { MessageComponent } from '../../src/components/message/message';
+import { InputChatComponent } from '../../src/components/input-chat/input-chat';
+
+// Provider
+import { SocketProvider } from '../../src/providers/services/socket.service';
 
 @NgModule({
   declarations: [
@@ -44,7 +55,10 @@ import { ApiProvider } from '../providers/api/api';
     FoodplanPage,
     SettingPage,
     TabsPage,
-    
+    ConversationPage,
+
+    MessageComponent,
+    InputChatComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +68,8 @@ import { ApiProvider } from '../providers/api/api';
     RoundProgressModule,
     ChartModule.forRoot(require('highcharts')),
     IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    HttpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -67,12 +82,15 @@ import { ApiProvider } from '../providers/api/api';
     FoodplanPage,
     SettingPage,
     TabsPage,
-    
+    ConversationPage,
+
+    MessageComponent,
+    InputChatComponent
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
     LoadingProvider,
     UserProvider,
     UserProvider,
@@ -85,7 +103,10 @@ import { ApiProvider } from '../providers/api/api';
     RoundProvider,
     DatetimeProvider,
     HealthyProvider,
-    LocalStorageProvider 
+    LocalStorageProvider,
+    ImageProvider,
+    ApiProvider,
+    SocketProvider
   ]
 })
-export class AppModule {}
+export class AppModule { }

@@ -1,0 +1,27 @@
+<ion-row class="person-1" [ngClass]="{'person-1': conversation.user_id != user_id , 'person-2': conversation.user_id == user_id}">
+  <ion-row class="conversation-avatar" tappable (click)='showDetail(conversation.user_id )'>
+    <!-- <img [src]="conversation.avatar" onError="this.src='assets/img/profile-avatar.png' ; " /> -->
+  </ion-row>
+  <ion-row class="conversation-row" *ngIf="conversation.content.Content">
+    <span class="conversation-message" [innerHTML]="conversation.content.Content">
+    </span>
+  </ion-row>
+  <ion-row class="conversation-row" *ngIf="conversation.content.Current_situation" tappable (click)='showDetail(conversation.content.User_id )'>
+    <ion-row class="conversation-send-profile">
+      <ion-row class="bg-green"></ion-row>
+      <ion-row class="profile">
+        <ion-row class="avatar">
+          <p class="user-name">{{conversation.content.Fullname}}</p>
+          <img [src]="conversation.content.Avartar" onError="this.src='assets/img/profile-avatar.png' ; " />
+        </ion-row>
+        <ion-row class="infor">
+          <p>{{buildCurrentJob(conversation.content.Current_situation)}}</p>
+        </ion-row>
+
+      </ion-row>
+    </ion-row>
+  </ion-row>
+  <!-- <ion-row class="conversation-time">
+    <p> {{conversation.timeDiff}}</p>
+  </ion-row> -->
+</ion-row>
