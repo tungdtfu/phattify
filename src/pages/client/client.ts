@@ -99,7 +99,7 @@ export class ClientPage {
                 }
             ]
         });
-        
+
         prompt.present();
     }
 
@@ -111,58 +111,59 @@ export class ClientPage {
         this.getData();
     }
 
-    getData () {
+    getData() {
         this._loadingProvider.showLoading();
         this._roundProvider.getRounDetail().subscribe(res => {
             this._loadingProvider.hideLoading();
             if (res['status'] == ResponseStatus.error) {
                 return;
-            } else {
-                let chart = res['data'].find(item => {
-                    return item.Status == 'Processing';
-                })
-
-                this.chartWeight = {
-                    start: {
-                        weight: chart.StartWeight,
-                        bmi: this._healthyProvider.getBmi(chart.StartWeight, 2.1),
-                        date: this._datetimeProvider.dateFormatRound(chart.StartDate)
-                    },
-                    target: {
-                        weight: chart.StartWeight,
-                        status: chart.Status,
-                        date: this._datetimeProvider.dateFormatRound(chart.EndDate)
-                    },
-                    round: {
-                        current: this._datetimeProvider.subDate(new Date(chart.StartDate), new Date()),
-                        max: chart.NumberOfProgramDays
-                    }
-                }
-
-                this._roundProvider.getRoundByUserId('DA66958A-292C-4EC5-B44D-3F7C98E48983').subscribe(detail => {
-                    if (detail['status'] == ResponseStatus.error) {
-                        return;
-                    } else {
-                        let data = detail['data'];
-
-                        let listDay = [], listWeight = [];
-                        data.map(item => {
-                            listDay.push(this._datetimeProvider.dateFormatRound(item.createdAt));
-                        })
-                        data.map(item => {
-                            listWeight.push(item.CurrentWeight);
-                        })
-                        this.dayChartWeight.day = listDay;
-                        this.dayChartWeight.weight = listWeight;
-
-                        this.drawDayChart();
-                    }
-                })
             }
+            let chart = res['data'].find(item => {
+                return item.Status == 'Processing';
+            })
+            if (!chart) {
+                return;
+            }
+
+            this.chartWeight = {
+                start: {
+                    weight: chart.StartWeight,
+                    bmi: this._healthyProvider.getBmi(chart.StartWeight, 2.1),
+                    date: this._datetimeProvider.dateFormatRound(chart.StartDate)
+                },
+                target: {
+                    weight: chart.StartWeight,
+                    status: chart.Status,
+                    date: this._datetimeProvider.dateFormatRound(chart.EndDate)
+                },
+                round: {
+                    current: this._datetimeProvider.subDate(new Date(chart.StartDate), new Date()),
+                    max: chart.NumberOfProgramDays
+                }
+            }
+
+            this._roundProvider.getRoundByUserId('DA66958A-292C-4EC5-B44D-3F7C98E48983').subscribe(detail => {
+                if (detail['status'] == ResponseStatus.error) {
+                    return;
+                }
+                let data = detail['data'];
+
+                let listDay = [], listWeight = [];
+                data.map(item => {
+                    listDay.push(this._datetimeProvider.dateFormatRound(item.createdAt));
+                })
+                data.map(item => {
+                    listWeight.push(item.CurrentWeight);
+                })
+                this.dayChartWeight.day = listDay;
+                this.dayChartWeight.weight = listWeight;
+
+                this.drawDayChart();
+            })
         })
     }
 
-    drawDayChart () {
+    drawDayChart() {
         this.options = {
             chart: {
                 defaultSeriesType: 'areaspline',

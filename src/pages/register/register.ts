@@ -46,7 +46,7 @@ export class RegisterPage {
     private sanitizer: DomSanitizer,
     private loading: LoadingProvider
   ) {
-    
+
   }
   showRadio(step) {
     let alert = this.alertCtrl.create();
@@ -92,7 +92,9 @@ export class RegisterPage {
   }
 
   ionViewDidLoad() {
-    this.currentUser = this.userProvider.getCurrentUserDetails();
+    this.userProvider.getCurrentUserDetails().subscribe(res => {
+      this.currentUser = res;
+    });
   }
 
   emitAttachment() {
@@ -126,7 +128,6 @@ export class RegisterPage {
         sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
       }
 
-      let photoExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];
       this.camera.getPicture(options).then((img) => {
         if (isAndroid) {
           resolve(img);

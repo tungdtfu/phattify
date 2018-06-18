@@ -35,20 +35,8 @@ export class UserProvider {
           observer.next(status);
           return;
         }
-
-        let token = res['token'];
-        var user = this.jwtHelper.decodeToken(token);
-        this.storage.set(StorageKey.userDetails, user)
-
-        // Save loginToken and get Information user 
-        localStorage.setItem(StorageKey.loginToken, token);
-        this.getCurrentUser().subscribe(user => {
-          if (user) {
-            observer.next(status);
-          } else {
-            observer.next(ResponseStatus.error);
-          }
-        })
+        localStorage.setItem(StorageKey.loginToken, res['token']);
+        observer.next(status);
       }, err => {
         observer.error(err);
       });
@@ -64,16 +52,8 @@ export class UserProvider {
           observer.next(status);
           return;
         }
-
-        // Save loginToken and get Information user 
         localStorage.setItem(StorageKey.loginToken, res['token']);
-        this.getCurrentUser().subscribe(user => {
-          if (user) {
-            observer.next(status);
-          } else {
-            observer.next(ResponseStatus.error);
-          }
-        })
+        observer.next(status);
       }, err => {
         observer.error(err);
       });
@@ -82,13 +62,28 @@ export class UserProvider {
 
 
   getCurrentUserDetails() {
-    return localStorage.getItem(StorageKey.loginToken);
+    return Observable.create(observer => {
+      this.storage.get(StorageKey.userDetails).then(details => {
+        if (details) {
+          observer.next(details);
+          return;
+        }
+        this._apiProvider.requestGet(`${SERVER_URL}user`).subscribe(res => {
+          if (res['status'] == ResponseStatus.error) {
+            observer.next(null);
+          } else {
+            this.storage.set(StorageKey.userDetails, res['data']);
+            observer.next(res['data']);
+          }
+        });
+      })
+    })
   }
 
   refreshToken() {
     let url = SERVER_URL + 'refreshtoken';
     let token = localStorage.getItem(StorageKey.loginToken);
-    if(!token){
+    if (!token) {
       localStorage.clear();
       return Observable.create(observer => {
         observer.error();
@@ -109,18 +104,5 @@ export class UserProvider {
         observer.error(err);
       });
     });
-  }
-
-  getCurrentUser () {
-    return Observable.create(observer => {
-      this._apiProvider.requestGet(`${SERVER_URL}user`).subscribe(res => {
-        if (res['status'] == ResponseStatus.error) {
-          observer.next(null);
-        } else {
-          this._localStorage.setItem(StorageKey.userDetails, res['data']);
-          observer.next(res['data']);
-        }
-      });
-    })
   }
 }
