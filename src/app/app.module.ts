@@ -36,6 +36,7 @@ import { ApiProvider } from '../providers/api/api';
 
 // Page
 import { ConversationPage } from '../../src/pages/conversation/conversation';
+import { ListConversationPage } from '../../src/pages/list-conversation/list-conversation';
 
 // Component
 import { MessageComponent } from '../../src/components/message/message';
@@ -56,6 +57,7 @@ import { SocketProvider } from '../../src/providers/services/socket.service';
     SettingPage,
     TabsPage,
     ConversationPage,
+    ListConversationPage,
 
     MessageComponent,
     InputChatComponent
@@ -83,6 +85,7 @@ import { SocketProvider } from '../../src/providers/services/socket.service';
     SettingPage,
     TabsPage,
     ConversationPage,
+    ListConversationPage,
 
     MessageComponent,
     InputChatComponent

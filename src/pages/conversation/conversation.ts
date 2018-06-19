@@ -76,8 +76,10 @@ export class ConversationPage {
 
   getCurrentUser() {
     this.userProvider.getCurrentUserDetails().subscribe(res=>{
-      this.fake_uuid=res.Id;
 
+      this.fake_uuid=res.Id;
+      this.fake_uuid_friend = this.navParams.get('friendId');
+      
       this.getListConversation(this.friend_ID);
       this.socket = this.socketProvider.ConnectSocket();
       this.socketProvider.JoinGroupChat(this.fake_groupId);

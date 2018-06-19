@@ -6,6 +6,7 @@ import { HealthyProvider } from '../../providers/healthy/healthy';
 import { DatetimeProvider } from '../../providers/date-time-format/date-time-format';
 import { LoadingProvider } from '../../providers/loading/loading';
 import { ConversationPage } from '../conversation/conversation';
+import { ListConversationPage } from '../list-conversation/list-conversation';
 
 @Component({
     selector: 'page-client',
@@ -71,7 +72,7 @@ export class ClientPage {
     }
 
     testMessageModule(){
-        this.navCtrl.push(ConversationPage);
+        this.navCtrl.push(ListConversationPage);
     }
 
     showPrompt() {
