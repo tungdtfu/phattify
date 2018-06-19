@@ -32,7 +32,7 @@ export class ApiProvider {
     }
     let data = {
       user_id: user_id,
-      group_id: group_id,
+      // group_id: group_id,
       friend_id: friend_id
     };
 
@@ -46,7 +46,10 @@ export class ApiProvider {
     //headers.append('login_token', login_token);
     let url = API_Socket + 'get-info-group';
     return this.http.post(url, data)
-      .map((res: any) => res.json());
+      .map((res:any) => {
+        // console.log(res.json());
+        return res;
+      });
   }
 
   getListGroupChat(user_id, login_token) {

@@ -26,7 +26,7 @@ export class ConversationPage {
   fake_uuid = '';
   fake_uuid_friend = '21B69402-7E9C-4BA3-99A8-6D84A96FA866';
   fake_loginToken = '';
-  fake_groupId = null;
+  fake_groupId = 'd9d0e78e-f248-4ce4-b2ed-c188d8d3a9c7';
   /**
    * HARD CODE END
    */
@@ -77,6 +77,19 @@ export class ConversationPage {
   getCurrentUser() {
     this.userProvider.getCurrentUserDetails().subscribe(res=>{
       this.fake_uuid=res.Id;
+
+      this.getListConversation(this.friend_ID);
+      this.socket = this.socketProvider.ConnectSocket();
+      this.socketProvider.JoinGroupChat(this.fake_groupId);
+      this.socket.on('send_message_to_client', msg => {
+        console.log("new mess from other" + msg);
+        // if (this.group_id && msg.group_id == this.group_id && this.navCtrl.getActive().name == 'ConversationPage') {
+        // if (this.user.id != msg.current_user.id) {
+        // this.apiProvider.readMessage(this.user.id, this.group_id);
+        this.addMessageTolist(msg);
+        // }
+        // }
+      });
     })
   }
 
@@ -115,19 +128,6 @@ export class ConversationPage {
     setTimeout(() => {
       this.showBoxShadow = true;
     }, 300);
-
-    this.getListConversation(this.friend_ID);
-    this.socket = this.socketProvider.ConnectSocket();
-    this.socketProvider.JoinGroupChat(this.fake_groupId);
-    this.socket.on('send_message_to_client', msg => {
-      console.log("new mess from other" + msg);
-      // if (this.group_id && msg.group_id == this.group_id && this.navCtrl.getActive().name == 'ConversationPage') {
-      // if (this.user.id != msg.current_user.id) {
-      // this.apiProvider.readMessage(this.user.id, this.group_id);
-      this.addMessageTolist(msg);
-      // }
-      // }
-    });
     this.getCurrentUser();
   }
 
@@ -214,8 +214,9 @@ export class ConversationPage {
 
 
   formatData(data) {
-    data.timeDiff = moment.utc(data.created_at).local().fromNow();
-    data.content = JSON.parse(data.content);
+    
+    data.timeDiff = moment.utc(data.createdAt).local().fromNow();
+    data.content = JSON.parse(data.Content);
     // if(data.content.Current_situation){
     //   data.content.Current_situation = JSON.parse(data.content.Current_situation);
     // }

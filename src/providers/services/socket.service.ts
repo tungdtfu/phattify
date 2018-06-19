@@ -19,6 +19,9 @@ export class SocketProvider {
     this.socket.on('connect', function(){
       console.log('connect')
     });
+    this.socket.on('invitaion_', function(a){
+      console.log('a: ', a)
+    });
     return this.socket;
   }
 
