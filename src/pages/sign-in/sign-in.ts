@@ -9,6 +9,7 @@ import { Storage } from '@ionic/storage';
 import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms';
 import { ClientPage } from '../client/client';
 import { StorageKey } from '../../constants/storage-key.constain';
+import { TabsPage } from '../tabs/tabs';
 /**
  * Generated class for the SignInPage page.
  *
@@ -44,7 +45,7 @@ export class SignInPage {
       if (res === ResponseStatus.error) {
         return;
       }
-      this.navCtrl.setRoot(ClientPage);
+      this.navCtrl.setRoot(TabsPage);
     }, () => {
       this.loading.hideLoading();
       return;
@@ -63,7 +64,7 @@ export class SignInPage {
         this.error = true;
         return;
       }
-      this.navCtrl.setRoot(ClientPage);
+      this.navCtrl.setRoot(TabsPage);
     }, () => {
       this.loading.hideLoading();
       this.error = true;

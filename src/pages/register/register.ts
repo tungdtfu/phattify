@@ -52,11 +52,12 @@ export class RegisterPage {
     let alert = this.alertCtrl.create();
     let title;
     if (step == 'profile') {
-      title = "Lightsaber color1"
+      title = "  Please use Head shot upper body picture"
+      
     } else if (step == 'front') {
-      title = "Lightsaber color2"
+      title = " Please use Full lenth front head to toe picture"
     } else {
-      title = "Lightsaber color3"
+      title = " Please use Full length side on picture"
     }
     alert.setTitle(title);
     alert.addInput({

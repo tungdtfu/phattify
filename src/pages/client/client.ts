@@ -28,7 +28,9 @@ export class ClientPage {
     animations: string[] = [];
     gradient: boolean = false;
     realCurrent: number = 0;
-
+    currentDay : any;
+    roundId : any;
+    chart : any;
     yourWeight: any = {
         lost: 0,
         current: 0,
@@ -51,18 +53,18 @@ export class ClientPage {
         private _datetimeProvider: DatetimeProvider, private _loadingProvider: LoadingProvider) {
         this.chartWeight = {
             start: {
-                weight: 128,
-                bmi: 42.6,
-                date: 'Aug 23, 2018'
+                weight: 0,
+                bmi: 0,
+                date: ''
             },
             target: {
-                weight: 96,
-                status: 'Complete',
-                date: 'Dec 23, 2018'
+                weight: 0,
+                status: '',
+                date: ''
             },
             round: {
-                current: 27,
-                max: 50
+                current: 0,
+                max: 0
             }
         }
     }
@@ -104,6 +106,25 @@ export class ClientPage {
                         this.chartWeight.round = {
                             current: this.chartWeight.start.weight - this.chartWeight.target.weight - Math.abs(this.chartWeight.target.weight - data.weight),
                             max: this.chartWeight.start.weight - this.chartWeight.target.weight
+                        }
+                        if(this.currentDay){
+                            this._loadingProvider.showLoading();
+                            this._roundProvider.updateCurrentWeight(this.yourWeight.current,this.currentDay.Id).subscribe(res => {
+                                this._loadingProvider.hideLoading();
+                                if (res['status'] == ResponseStatus.error) {
+                                    return;
+                                }
+                                this.getDetailChart (this.chart);
+                            })
+                        }else{
+                            this._loadingProvider.showLoading();
+                            this._roundProvider.creatCurrentWeight(this.yourWeight.current,this.roundId).subscribe(res => {
+                                this._loadingProvider.hideLoading();
+                                if (res['status'] == ResponseStatus.error) {
+                                    return;
+                                }
+                                this.getDetailChart (this.chart);
+                            })
                         }
                     }
                 }
@@ -158,52 +179,53 @@ export class ClientPage {
             if (res['status'] == ResponseStatus.error) {
                 return;
             }
-            let chart = res['data'].find(item => {
+            this.chart = res['data'].find(item => {
                 return item.Status == 'Processing';
             })
-            if (!chart) {
+           
+            if (!this.chart) {
                 return;
             }
-
-           
-            this._roundProvider.getRoundByUserId('DA66958A-292C-4EC5-B44D-3F7C98E48983').subscribe(detail => {
-                if (detail['status'] == ResponseStatus.error) {
-                    return;
-                }
-                let data = detail['data'];
-                let currentDay = data.find(item =>{
-                    return this._datetimeProvider.dateFormatRound(item.createdAt) == this._datetimeProvider.dateFormatRound(new Date());
-                })
-                if(currentDay){
-                    this.yourWeight.current = currentDay.CurrentWeight;
-                    this.yourWeight.lost = chart.StartWeight - currentDay.CurrentWeight;
-                    this.yourWeight.remaining  = currentDay.CurrentWeight - chart.TargetWeight;
-                }
-
-                this.calWeight(data)
-                this.drawDayChart();
-                //chart.StartWeight = 120
-                this.chartWeight = {
-                    start: {
-                        weight: chart.StartWeight,
-                        bmi: this._healthyProvider.getBmi(chart.StartWeight, 2.1),
-                        date: this._datetimeProvider.dateFormatRound(chart.StartDate)
-                    },
-                    target: {
-                        weight: chart.TargetWeight,
-                        status: chart.Status,
-                        date: this._datetimeProvider.dateFormatRound(chart.EndDate)
-                    },
-                    round: {
-                        current: currentDay ? chart.StartWeight - chart.TargetWeight - Math.abs(chart.TargetWeight - currentDay.CurrentWeight): 0,
-                        max: chart.StartWeight- chart.TargetWeight
-                    }
-                }
-            })
-
+            this.roundId = this.chart.Id;
+           this.getDetailChart (this.chart);
         })
     }
+    getDetailChart(chart){
+        this._roundProvider.getRoundByUserId(this.roundId).subscribe(detail => {
+            if (detail['status'] == ResponseStatus.error) {
+                return;
+            }
+            let data = detail['data'];
+            console.log(data)
+           this.currentDay = data.find(item =>{
+                return this._datetimeProvider.dateFormatRound(item.createdAt) == this._datetimeProvider.dateFormatRound(new Date());
+            })
+            if(this.currentDay){
+                this.yourWeight.current = this.currentDay.CurrentWeight;
+                this.yourWeight.lost = chart.StartWeight - this.currentDay.CurrentWeight;
+                this.yourWeight.remaining  = this.currentDay.CurrentWeight - chart.TargetWeight;
+            }
 
+            this.calWeight(data)
+            this.drawDayChart();
+            this.chartWeight = {
+                start: {
+                    weight: chart.StartWeight,
+                    bmi: this._healthyProvider.getBmi(chart.StartWeight, chart.Height),
+                    date: this._datetimeProvider.dateFormatRound(chart.StartDate)
+                },
+                target: {
+                    weight: chart.TargetWeight,
+                    status: chart.Status,
+                    date: this._datetimeProvider.dateFormatRound(chart.EndDate)
+                },
+                round: {
+                    current: this.currentDay ? chart.StartWeight - chart.TargetWeight - Math.abs(chart.TargetWeight - this.currentDay.CurrentWeight): 0,
+                    max: chart.StartWeight- chart.TargetWeight
+                }
+            }
+        })
+    }
     drawDayChart() {
         this.options = {
             chart: {
