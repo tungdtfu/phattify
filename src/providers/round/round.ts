@@ -61,7 +61,7 @@ export class RoundProvider {
     let authdata = 'Bearer ' + token;
     let params = {
       currentWeight: currentWeight,
-      roundId: roundId
+      id: roundId
     }
     return Observable.create(observer => {
       this.http.patch(url, params,{ headers: { 'Authorization': authdata }}).subscribe(res => {
