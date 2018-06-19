@@ -105,4 +105,30 @@ export class UserProvider {
       });
     });
   }
+
+  getlistContact() {
+    let url = SERVER_URL + 'userclient';
+    let token = localStorage.getItem(StorageKey.loginToken);
+    if (!token) {
+      localStorage.clear();
+      return Observable.create(observer => {
+        observer.error();
+      })
+    }
+    let authdata = 'Bearer ' + token;
+    return Observable.create(observer => {
+      this.http.get(url, { headers: { 'Authorization': authdata } }).subscribe(res => {
+        let status = res['status'];
+        if (status === ResponseStatus.error) {
+          localStorage.clear();
+          observer.next(status);
+          return;
+        }
+        localStorage.setItem(StorageKey.loginToken, res['token']);
+        observer.next(status);
+      }, err => {
+        observer.error(err);
+      });
+    });
+  }
 }
