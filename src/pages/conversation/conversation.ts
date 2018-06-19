@@ -79,7 +79,9 @@ export class ConversationPage {
 
       this.fake_uuid=res.Id;
       this.fake_uuid_friend = this.navParams.get('friendId');
-      
+
+      this.user = res;
+
       this.getListConversation(this.friend_ID);
       this.socket = this.socketProvider.ConnectSocket();
       this.socketProvider.JoinGroupChat(this.fake_groupId);
@@ -142,13 +144,13 @@ export class ConversationPage {
       friend_id = this.friend.id;
     }
     //this.loadingScreen.presentLoading();
-    this.apiProvider.getListGroupChat(this.fake_uuid, this.fake_loginToken).subscribe(res => {
+    this.apiProvider.getListGroupChat(this.user.Id, this.fake_loginToken).subscribe(res => {
       console.log(res);
     }, err => {
       console.log(err);
     })
 
-    this.apiProvider.getListConversation(this.fake_uuid, this.fake_groupId, this.fake_uuid_friend, this.fake_loginToken).subscribe(
+    this.apiProvider.getListConversation(this.user.Id, this.fake_groupId, this.fake_uuid_friend, this.fake_loginToken).subscribe(
       res => {
         //this.loadingScreen.dismissLoading();
         if (res.status == SUCCESS_STATUS) {
@@ -201,11 +203,11 @@ export class ConversationPage {
     let dataMessage = {
       group_id: this.fake_groupId,
       user_id: this.fake_uuid,
-      // current_user: {
-      //   id: this.user.id,
-      //   avatar: this.user.avatar,
-      //   full_name: this.user.full_name,
-      // },
+      current_user: {
+        id: this.user.id,
+        avatar: null,
+        full_name: this.user.FirstName + ' ' + this.user.SurName,
+      },
       content: sentMessage,
       content_type: content_type
     }
