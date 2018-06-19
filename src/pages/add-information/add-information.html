@@ -25,6 +25,10 @@
       </ion-item>
       <p class="error-text" *ngIf="registerForm.controls.surname.touched && !registerForm.controls.surname.valid">This field is required.</p>
       <ion-item>
+        <ion-label class="required">Email</ion-label>
+        <ion-input type="email" formControlName="email"></ion-input>
+      </ion-item>
+      <ion-item>
         <ion-label class="required">Password</ion-label>
         <ion-input type="password" formControlName="password"></ion-input>
       </ion-item>
@@ -56,10 +60,7 @@
         <ion-input type="text" formControlName="city"></ion-input>
       </ion-item>
       <p class="error-text" *ngIf="registerForm.controls.city.touched && !registerForm.controls.city.valid">This field is required.</p>
-      <ion-item>
-        <ion-label class="required">Email</ion-label>
-        <ion-input type="email" formControlName="email"></ion-input>
-      </ion-item>
+     
       <p class="error-text" *ngIf="registerForm.controls.email.touched && !registerForm.controls.email.valid">This field is required.</p>
       <ion-item>
         <ion-label class="required">Contact Number</ion-label>
