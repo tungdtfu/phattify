@@ -135,9 +135,8 @@ export class AddInformationPage {
       UnitOfWeight: form.weightUnit,
       UnitOfHeight: form.heightUnit,
       healthMedication: form.specifyHealth,
-      "healthId": "4E56B8B2-FA06-4981-99BE-135866B92983",
+      healthId: this.selectedHealthChecklist,
       otherIllnesses: form.specifyHealthChecklist,
-      selectedHealthChecklist: this.selectedHealthChecklist
     }
     this.navCtrl.push(DlsclaimerPage, { model: model });
   }

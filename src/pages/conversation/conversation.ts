@@ -23,7 +23,7 @@ export class ConversationPage {
   /**
    * HARD CODE BEGIN
    */
-  fake_uuid = '05adf56b-c128-4203-802f-d8d0e2916210';
+  fake_uuid = '';
   fake_uuid_friend = '21B69402-7E9C-4BA3-99A8-6D84A96FA866';
   fake_loginToken = '';
   fake_groupId = null;
@@ -75,8 +75,8 @@ export class ConversationPage {
   }
 
   getCurrentUser() {
-    var user = this.userProvider.getCurrentUserDetails().subscribe(res=>{
-      debugger
+    this.userProvider.getCurrentUserDetails().subscribe(res=>{
+      this.fake_uuid=res.Id;
     })
   }
 
