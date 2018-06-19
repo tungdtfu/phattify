@@ -205,7 +205,7 @@ export class ClientPage {
             this.chartWeight = {
                 start: {
                     weight: chart.StartWeight,
-                    bmi: this._healthyProvider.getBmi(chart.StartWeight, 2.1),
+                    bmi: this._healthyProvider.getBmi(chart.StartWeight, chart.Height),
                     date: this._datetimeProvider.dateFormatRound(chart.StartDate)
                 },
                 target: {
