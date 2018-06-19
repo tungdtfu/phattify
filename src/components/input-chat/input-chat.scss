@@ -1,7 +1,16 @@
 input-chat {
+  display: flex;
+  align-items: center;
+  ion-textarea {
+    padding-top: 10px;
+  }
   textarea{
     &.text-input{
       margin: 0;
     }
+  }
+  ion-icon {
+    margin-right: 20px;
+    font-size: 45px;
   }
 }
