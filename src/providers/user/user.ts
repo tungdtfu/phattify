@@ -108,27 +108,27 @@ export class UserProvider {
 
   getlistContact() {
     let url = SERVER_URL + 'userclient';
-    let token = localStorage.getItem(StorageKey.loginToken);
-    if (!token) {
-      localStorage.clear();
-      return Observable.create(observer => {
-        observer.error();
-      })
-    }
-    let authdata = 'Bearer ' + token;
-    return Observable.create(observer => {
+    let objObs = new Observable(obs => {
+      let token = localStorage.getItem(StorageKey.loginToken);
+      if (!token) {
+        localStorage.clear();
+        obs.error();
+      }
+      let authdata = 'Bearer ' + token;
+
       this.http.get(url, { headers: { 'Authorization': authdata } }).subscribe(res => {
         let status = res['status'];
-        if (status === ResponseStatus.error) {
+        if (status === ResponseStatus.success) {
+          obs.next(res);
+        } else {
           localStorage.clear();
-          observer.next(status);
-          return;
+          obs.error(res);
         }
-        localStorage.setItem(StorageKey.loginToken, res['token']);
-        observer.next(status);
       }, err => {
-        observer.error(err);
+        obs.error(err);
       });
-    });
+    })
+
+    return objObs;
   }
 }
