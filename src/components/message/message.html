@@ -1,5 +1,5 @@
-<ion-row class="person-1" [ngClass]="{'person-1': conversation.user_id != user_id , 'person-2': conversation.user_id == user_id}">
-  <ion-row class="conversation-avatar" tappable (click)='showDetail(conversation.user_id )'>
+<ion-row class="person-1" [ngClass]="{'person-1': conversation.UserId != user_id , 'person-2': conversation.UserId == user_id}">
+  <ion-row class="conversation-avatar" tappable (click)='showDetail(conversation.UserId )'>
     <!-- <img [src]="conversation.avatar" onError="this.src='assets/img/profile-avatar.png' ; " /> -->
   </ion-row>
   <ion-row class="conversation-row" *ngIf="conversation.content.Content">
