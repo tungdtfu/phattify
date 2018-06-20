@@ -1,9 +1,3 @@
-<!--
-  Generated template for the RegisterPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-content>
   <ion-card>
       <ion-img width="108" height="108" src="assets/imgs/login-mage.png"></ion-img>
@@ -12,7 +6,7 @@
       <div class="content-process">
           <ion-list>
               <ion-item>
-                  <div  class="process-col" [ngClass]="{'process-col-active':currentUser}"></div><!--class "process-col-active" to green for process col-->
+                  <div  class="process-col" [ngClass]="{'process-col-active':currentUser}"></div>
                   <button ion-button (click)="addInformation()">Create Profile</button>
                   <div  class="sub-content" *ngIf="currentUser">
                       <p class="sub-title">Tap an icon to start taking your picture</p>
@@ -39,7 +33,7 @@
                   </div>
               </ion-item>
               <ion-item>
-                  <div class="process-col process-col-2 process-col-extra" ></div><!--class"process-col-extra" appear when class"poecess-col-active" in the first col active-->
+                  <div class="process-col process-col-2 process-col-extra" ></div>
                   <button ion-button [disabled]="disabledTakeProfile()" (click)="upImage()">Take profile picture</button>
               </ion-item>
           </ion-list>

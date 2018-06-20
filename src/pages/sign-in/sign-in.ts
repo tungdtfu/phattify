@@ -30,8 +30,7 @@ export class SignInPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private userProvider: UserProvider,
-    private loading: LoadingProvider,
-    private storage: Storage
+    private loading: LoadingProvider
   ) {
   }
 

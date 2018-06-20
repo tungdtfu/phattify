@@ -1,6 +1,5 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, Platform } from 'ionic-angular';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Base64 } from "@ionic-native/base64";
 import { AddInformationPage } from '../add-information/add-information';
 import { ImagePicker } from '@ionic-native/image-picker';
@@ -9,14 +8,13 @@ import { ImageProvider } from '../../providers/image/image';
 import { UserProvider } from '../../providers/user/user';
 import { LoadingProvider } from '../../providers/loading/loading';
 import { ResponseStatus } from '../../constants/response-status.constain';
-import { ClientPage } from '../client/client';
+import { TabsPage } from '../tabs/tabs';
 /**
  * Generated class for the RegisterPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-declare var window: any;
 declare var b64toBlob: any;
 @IonicPage()
 @Component({
@@ -26,7 +24,6 @@ declare var b64toBlob: any;
 })
 export class RegisterPage {
   currentUser: any;
-  @Output() attachments = new EventEmitter<any>();
   radioOpen: any;
   radioResult: any;
   imgs: any[] = [];
@@ -45,7 +42,6 @@ export class RegisterPage {
     private imageService: ImageProvider,
     private userProvider: UserProvider,
     private base64: Base64,
-    private sanitizer: DomSanitizer,
     private loading: LoadingProvider
   ) {
 
@@ -97,11 +93,8 @@ export class RegisterPage {
   ionViewDidLoad() {
     this.userProvider.getCurrentUserDetails().subscribe(res => {
       this.currentUser = res;
+    }, () => {
     });
-  }
-
-  emitAttachment() {
-    this.attachments.emit(this.imgs);
   }
 
   takePhotoOrVideo() {
@@ -198,7 +191,7 @@ export class RegisterPage {
   }
 
   Continue() {
-    this.navCtrl.push(ClientPage)
+    this.navCtrl.setRoot(TabsPage)
   }
 
   showImageBase64(imageData) {

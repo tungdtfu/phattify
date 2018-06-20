@@ -32,7 +32,6 @@ export class ListConversationPage {
     this.userProvider.getlistContact().subscribe((res:any) => {
       this.listContact =  res.data;
     }, err => {
-      debugger
     })
   }
 
@@ -42,7 +41,6 @@ export class ListConversationPage {
   }
 
   chatToContact(uuidContact: string = '21B69402-7E9C-4BA3-99A8-6D84A96FA866') {
-    debugger
     this.navCtrl.push(ConversationPage, { friendId: uuidContact})
   }
 

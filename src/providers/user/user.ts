@@ -68,14 +68,20 @@ export class UserProvider {
           observer.next(details);
           return;
         }
-        this._apiProvider.requestGet(`${SERVER_URL}user`).subscribe(res => {
+        let token = localStorage.getItem(StorageKey.loginToken);
+        if(!token){
+          observer.error(null);
+          return;
+        }
+        let authdata = 'Bearer ' + token;
+        this.http.get(`${SERVER_URL}user`, { headers: { 'Authorization': authdata } }).subscribe(res => {
           if (res['status'] == ResponseStatus.error) {
             observer.error(null);
           } else {
             this.storage.set(StorageKey.userDetails, res['data']);
             observer.next(res['data']);
           }
-        },err=>{
+        }, err => {
           observer.error(err);
         });
       })

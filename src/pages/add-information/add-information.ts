@@ -54,7 +54,7 @@ export class AddInformationPage {
       surname: ['', Validators.required],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required],
-      dateOfBirth: [Date.now(), Validators.required],
+      dateOfBirth: ['2000-01-01', Validators.required],
       country: ['', Validators.required],
       city: ['', Validators.required],
       email: ['', Validators.required],
