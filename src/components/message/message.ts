@@ -1,5 +1,6 @@
-import { Component , ViewChild , Input, Output} from '@angular/core';
-import { NavController, NavParams , App } from 'ionic-angular';
+import { Component, ViewChild, Input, Output } from '@angular/core';
+import { NavController, NavParams, App } from 'ionic-angular';
+import { UserProvider } from '../../providers/user/user';
 
 //import pages
 
@@ -15,7 +16,17 @@ export class MessageComponent {
 
   @Input()
   type: any;
-  constructor(private app: App , public navParams: NavParams ,public navCtrl: NavController) {
+  constructor(private app: App, public navParams: NavParams, public navCtrl: NavController,
+    private userProvider: UserProvider
+  ) {
+    this.getCurrentUser();
+  }
+
+  getCurrentUser() {
+    this.userProvider.getCurrentUserDetails().subscribe(res => {
+      console.log('res', res);
+      this.user_id = res.Id;
+    })
   }
 
   buildCurrentJob(current_situation) {
