@@ -182,7 +182,6 @@ export class ClientPage {
             this.chart = res['data'].find(item => {
                 return item.Status == 'Processing';
             })
-           console.log(this.chart.ProgramName)
             if (!this.chart) {
                 return;
             }
