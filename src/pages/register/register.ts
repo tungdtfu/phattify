@@ -57,7 +57,7 @@ export class RegisterPage {
       title = "  Please use Head shot upper body picture"
 
     } else if (step == 'front') {
-      title = " Please use Full lenth front head to toe picture"
+      title = " Please use Full length front head to toe picture"
     } else {
       title = " Please use Full length side on picture"
     }
