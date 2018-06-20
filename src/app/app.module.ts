@@ -69,7 +69,7 @@ import { SocketProvider } from '../../src/providers/services/socket.service';
     SignInPageModule,
     RoundProgressModule,
     ChartModule.forRoot(require('highcharts')),
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp,{scollPadding:false}),
     IonicStorageModule.forRoot(),
     HttpModule
   ],

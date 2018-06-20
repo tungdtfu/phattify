@@ -7,7 +7,7 @@ $c-sky: #e0fffb;
 $c-light-sky: #E8FCFF;
 $c-blue-border: #c7eafb;
 $c-grey: #999999;
-$c-grey-p : #777777;
+$c-grey-p: #777777;
 $c-grey-p-large: #606569;
 $c-grey-border: #e0dcdc;
 $c-grey-border2: #707070;
@@ -15,124 +15,129 @@ $c-green: #2e9f55;
 $c-green2: #1ac30c;
 $c-black: #111;
 @import url('https://fonts.googleapis.com/css?family=Roboto');
-
 body {
-  font-family: 'Roboto', sans-serif;
-  font-size: 14px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
 }
 
 ion-header {
-  ion-navbar.toolbar {
-    min-height: 61px;
-    .back-button {
-      color: $c-white;
-      background-color: transparent;
-      ion-icon {
-        &:before {
-          content: "\f27d"!important;
+    ion-navbar.toolbar {
+        min-height: 61px;
+        .back-button {
+            color: $c-white;
+            background-color: transparent;
+            ion-icon {
+                &:before {
+                    content: "\f27d" !important;
+                }
+            }
+            .back-button-text {
+                display: none;
+            }
         }
-      }
-      .back-button-text {
-        display: none;
-      }
     }
-  }
 }
+
 .toolbar-background {
-  background-color: $c-blue;
-  &.toolbar-background-ios {
     background-color: $c-blue;
-  }
+    &.toolbar-background-ios {
+        background-color: $c-blue;
+    }
 }
 
 .toolbar-title {
-  color: $c-white;
-  text-align: center;
-  font-size: 18px;
-  letter-spacing: 1.2px;
-  &.toolbar-title-ios {
     color: $c-white;
-  }
+    text-align: center;
+    font-size: 18px;
+    letter-spacing: 1.2px;
+    &.toolbar-title-ios {
+        color: $c-white;
+    }
 }
 
 ion-footer {
-  ion-toolbar {
-    min-height: 55px!important;
-  }
-  .toolbar-background {
-    background-color: $c-light-blue;
-    border-width: 0 !important;
-    &.toolbar-background-ios {
-      background-color: $c-light-blue;
+    ion-toolbar {
+        min-height: 55px !important;
     }
-  }
-
-  .toolbar-title {
-    color: $c-blue;
-    text-align: center;
-    font-size: 13px;
-    font-weight: 500;
-    &.toolbar-title-ios {
-      color: $c-blue;
+    .toolbar-background {
+        background-color: $c-light-blue;
+        border-width: 0 !important;
+        &.toolbar-background-ios {
+            background-color: $c-light-blue;
+        }
     }
-  }
+    .toolbar-title {
+        color: $c-blue;
+        text-align: center;
+        font-size: 13px;
+        font-weight: 500;
+        &.toolbar-title-ios {
+            color: $c-blue;
+        }
+    }
 }
 
 .button-arrow-back {
-  display: inline-block;
-  background-color: $c-blue;
-  box-shadow: none;
-  ion-icon {
-    font-size: 35px;
-    font-weight: 700;
-    color: $c-white;
-    &:before {
-      content: "\f27d"!important;
+    display: inline-block;
+    background-color: $c-blue;
+    box-shadow: none;
+    ion-icon {
+        font-size: 35px;
+        font-weight: 700;
+        color: $c-white;
+        &:before {
+            content: "\f27d" !important;
+        }
     }
-  }
 }
+
 .check-list-headline {
-  font-size: 20px;
-  font-weight: 400;
-  text-transform: uppercase;
+    font-size: 20px;
+    font-weight: 400;
+    text-transform: uppercase;
 }
+
 .check-list-description {
-  font-size: 13px;
+    font-size: 13px;
 }
 
 .no-active {
-  display: none !important;
+    display: none !important;
 }
 
 .sub-title-custom {
-  text-transform: uppercase;
-  font-size: 16px;
-  font-weight: 700;
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: 700;
 }
 
 .p-custom {
-  font-size: 13px;
-  line-height: 2;
+    font-size: 13px;
+    line-height: 2;
 }
 
 .p-large {
-  font-size: 15px;
+    font-size: 15px;
 }
 
 .p-small {
-  font-size: 13px;
+    font-size: 13px;
 }
 
-.error-text{
-  color: red;
-  padding-left: 16px;
+.error-text {
+    color: red;
+    padding-left: 16px;
 }
 
 .required:after {
-  content: "*";
-  color: red;
-  margin-left: 3px;
-  font-size: 15px;
-  height: 15px;
-  display: inline-block;
+    content: "*";
+    color: red;
+    margin-left: 3px;
+    font-size: 15px;
+    height: 15px;
+    display: inline-block;
+}
+
+ion-content.content-md:not([padding]) .scroll-content {
+    padding-bottom: 0 !important;
 }

@@ -55,7 +55,7 @@ export class RegisterPage {
     let title;
     if (step == 'profile') {
       title = "  Please use Head shot upper body picture"
-      
+
     } else if (step == 'front') {
       title = " Please use Full lenth front head to toe picture"
     } else {
@@ -110,7 +110,8 @@ export class RegisterPage {
         targetHeight: 768,
         targetWidth: 768,
         destinationType: this.camera.DestinationType.DATA_URL,
-        mediaType: this.camera.MediaType.ALLMEDIA
+        mediaType: this.camera.MediaType.PICTURE,
+        sourceType: this.camera.PictureSourceType.CAMERA
       }
       this.camera.getPicture(options).then((img) => {
         resolve(`data:image/png;base64,${img}`);
@@ -127,7 +128,7 @@ export class RegisterPage {
         targetHeight: 768,
         targetWidth: 768,
         destinationType: this.camera.DestinationType.DATA_URL,
-        mediaType: this.camera.MediaType.ALLMEDIA,
+        mediaType: this.camera.MediaType.PICTURE,
         sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
       }
 
@@ -148,12 +149,12 @@ export class RegisterPage {
       if (img.indexOf('data:image/png;base64') > -1) {
         img = img.replace('data:image/png;base64,', '');
         var blob = b64toBlob(img, 'image/png');
-        resolve(URL.createObjectURL(blob));
+        resolve(blob);
       } else {
         this.base64.encodeFile(img).then((base64File: string) => {
           base64File = base64File.replace('data:image/*;charset=utf-8;base64,', '');
           var blob = b64toBlob(base64File, 'image/png');
-          resolve(URL.createObjectURL(blob));
+          resolve(blob);
         }, (err) => {
           console.log(err);
         });
@@ -164,47 +165,46 @@ export class RegisterPage {
   upImage() {
     this.loading.showLoading();
     let list = [];
-    this.makeBase64ToBlob(this.listImage.profile).then(img => {
+    var profile = this.makeBase64ToBlob(this.listImage.profile);
+    var front = this.makeBase64ToBlob(this.listImage.front);
+    var side = this.makeBase64ToBlob(this.listImage.side);
+    Promise.all([profile, front, side]).then(res => {
       list.push({
-        img: this.makeBase64ToBlob(this.listImage.profile),
+        img: res[0],
         name: 'profile.png'
       });
-      this.makeBase64ToBlob(this.listImage.front).then(img => {
-        list.push({
-          img: this.makeBase64ToBlob(this.listImage.front),
-          name: 'front.png'
-        });
-        this.makeBase64ToBlob(this.listImage.side).then(img => {
-          list.push({
-            img: this.makeBase64ToBlob(this.listImage.side),
-            name: 'side.png'
-          });
-          this.imageService.upLoadImage(list).subscribe(res => {
-            this.loading.hideLoading();
-            if (res['status'] == ResponseStatus.error) {
-              this.loading.showToast(res['message']);
-            } else {
-             // this.navCtrl.push(ClientPage);
-              this.successImage();
-              this.upImageSuccess = true;
-            }
-          })
-        })
+      list.push({
+        img: res[1],
+        name: 'front.png'
+      });
+      list.push({
+        img: res[2],
+        name: 'side.png'
+      });
+      this.imageService.upLoadImage(list).subscribe(res => {
+        this.loading.hideLoading();
+        if (res['status'] == ResponseStatus.error) {
+          this.loading.showToast(res['message']);
+        } else {
+          this.successImage();
+          this.upImageSuccess = true;
+        }
       })
     })
   }
-  
+
   addInformation() {
     this.navCtrl.push(AddInformationPage);
   }
-  Continue(){
+
+  Continue() {
     this.navCtrl.push(ClientPage)
   }
+
   showImageBase64(imageData) {
     return imageData;
-    // return this.sanitizer.bypassSecurityTrustResourceUrl(imageData);
   }
-  
+
   disabledTakeProfile() {
     for (let key in this.listImage) {
       if (this.listImage[key] == 'assets/imgs/default-avatar.png')
@@ -213,20 +213,20 @@ export class RegisterPage {
 
     return false;
   }
-  successImage() {
 
-		let method = this.alertCtrl.create({			
+  successImage() {
+    let method = this.alertCtrl.create({
       message: 'Your images have been saved successfully, please tap "Continue" to start using the app',
-			buttons: [
-				{
-					text: 'OK',
-					cssClass: 'method-color',
-					handler: () => {
-						console.log('OK clicked');
-					}
-				}
-			]
-		});
-		method.present()
-	}
+      buttons: [
+        {
+          text: 'OK',
+          cssClass: 'method-color',
+          handler: () => {
+            console.log('OK clicked');
+          }
+        }
+      ]
+    });
+    method.present()
+  }
 }

@@ -3,12 +3,9 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { RegisterPage } from '../register/register';
 import { UserProvider } from '../../providers/user/user';
 import { ResponseStatus } from '../../constants/response-status.constain';
-import { CalendarPage } from '../calendar/calendar';
 import { LoadingProvider } from '../../providers/loading/loading';
 import { Storage } from '@ionic/storage';
-import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms';
-import { ClientPage } from '../client/client';
-import { StorageKey } from '../../constants/storage-key.constain';
+import { FormControl, FormGroup } from '@angular/forms';
 import { TabsPage } from '../tabs/tabs';
 /**
  * Generated class for the SignInPage page.
@@ -45,7 +42,13 @@ export class SignInPage {
       if (res === ResponseStatus.error) {
         return;
       }
-      this.navCtrl.setRoot(TabsPage);
+      this.userProvider.getCurrentUserDetails().subscribe(res => {
+        if (!res.SideOn || !res.FrontOn || !res.ProfilePicture) {
+          this.navCtrl.setRoot(RegisterPage);
+        } else {
+          this.navCtrl.setRoot(TabsPage);
+        }
+      })
     }, () => {
       this.loading.hideLoading();
       return;
@@ -64,7 +67,13 @@ export class SignInPage {
         this.error = true;
         return;
       }
-      this.navCtrl.setRoot(TabsPage);
+      this.userProvider.getCurrentUserDetails().subscribe(res => {
+        if (!res.SideOn || !res.FrontOn || !res.ProfilePicture) {
+          this.navCtrl.setRoot(RegisterPage);
+        } else {
+          this.navCtrl.setRoot(TabsPage);
+        }
+      })
     }, () => {
       this.loading.hideLoading();
       this.error = true;

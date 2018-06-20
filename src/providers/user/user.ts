@@ -70,11 +70,13 @@ export class UserProvider {
         }
         this._apiProvider.requestGet(`${SERVER_URL}user`).subscribe(res => {
           if (res['status'] == ResponseStatus.error) {
-            observer.next(null);
+            observer.error(null);
           } else {
             this.storage.set(StorageKey.userDetails, res['data']);
             observer.next(res['data']);
           }
+        },err=>{
+          observer.error(err);
         });
       })
     })

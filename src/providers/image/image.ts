@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SERVER_URL } from '../../constants/config';
 import { Observable } from 'rxjs/Observable';
+import { StorageKey } from '../../constants/storage-key.constain';
 
 /*
   Generated class for the ImageProvider provider.
@@ -13,12 +14,13 @@ import { Observable } from 'rxjs/Observable';
 export class ImageProvider {
 
   constructor(public http: HttpClient) {
-    console.log('Hello ImageProvider Provider');
   }
 
   upLoadImage(listImage) {
     let url = SERVER_URL + 'uploadimages';
-    let headers = new HttpHeaders({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyMUI2OTQwMi03RTlDLTRCQTMtOTlBOC02RDg0QTk2RkE4NjYiLCJleHBpcmVzSW4iOjg2NDAwLCJpYXQiOjE1Mjg5NzI2MjgsImV4cCI6MTUyOTA1OTAyOCwiYXVkIjoiaHR0cHM6Ly9waGF0dGlmeW1vYmlsZXNlcnZpY2UuYXp1cmV3ZWJzaXRlcy5uZXQvIiwiaXNzIjoiaHR0cHM6Ly9waGF0dGlmeW1vYmlsZXNlcnZpY2UuYXp1cmV3ZWJzaXRlcy5uZXQvIn0.IPEAcqem5pJ8R52fnzRan2x_yLQwDHFEzCYDg1lHpvE'});
+    let token = localStorage.getItem(StorageKey.loginToken);
+    let authdata = 'Bearer ' + token;
+    let headers = new HttpHeaders({Authorization: authdata});
     const formData = new FormData();
     listImage.map(img => {
       formData.append('fileUpload', img.img, img.name);
