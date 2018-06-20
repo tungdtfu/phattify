@@ -1,11 +1,14 @@
 page-client {
   .circle-progress {
-    padding: 20px 25px 25px;
+    padding: 20px 20px 25px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
     background-color: $c-light-sky;
+    @media screen and (max-width: 320px) {
+      padding: 20px 5px 25px;
+    }
     .circle-progress-detail {
       position: relative;
       color: $c-blue;
@@ -54,7 +57,7 @@ page-client {
     background-color: $c-light-blue2;
     .lost-weight-col {
       width: percentage(100/3);
-      padding: 40px 10px;
+      padding: 40px 5px;
       border: 1px solid $c-grey-border2;
       border-left: 0;
       &:first-child {
@@ -72,9 +75,10 @@ page-client {
       text-align: center;
     }
     button {
+      width: 100%;
       background-color: $c-blue;
       color: $c-white;
-      padding: 18px 20px;
+      padding: 18px 5px;
       border-radius: 4px;
       text-transform: capitalize;
       font-weight: 500;
