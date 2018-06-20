@@ -55,9 +55,9 @@ export class RegisterPage {
     let title;
     if (step == 'profile') {
       title = "  Please use Head shot upper body picture"
-      
+
     } else if (step == 'front') {
-      title = " Please use Full lenth front head to toe picture"
+      title = " Please use Full length front head to toe picture"
     } else {
       title = " Please use Full length side on picture"
     }
@@ -193,7 +193,7 @@ export class RegisterPage {
       })
     })
   }
-  
+
   addInformation() {
     this.navCtrl.push(AddInformationPage);
   }
@@ -204,7 +204,7 @@ export class RegisterPage {
     return imageData;
     // return this.sanitizer.bypassSecurityTrustResourceUrl(imageData);
   }
-  
+
   disabledTakeProfile() {
     for (let key in this.listImage) {
       if (this.listImage[key] == 'assets/imgs/default-avatar.png')
@@ -215,7 +215,7 @@ export class RegisterPage {
   }
   successImage() {
 
-		let method = this.alertCtrl.create({			
+		let method = this.alertCtrl.create({
       message: 'Your images have been saved successfully, please tap "Continue" to start using the app',
 			buttons: [
 				{
