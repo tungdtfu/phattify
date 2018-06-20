@@ -53,16 +53,16 @@ export class ClientPage {
             start: {
                 weight: 0,
                 bmi: 0,
-                date: ''
+                date: 'None'
             },
             target: {
                 weight: 0,
-                status: '',
-                date: ''
+                status: 'None',
+                date: 'None'
             },
             round: {
-                current: 0,
-                max: 0
+                current: 50,
+                max: 100
             }
         }
     }
@@ -176,7 +176,7 @@ export class ClientPage {
             this.chart = res['data'].find(item => {
                 return item.Status == 'Processing';
             })
-           
+           console.log(this.chart.ProgramName)
             if (!this.chart) {
                 return;
             }
@@ -190,7 +190,6 @@ export class ClientPage {
                 return;
             }
             let data = detail['data'];
-            console.log(data)
            this.currentDay = data.find(item =>{
                 return this._datetimeProvider.dateFormatRound(item.createdAt) == this._datetimeProvider.dateFormatRound(new Date());
             })

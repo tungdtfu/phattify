@@ -1,13 +1,15 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>
-      Trevor round 2
+    <ion-title  >
+     {{chart?.ProgramName}} round {{chart?.NumberOfProgramStages}}
     </ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content>
   <div class="circle-progress">
-    <div class="circle-progress-detail circle-progress-left" *ngIf="chartWeight.start.weight">
+    
+  <div  class="circle-message"*ngIf="!chartWeight.target.weight"> You are first time user, please go to Setting to add a new round of losing weight! </div>
+    <div class="circle-progress-detail circle-progress-left">
       <p class="p-large">Start</p>
       <p class="p-small">{{chartWeight.start.weight}}kg</p>
       <p class="p-small">BMI: {{chartWeight.start.bmi}}</p>
@@ -24,7 +26,7 @@
           <span class="square-status square-green"></span>
         </div>
       </div>
-      <round-progress
+      <round-progress 
               [current]="chartWeight.round.current"
               [max]="chartWeight.round.max"
               [color]=" '#8bff8f'"
@@ -39,7 +41,7 @@
               [animationDelay]="0">
       </round-progress>
     </div>
-    <div class="circle-progress-detail circle-progress-right" *ngIf="chartWeight.target.weight">
+    <div class="circle-progress-detail circle-progress-right">
       <p class="p-large">Target</p>
       <p class="p-small">{{chartWeight.target.weight}}kg</p>
       <p class="p-small">{{chartWeight.target.status}}</p>

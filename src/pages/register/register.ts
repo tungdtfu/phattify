@@ -35,6 +35,8 @@ export class RegisterPage {
     front: 'assets/imgs/default-avatar.png',
     side: 'assets/imgs/default-avatar.png'
   };
+
+  upImageSuccess = false;
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public alertCtrl: AlertController,
@@ -182,20 +184,27 @@ export class RegisterPage {
             if (res['status'] == ResponseStatus.error) {
               this.loading.showToast(res['message']);
             } else {
-              this.navCtrl.push(ClientPage);
+             // this.navCtrl.push(ClientPage);
+              this.successImage();
+              this.upImageSuccess = true;
             }
           })
         })
       })
     })
   }
+  
   addInformation() {
     this.navCtrl.push(AddInformationPage);
+  }
+  Continue(){
+    this.navCtrl.push(ClientPage)
   }
   showImageBase64(imageData) {
     return imageData;
     // return this.sanitizer.bypassSecurityTrustResourceUrl(imageData);
   }
+  
   disabledTakeProfile() {
     for (let key in this.listImage) {
       if (this.listImage[key] == 'assets/imgs/default-avatar.png')
@@ -204,4 +213,20 @@ export class RegisterPage {
 
     return false;
   }
+  successImage() {
+
+		let method = this.alertCtrl.create({			
+      message: 'Your images have been saved successfully, please tap "Continue" to start using the app',
+			buttons: [
+				{
+					text: 'OK',
+					cssClass: 'method-color',
+					handler: () => {
+						console.log('OK clicked');
+					}
+				}
+			]
+		});
+		method.present()
+	}
 }
