@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+import { Storage } from '@ionic/storage';
 import { IonicPage, NavController, NavParams, App, ActionSheetController, ModalController } from 'ionic-angular';
 import { SUCCESS_STATUS, ACCESS_DENIED, ERROR_STATUS, API_Socket, Content_Type, TypeTabIndex, report_type, typeEvent } from '../../constants/config';
 import * as moment from 'moment';
@@ -8,6 +9,8 @@ import { ApiProvider } from '../../providers/api/api';
 // import { TimeDiffProvider } from '../../providers/services/timeDiff.service';
 import { SocketProvider } from '../../providers/services/socket.service';
 import { UserProvider } from '../../providers/user/user';
+import { StorageKey } from '../../constants/storage-key.constain';
+
 //import plugins
 
 //import pages
@@ -44,6 +47,8 @@ export class ConversationPage {
   checkShareProfile: boolean;
   showBoxShadow: boolean;
   friend_ID: any;
+  userToken: any;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -52,7 +57,8 @@ export class ConversationPage {
     private actionSheetCtrl: ActionSheetController,
     public modalCtrl: ModalController,
     private socketProvider: SocketProvider,
-    private userProvider: UserProvider
+    private userProvider: UserProvider,
+    private storage: Storage
   ) {
     this.typingMessage = false;
     if (this.navParams.get('friend')) {
@@ -69,28 +75,38 @@ export class ConversationPage {
     else {
       this.checkShareProfile = false;
       this.group_id = this.navParams.get('group_id');
-      this.friend_ID = this.navParams.get('friend_id');
+      this.friend_ID = this.navParams.get('friendId');
     }
     //console.log(moment.utc().format('YYYY-MM-DD h:mm:ss a'));
+    this.userToken = localStorage.getItem(StorageKey.loginToken);
   }
 
   getCurrentUser() {
-    this.userProvider.getCurrentUserDetails().subscribe(res=>{
+    this.userProvider.getCurrentUserDetails().subscribe(res => {
 
-      this.fake_uuid=res.Id;
-      this.fake_uuid_friend = this.navParams.get('friendId');
+      // this.fake_uuid = res.Id;
+      // this.fake_uuid_friend = this.navParams.get('friendId');
 
       this.user = res;
 
       this.getListConversation(this.friend_ID);
       this.socket = this.socketProvider.ConnectSocket();
-      this.socketProvider.JoinGroupChat(this.fake_groupId);
+      // this.socketProvider.JoinGroupChat(this.group_id);
       this.socket.on('send_message_to_client', msg => {
         console.log("new mess from other" + msg);
+        if (typeof msg === 'object') {
+          this.addMessageTolist(msg);
+
+        } else {
+          this.addMessageTolist(JSON.parse(msg));
+        }
+
+        this.apiProvider.saveMessage(msg.group_id, msg.current_user.id, msg.content, msg.content_type).subscribe(res => {
+          console.log('res', res);
+        })
         // if (this.group_id && msg.group_id == this.group_id && this.navCtrl.getActive().name == 'ConversationPage') {
         // if (this.user.id != msg.current_user.id) {
         // this.apiProvider.readMessage(this.user.id, this.group_id);
-        this.addMessageTolist(msg);
         // }
         // }
       });
@@ -144,13 +160,13 @@ export class ConversationPage {
       friend_id = this.friend.id;
     }
     //this.loadingScreen.presentLoading();
-    this.apiProvider.getListGroupChat(this.user.Id, this.fake_loginToken).subscribe(res => {
+    this.apiProvider.getListGroupChat(this.user.Id, this.userToken).subscribe(res => {
       console.log(res);
     }, err => {
       console.log(err);
     })
 
-    this.apiProvider.getListConversation(this.user.Id, this.fake_groupId, this.fake_uuid_friend, this.fake_loginToken).subscribe(
+    this.apiProvider.getListConversation(this.user.Id, this.group_id, this.friend_ID, this.userToken).subscribe(
       res => {
         //this.loadingScreen.dismissLoading();
         if (res.status == SUCCESS_STATUS) {
@@ -190,21 +206,21 @@ export class ConversationPage {
         Fullname: this.ProfileShare.full_name,
         Current_situation: this.ProfileShare.current_situation
       }
-      content_type = 2;
+      content_type = Content_Type.Contact;
     }
     else {
       sentMessage = {
         Content: sentMessage.replace(/(?:\r\n|\r|\n)/g, '<br />')
       };
       this.message = '';
-      content_type = 0;
+      content_type = Content_Type.Text;
     }
     //last_time_send_message : moment.utc().format('YYYY-MM-DD h:mm:ss a'),
     let dataMessage = {
-      group_id: this.fake_groupId,
-      user_id: this.fake_uuid,
+      group_id: this.group_id,
+      // user_id: this.fake_uuid,
       current_user: {
-        id: this.user.id,
+        id: this.user.Id,
         avatar: null,
         full_name: this.user.FirstName + ' ' + this.user.SurName,
       },
@@ -212,13 +228,13 @@ export class ConversationPage {
       content_type: content_type
     }
     this.socket.emit('send_message', dataMessage);
-    this.addMessageTolist(dataMessage);
+    // this.addMessageTolist(dataMessage);
   }
 
 
 
   formatData(data) {
-    
+
     data.timeDiff = moment.utc(data.createdAt).local().fromNow();
     data.content = JSON.parse(data.Content);
     // if(data.content.Current_situation){
@@ -231,7 +247,7 @@ export class ConversationPage {
     console.log(item);
     var message = {
       content: item.content,
-      user_id: item.user_id,
+      UserId: item.UserId,
       group_id: item.group_id,
       // avatar: item.current_user.avatar,
       // full_name: item.current_user.full_name,
