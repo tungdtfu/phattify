@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { StorageKey } from '../../constants/storage-key.constain';
 
 import 'rxjs/add/operator/map';
-import { API_Socket } from "../../constants/config";
+import { API_Socket, SERVER_URL } from "../../constants/config";
 /*
   Generated class for the ApiProvider provider.
 
@@ -46,7 +46,7 @@ export class ApiProvider {
     //headers.append('login_token', login_token);
     let url = API_Socket + 'get-info-group';
     return this.http.post(url, data)
-      .map((res:any) => {
+      .map((res: any) => {
         // console.log(res.json());
         return res;
       });
@@ -60,6 +60,17 @@ export class ApiProvider {
     //headers.append('login_token', login_token);
     let url = API_Socket + 'get-list-group-of-user';
     return this.http.post(url, data)
+      .map((res: any) => res);
+  }
+
+  saveMessage(groupId, userId, content, contentType) {
+    let params = {
+      groupId: groupId,
+      userId: userId,
+      content: JSON.stringify(content),
+      contentType: contentType
+    }
+    return this.http.post(SERVER_URL + 'message', params, { headers: this.getHeader() })
       .map((res: any) => res);
   }
 }
