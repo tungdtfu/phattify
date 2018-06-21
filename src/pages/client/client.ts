@@ -28,9 +28,9 @@ export class ClientPage {
     animations: string[] = [];
     gradient: boolean = false;
     realCurrent: number = 0;
-    currentDay : any;
-    roundId : any;
-    chart : any;
+    currentDay: any;
+    roundId: any;
+    chart: any;
     yourWeight: any = {
         lost: 0,
         current: 0,
@@ -73,7 +73,7 @@ export class ClientPage {
 
     }
 
-    testMessageModule(){
+    testMessageModule() {
         this.navCtrl.push(ListConversationPage);
     }
 
@@ -107,23 +107,23 @@ export class ClientPage {
                             current: this.chartWeight.start.weight - this.chartWeight.target.weight - Math.abs(this.chartWeight.target.weight - data.weight),
                             max: this.chartWeight.start.weight - this.chartWeight.target.weight
                         }
-                        if(this.currentDay){
+                        if (this.currentDay) {
                             this._loadingProvider.showLoading();
-                            this._roundProvider.updateCurrentWeight(this.yourWeight.current,this.currentDay.Id).subscribe(res => {
+                            this._roundProvider.updateCurrentWeight(this.yourWeight.current, this.currentDay.Id).subscribe(res => {
                                 this._loadingProvider.hideLoading();
                                 if (res['status'] == ResponseStatus.error) {
                                     return;
                                 }
-                                this.getDetailChart (this.chart);
+                                this.getDetailChart(this.chart);
                             })
-                        }else{
+                        } else {
                             this._loadingProvider.showLoading();
-                            this._roundProvider.creatCurrentWeight(this.yourWeight.current,this.roundId).subscribe(res => {
+                            this._roundProvider.creatCurrentWeight(this.yourWeight.current, this.roundId).subscribe(res => {
                                 this._loadingProvider.hideLoading();
                                 if (res['status'] == ResponseStatus.error) {
                                     return;
                                 }
-                                this.getDetailChart (this.chart);
+                                this.getDetailChart(this.chart);
                             })
                         }
                     }
@@ -186,22 +186,22 @@ export class ClientPage {
                 return;
             }
             this.roundId = this.chart.Id;
-           this.getDetailChart (this.chart);
+            this.getDetailChart(this.chart);
         })
     }
-    getDetailChart(chart){
+    getDetailChart(chart) {
         this._roundProvider.getRoundByUserId(this.roundId).subscribe(detail => {
             if (detail['status'] == ResponseStatus.error) {
                 return;
             }
             let data = detail['data'];
-           this.currentDay = data.find(item =>{
+            this.currentDay = data.find(item => {
                 return this._datetimeProvider.dateFormatRound(item.createdAt) == this._datetimeProvider.dateFormatRound(new Date());
             })
-            if(this.currentDay){
+            if (this.currentDay) {
                 this.yourWeight.current = this.currentDay.CurrentWeight;
                 this.yourWeight.lost = chart.StartWeight - this.currentDay.CurrentWeight;
-                this.yourWeight.remaining  = this.currentDay.CurrentWeight - chart.TargetWeight;
+                this.yourWeight.remaining = this.currentDay.CurrentWeight - chart.TargetWeight;
             }
 
             this.calWeight(data)
@@ -218,8 +218,8 @@ export class ClientPage {
                     date: this._datetimeProvider.dateFormatRound(chart.EndDate)
                 },
                 round: {
-                    current: this.currentDay ? chart.StartWeight - chart.TargetWeight - Math.abs(chart.TargetWeight - this.currentDay.CurrentWeight): 0,
-                    max: chart.StartWeight- chart.TargetWeight
+                    current: this.currentDay ? chart.StartWeight - chart.TargetWeight - Math.abs(chart.TargetWeight - this.currentDay.CurrentWeight) : 0,
+                    max: chart.StartWeight - chart.TargetWeight
                 }
             }
         })
@@ -230,8 +230,8 @@ export class ClientPage {
                 defaultSeriesType: 'areaspline',
                 margin: [20, 20, 70, 45],
                 backgroundColor: '#2699fb',
-                selectionMarkerFill: 'none'
-
+                selectionMarkerFill: 'none',
+                color: '#8bff8f'
             },
             credits: false,
             title: { text: '' },
