@@ -48,6 +48,7 @@ export class ConversationPage {
   showBoxShadow: boolean;
   friend_ID: any;
   userToken: any;
+  offEventSendMessage: any;
 
   constructor(
     public navCtrl: NavController,
@@ -92,24 +93,25 @@ export class ConversationPage {
       this.getListConversation(this.friend_ID);
       this.socket = this.socketProvider.ConnectSocket();
       // this.socketProvider.JoinGroupChat(this.group_id);
-      this.socket.on('send_message_to_client', msg => {
-        console.log("new mess from other" + msg);
-        if (typeof msg === 'object') {
-          this.addMessageTolist(msg);
-
-        } else {
-          this.addMessageTolist(JSON.parse(msg));
+      this.offEventSendMessage = (msg) => {
+        if (typeof msg !== 'object') {
+          msg = JSON.parse(msg);
         }
-
-        this.apiProvider.saveMessage(msg.group_id, msg.current_user.id, msg.content, msg.content_type).subscribe(res => {
-          console.log('res', res);
-        })
-        // if (this.group_id && msg.group_id == this.group_id && this.navCtrl.getActive().name == 'ConversationPage') {
-        // if (this.user.id != msg.current_user.id) {
-        // this.apiProvider.readMessage(this.user.id, this.group_id);
-        // }
-        // }
-      });
+        if (this.user.Id != msg.UserId) {
+          console.log("new mess from other" + msg);
+          this.apiProvider.readMessage(this.user.Id, this.group_id).subscribe(res => {
+            if (res) {
+              console.log(res);
+            }
+          });
+        } else {
+          this.apiProvider.saveMessage(msg.group_id, msg.current_user.id, msg.content, msg.content_type).subscribe(res => {
+            console.log('res', res);
+          })
+        }
+        this.addMessageTolist(msg);
+      };
+      this.socket.on('send_message_to_client', this.offEventSendMessage);
     })
   }
 
@@ -171,7 +173,7 @@ export class ConversationPage {
         //this.loadingScreen.dismissLoading();
         if (res.status == SUCCESS_STATUS) {
           let num_of_res = res.data.list_message.length;
-          this.friend = res.data.friend_info;
+          this.friend = res.data.friend;
           this.group_id = res.data.group_id;
           for (let i = 0; i < res.data.list_message.length; i++) {
             res.data.list_message[i] = this.formatData(res.data.list_message[i]);
@@ -255,7 +257,7 @@ export class ConversationPage {
       timeDiff: '',
       message_type: item.content_type
     };
-    // message.timeDiff = moment.utc(message.created_at).local().fromNow();
+    message.timeDiff = moment.utc(message.created_at).local().fromNow();
     // if(message.message_type == Content_Type.Contact){
     //   message.content.Current_situation = JSON.parse(message.content.Current_situation);
     // }
@@ -293,9 +295,11 @@ export class ConversationPage {
 
   ionViewWillLeave() {
     this.showBoxShadow = false;
+    this.socket.removeListener('send_message_to_client', this.offEventSendMessage);
   }
 
   goback() {
+    this.navCtrl.pop();
   }
 
   showDetail() {

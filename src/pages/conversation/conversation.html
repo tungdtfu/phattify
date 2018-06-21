@@ -1,17 +1,17 @@
 <ion-header no-border class="header-gray">
   <ion-navbar hideBackButton="true" [ngClass]="{'hide-boxshadow': !showBoxShadow}">
-    <ion-buttons end (click)="action()">
-      <button ion-button icon-only class="bar-button-gray">
-        <ion-icon name="md-more"></ion-icon>
+    <ion-buttons start style="order: 1;">
+      <button ion-button (click)="goback()">
+        <ion-icon name="arrow-back"></ion-icon>
       </button>
     </ion-buttons>
     <ion-title *ngIf="friend" (click)="showDetail()">
-      <img [src]="friend.avatar" onError="this.src='assets/img/profile-avatar.png' ; "  class="header-avatar"/>
-      <span >{{friend.full_name}}</span>
+      <img [src]="friend.avatar" onError="this.src='assets/imgs/profile-avatar.png';" class="header-avatar" />
+      <span>{{friend.FirstName}} {{friend.SurName}}</span>
     </ion-title>
-    <ion-buttons start>
-      <button ion-button class="bar-button-text" (click)="goback()">
-        <ion-icon name="arrow-back"></ion-icon>
+    <ion-buttons end (click)="action()">
+      <button ion-button icon-only class="bar-button-gray">
+        <ion-icon name="md-more"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -23,9 +23,9 @@
       <p *ngIf="friend">Write your first message to {{friend.full_name}}</p>
       <i class="icon icon-airplane"></i>
     </div>
-    <div class="conversation-content" *ngIf="listConversation.length > 0" >
+    <div class="conversation-content" *ngIf="listConversation.length > 0">
       <div *ngFor="let conversation of listConversation">
-      <message-component [conversation]='conversation' [type]='1' ></message-component>
+        <message-component [conversation]='conversation' [type]='1'></message-component>
       </div>
     </div>
   </div>
@@ -33,12 +33,12 @@
 </ion-content>
 
 
- <!--add class "new-message" into ion-footer-->
+<!--add class "new-message" into ion-footer-->
 <ion-footer class="conversation-footer" [ngClass]="{'new-message' : typingMessage}">
   <div class="wrap-input">
-    <input-chat placeholder="Type message" lineHeight="16"   (textMessage)='textMessage($event)' (EventInput)='EventInput($event)'
-    (SubmitText)='submitChat($event)'>
+    <input-chat placeholder="Type message" lineHeight="16" (textMessage)='textMessage($event)' (EventInput)='EventInput($event)'
+      (SubmitText)='submitChat($event)'>
     </input-chat>
     <!--<textarea placeholder="Type message" class="input"(blur)="onBlur()" (focus)="onFocus()" [(ngModel)]="message"></textarea>-->
-    </div>
+  </div>
 </ion-footer>

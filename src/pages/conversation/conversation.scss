@@ -1,0 +1,46 @@
+.header-gray {
+  ion-navbar {
+    -webkit-box-shadow: 0px 3px 7px #efecec;
+    -moz-box-shadow: 0px 3px 7px #efecec;
+    box-shadow: 0px 3px 7px #efecec;
+    &.hide-boxshadow {
+      box-shadow: none;
+    }
+    .bar-button-text {
+      .button-inner {
+        color: black;
+      }
+    }
+    .title {
+      .toolbar-title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .header-avatar {
+          width: 35px;
+          height: 35px;
+          object-fit: cover;
+          border-radius: 50%;
+          margin-right: 15px;
+        }
+      }
+    }
+  }
+  ion-toolbar {
+    margin-top: 10px;
+    .toolbar-background {
+      background: #ffffff;
+    }
+  }
+  ion-segment {
+    justify-content: space-between;
+    ion-segment-button {
+      &.segment-button {
+        max-width: initial;
+      }
+    }
+  }
+  .toolbar {
+    min-height: 60px;
+  }
+}
