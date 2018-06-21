@@ -73,4 +73,29 @@ export class ApiProvider {
     return this.http.post(SERVER_URL + 'message', params, { headers: this.getHeader() })
       .map((res: any) => res);
   }
+
+  readMessage(user_id, group_id) {
+    let data = {
+      user_id: user_id,
+      group_id: group_id
+    }
+    return this.http.post(API_Socket + 'send-read-message-status', data, { headers: this.getHeader() })
+      .map((res: any) => res);
+    // let data = {
+    //   user_id: user_id,
+    //   group_id: group_id
+    // }
+    // let url = API_Socket + 'send-read-message-status';
+    // try {
+    //   let header = this.getHeader();
+    //   header.append('Content-Type', 'application/json');
+    //   this.http.post(url, data, { headers: header })
+    //     .map((res: any) => {
+    //       console.log(res);
+    //     });
+    // } catch (err) {
+    //   console.log(err);
+    // }
+  }
+
 }
